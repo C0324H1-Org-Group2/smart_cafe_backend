@@ -22,9 +22,6 @@ public class Employee {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal salary;
 
-    @Column(name = "hire_date", nullable = false)
-    private Date hireDate;
-
     @Column(columnDefinition = "TEXT")
     private String note;
 
