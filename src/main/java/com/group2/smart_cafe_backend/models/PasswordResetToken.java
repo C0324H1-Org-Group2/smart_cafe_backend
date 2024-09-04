@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class PasswordResetToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int tokenId;
+    private Long tokenId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

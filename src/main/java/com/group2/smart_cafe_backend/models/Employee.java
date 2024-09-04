@@ -10,7 +10,7 @@ import java.util.Date;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int employeeId;
+    private Long employeeId;
 
     @Column(name = "full_name", nullable = false)
     private String fullName;
@@ -21,9 +21,6 @@ public class Employee {
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal salary;
-
-    @Column(name = "hire_date", nullable = false)
-    private Date hireDate;
 
     @Column(columnDefinition = "TEXT")
     private String note;

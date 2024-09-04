@@ -7,7 +7,7 @@ import lombok.Data;
 public class BillDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int billDetailId;
+    private Long billDetailId;
 
     @ManyToOne
     @JoinColumn(name = "bill_id")
