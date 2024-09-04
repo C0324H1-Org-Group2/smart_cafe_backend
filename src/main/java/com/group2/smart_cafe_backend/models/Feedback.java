@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int feedbackId;
+    private Long feedbackId;
 
     @ManyToOne
     @JoinColumn(name = "creator_id")

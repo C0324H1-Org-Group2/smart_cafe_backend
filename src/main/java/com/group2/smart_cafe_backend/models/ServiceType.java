@@ -10,7 +10,7 @@ public class ServiceType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int typeId;
+    private Long typeId;
 
     @Column(nullable = false, unique = true, length = 100)
     private String typeName;
