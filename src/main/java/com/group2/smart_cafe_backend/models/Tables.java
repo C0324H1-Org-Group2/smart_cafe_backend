@@ -10,7 +10,7 @@ public class Tables {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int tableId;
+    private Long tableId;
 
     @Column(nullable = false, unique = true, length = 50)
     private String code;

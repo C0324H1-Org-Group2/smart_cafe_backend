@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int newsId;
+    private Long newsId;
 
     @Column(nullable = false, length = 200)
     private String title;

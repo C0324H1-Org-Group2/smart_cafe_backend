@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int billId;
+    private Long billId;
 
     @ManyToOne
     @JoinColumn(name = "table_id")
