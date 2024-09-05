@@ -33,4 +33,9 @@ public class ServiceController {
         Service newService = serviceService.addService(serviceDto);
         return new ResponseEntity<>(newService, HttpStatus.CREATED);
     }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteService(@PathVariable Long id) {
+        serviceService.deleteService(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

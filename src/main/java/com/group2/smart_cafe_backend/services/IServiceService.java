@@ -10,6 +10,8 @@ public interface IServiceService {
     List<Service> getTop5NewestServices();
     List<Service> getAllServices();
     Service addService(ServiceDto serviceDTO);
+    void deleteService(Long serviceId);
+
 
 
 

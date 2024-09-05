@@ -48,6 +48,11 @@ public class ServiceService implements IServiceService {
         return serviceRepository.save(service);
     }
 
+    @Override
+    public void deleteService(Long serviceId) {
+        serviceRepository.deleteById(serviceId);
+
+    }
 
 
 }
