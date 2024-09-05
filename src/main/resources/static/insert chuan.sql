@@ -1,4 +1,4 @@
-#Insert category sản phẩm
+use module6_cafe_store;
 INSERT INTO service_types (type_name,code, description)
 VALUES ('Cà Phê','CF',
         'Sự kết hợp hoàn hảo giữa hạt cà phê Robusta & Arabica thượng hạng được trồng trên những vùng cao nguyên Việt Nam màu mỡ, qua những bí quyết rang xay độc đáo, Smart Coffee chúng tôi tự hào giới thiệu những dòng sản phẩm Cà phê mang hương vị đậm đà và tinh tế.');
@@ -183,7 +183,7 @@ values  (1, 'VŨ HUY HOÀNG', 'MALE_EMP.jpg', null, 5000000.00, 2),
         (6, 'NGUYỄN VĂN TÍNH', 'MALE_EMP.jpg', null, 5000000.00, 2);
         
 #------------------------
-#Insert userr
+#Insert user
 insert into users (user_id, address, birthday, email, full_name, gender, is_verified, password, password_expiry_date, tel, username, verification_token, employee_id)
 values  (1, 'Ba Đình, Hà Nội', '1997-11-18', 'hoangvhdata@gmail.com', 'Vũ Huy Hoàng', 'male', 0, '', null, '0329193149', 'hoangvu1811', null, 1);
 
