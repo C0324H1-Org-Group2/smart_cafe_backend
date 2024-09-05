@@ -26,6 +26,12 @@ public class ServiceController {
         return new ResponseEntity<>(top5Services, HttpStatus.OK);
     }
 
+    @GetMapping("/top5-most-ordered")
+    public ResponseEntity<List<Service>> getTop5MostOrderedServices() {
+        List<Service> top5MostOrdered = serviceService.getTop5MostOrderedServices();
+        return new ResponseEntity<>(top5MostOrdered, HttpStatus.OK);
+    }
+
     @GetMapping("/list-service-types")
     public ResponseEntity<List<ServiceType>> getAllServiceTypes() {
         List<ServiceType> allServiceType = serviceService.getAllServiceTypes();

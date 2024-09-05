@@ -8,6 +8,8 @@ import java.util.List;
 public interface IServiceService {
     List<Service> getTop5NewestServices();
 
+    List<Service> getTop5MostOrderedServices();
+
     List<ServiceType> getAllServiceTypes();
 
     List<Service> getAllServices();
