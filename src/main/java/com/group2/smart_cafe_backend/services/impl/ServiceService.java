@@ -18,4 +18,9 @@ public class ServiceService implements IServiceService {
     public List<com.group2.smart_cafe_backend.models.Service> getTop5NewestServices() {
         return serviceRepository.findTop5NewestServices();
     }
+
+    @Override
+    public List<com.group2.smart_cafe_backend.models.Service> getTop5MostOrderedServices() {
+        return serviceRepository.findTop5MostOrderedServices();
+    }
 }

@@ -24,4 +24,10 @@ public class ServiceController {
 //        return ResponseEntity.ok(top5Services);
         return new ResponseEntity<>(top5Services, HttpStatus.OK);
     }
+
+    @GetMapping("/top5-most-ordered")
+    public ResponseEntity<List<Service>> getTop5MostOrderedServices() {
+        List<Service> top5MostOrdered = serviceService.getTop5MostOrderedServices();
+        return new ResponseEntity<>(top5MostOrdered, HttpStatus.OK);
+    }
 }

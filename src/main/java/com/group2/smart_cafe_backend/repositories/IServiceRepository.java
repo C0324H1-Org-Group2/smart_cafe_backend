@@ -10,5 +10,10 @@ import java.util.List;
 public interface IServiceRepository extends JpaRepository<Service, Long> {
     @Query(value = "SELECT * FROM Services ORDER BY service_id DESC LIMIT 5", nativeQuery = true)
     List<Service> findTop5NewestServices();
+
+    @Query("SELECT bd.service FROM BillDetail bd WHERE bd.service.isDelete = false " +
+            "GROUP BY bd.service.serviceId " +
+            "ORDER BY SUM(bd.quantity) DESC LIMIT 5")
+    List<Service> findTop5MostOrderedServices();
 }
 
