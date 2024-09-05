@@ -26,7 +26,6 @@ CREATE TABLE Employees
     full_name   VARCHAR(100)   NOT NULL,
     position_id INT,
     salary      DECIMAL(10, 2) NOT NULL,
-    hire_date   DATE           NOT NULL,
     note        TEXT,
     image_url   VARCHAR(255),
     FOREIGN KEY (position_id) REFERENCES Positions (position_id)
