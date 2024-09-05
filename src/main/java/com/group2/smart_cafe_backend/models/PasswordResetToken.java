@@ -21,7 +21,4 @@ public class PasswordResetToken {
 
     @Column
     private LocalDateTime createdAt;
-    @Column
-    private LocalDateTime expiresAt;
-
 }

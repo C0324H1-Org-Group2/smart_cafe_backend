@@ -39,5 +39,7 @@ public class Service {
     @Column(columnDefinition = "ENUM('available', 'unavailable', 'out_of_stock')")
     private ServiceStatus status;
 
+    @Column(name = "is_delete", nullable = false)
+    private boolean isDelete = false;
 }
 

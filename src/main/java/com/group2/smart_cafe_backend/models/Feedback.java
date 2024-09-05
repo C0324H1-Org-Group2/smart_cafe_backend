@@ -25,4 +25,7 @@ public class Feedback {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    @Column(name = "code", nullable = false, unique = true, length = 50)
+    private String code;
+
 }
