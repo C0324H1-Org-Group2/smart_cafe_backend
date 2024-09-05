@@ -1,6 +1,7 @@
 package com.group2.smart_cafe_backend.controllers;
 
 import com.group2.smart_cafe_backend.models.Service;
+import com.group2.smart_cafe_backend.models.ServiceType;
 import com.group2.smart_cafe_backend.services.IServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,5 +30,17 @@ public class ServiceController {
     public ResponseEntity<List<Service>> getTop5MostOrderedServices() {
         List<Service> top5MostOrdered = serviceService.getTop5MostOrderedServices();
         return new ResponseEntity<>(top5MostOrdered, HttpStatus.OK);
+    }
+
+    @GetMapping("/list-service-types")
+    public ResponseEntity<List<ServiceType>> getAllServiceTypes() {
+        List<ServiceType> allServiceType = serviceService.getAllServiceTypes();
+        return new ResponseEntity<>(allServiceType, HttpStatus.OK);
+    }
+
+    @GetMapping("/all-services")
+    public ResponseEntity<List<Service>> getAllServices() {
+        List<Service> allServices = serviceService.getAllServices();
+        return new ResponseEntity<>(allServices, HttpStatus.OK);
     }
 }
