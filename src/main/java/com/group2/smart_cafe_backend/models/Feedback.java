@@ -6,19 +6,20 @@ import java.time.LocalDate;
 
 @Data
 @Entity
-@Table(name = "Feedbacks")
+@Table(name = "feedbacks")
 public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long feedbackId;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "creator_id")
     private User creator;
 
     @Column(length = 100)
     private String email;
 
+    @Column(name = "feedback_date")
     private LocalDate feedbackDate;
 
     @Column(columnDefinition = "TEXT")
