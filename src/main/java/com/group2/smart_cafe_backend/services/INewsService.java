@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface INewsService {
     List<News> getAllNews();
+
+    News getNewsById(Long newsId);
 }
