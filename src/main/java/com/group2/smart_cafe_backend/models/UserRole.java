@@ -7,7 +7,7 @@ import lombok.Data;
 public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userRoleId;
+    private Long userRoleId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

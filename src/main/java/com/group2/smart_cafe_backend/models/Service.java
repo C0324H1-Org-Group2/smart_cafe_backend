@@ -12,7 +12,7 @@ import java.time.LocalTime;
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int serviceId;
+    private Long serviceId;
 
     @Column(nullable = false, unique = true, length = 50)
     private String serviceCode;

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class UserToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int tokenId;
+    private Long tokenId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
