@@ -1,15 +1,14 @@
 package com.group2.smart_cafe_backend.controllers;
 
+import com.group2.smart_cafe_backend.dtos.ServiceDto;
 import com.group2.smart_cafe_backend.models.Service;
 import com.group2.smart_cafe_backend.models.ServiceType;
 import com.group2.smart_cafe_backend.services.IServiceService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @CrossOrigin("*")
@@ -24,6 +23,17 @@ public class ServiceController {
         List<Service> top5Services = serviceService.getTop5NewestServices();
 //        return ResponseEntity.ok(top5Services);
         return new ResponseEntity<>(top5Services, HttpStatus.OK);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Service> addService(@RequestBody @Valid ServiceDto serviceDto) {
+        Service newService = serviceService.addService(serviceDto);
+        return new ResponseEntity<>(newService, HttpStatus.CREATED);
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteService(@PathVariable Long id) {
+        serviceService.deleteService(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/top5-most-ordered")
