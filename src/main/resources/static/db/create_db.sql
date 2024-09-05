@@ -23,8 +23,13 @@ CREATE TABLE Positions
 CREATE TABLE Employees
 (
     employee_id INT PRIMARY KEY AUTO_INCREMENT,
-    full_name   VARCHAR(100)   NOT NULL,
     position_id INT,
+    full_name   VARCHAR(100),
+    email       VARCHAR(100)   NOT NULL UNIQUE,
+    address     VARCHAR(255),
+    tel         VARCHAR(20),
+    birthday    DATE,
+    gender      ENUM ('male', 'female', 'unknown'),
     salary      DECIMAL(10, 2) NOT NULL,
     note        TEXT,
     image_url   VARCHAR(255),
@@ -37,12 +42,6 @@ CREATE TABLE Users
     user_id              INT PRIMARY KEY AUTO_INCREMENT,
     username             VARCHAR(50)  NOT NULL UNIQUE,
     password             VARCHAR(255) NOT NULL,
-    full_name            VARCHAR(100),
-    email                VARCHAR(100) NOT NULL UNIQUE,
-    address              VARCHAR(255),
-    tel                  VARCHAR(20),
-    birthday             DATE,
-    gender               ENUM ('male', 'female', 'unknown'),
     employee_id          INT,
     is_verified          BOOLEAN DEFAULT FALSE,
     verification_token   VARCHAR(255),
@@ -57,7 +56,6 @@ CREATE TABLE Password_Reset_Tokens
     user_id    INT          NOT NULL,
     token      VARCHAR(255) NOT NULL UNIQUE,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    expires_at DATETIME,
     FOREIGN KEY (user_id) REFERENCES Users (user_id)
 );
 
@@ -85,11 +83,11 @@ CREATE TABLE User_Roles
 -- Bảng lưu thông tin bàn
 CREATE TABLE Tables
 (
-    table_id INT PRIMARY KEY AUTO_INCREMENT,
-    code     VARCHAR(50) NOT NULL UNIQUE,
-    is_on    BOOLEAN     NOT NULL DEFAULT TRUE,
-    state    VARCHAR(50)          DEFAULT 'good',
-    UNIQUE (table_id)
+    table_id  INT PRIMARY KEY AUTO_INCREMENT,
+    code      VARCHAR(50) NOT NULL UNIQUE,
+    is_on     BOOLEAN     NOT NULL DEFAULT TRUE,
+    state     VARCHAR(50)          DEFAULT 'good',
+    is_delete BOOLEAN     NOT NULL DEFAULT FALSE
 );
 
 -- Bảng lưu thông tin nhóm món
@@ -113,6 +111,7 @@ CREATE TABLE Services
     image_url    VARCHAR(255),
     wait_time    TIME,
     status       ENUM ('available', 'unavailable', 'out_of_stock'),
+    is_delete    BOOLEAN     NOT NULL DEFAULT FALSE,
     FOREIGN KEY (type_id) REFERENCES Service_Types (type_id)
 );
 
@@ -146,6 +145,7 @@ CREATE TABLE Feedbacks
 (
     feedback_id   INT PRIMARY KEY AUTO_INCREMENT,
     creator_id    INT,
+    code          VARCHAR(50) NOT NULL UNIQUE,
     email         VARCHAR(100),
     feedback_date DATE,
     content       TEXT,
