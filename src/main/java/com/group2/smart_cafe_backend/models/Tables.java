@@ -10,14 +10,18 @@ public class Tables {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "table_id")
     private Long tableId;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(name = "code", nullable = false, unique = true, length = 50)
     private String code;
 
-    @Column(nullable = false)
+    @Column(name = "is_on", nullable = false)
     private boolean isOn = true;
 
-    @Column(length = 50)
+    @Column(name = "state", length = 50)
     private String state = "good";
+
+    @Column(name = "is_delete", nullable = false)
+    private boolean isDelete = false;
 }
