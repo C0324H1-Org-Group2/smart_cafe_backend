@@ -3,6 +3,7 @@ import com.group2.smart_cafe_backend.models.emum.Gender;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -29,7 +30,7 @@ public class User {
 
     private String tel;
 
-    private Date birthday;
+    private LocalDate birthday;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM('male', 'female', 'unknown')")
