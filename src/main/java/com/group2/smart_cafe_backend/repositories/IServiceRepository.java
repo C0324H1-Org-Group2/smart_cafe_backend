@@ -10,5 +10,10 @@ import java.util.List;
 public interface IServiceRepository extends JpaRepository<Service, Long> {
     @Query(value = "SELECT * FROM Services ORDER BY service_id DESC LIMIT 5", nativeQuery = true)
     List<Service> findTop5NewestServices();
+    @Override
+    List<Service> findAll();
+
+    @Override
+    <S extends Service> S save(S entity);
 }
 
