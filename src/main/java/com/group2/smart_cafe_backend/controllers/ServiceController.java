@@ -48,11 +48,11 @@ public class ServiceController {
         return new ResponseEntity<>(allServiceType, HttpStatus.OK);
     }
 
-//    @GetMapping("/all-services")
-//    public ResponseEntity<List<Service>> getAllServices() {
-//        List<Service> allServices = serviceService.getAllServices();
-//        return new ResponseEntity<>(allServices, HttpStatus.OK);
-//    }
+    @GetMapping("/all-services")
+    public ResponseEntity<List<Service>> getAllServices() {
+        List<Service> allServices = serviceService.getAllServices();
+        return new ResponseEntity<>(allServices, HttpStatus.OK);
+    }
 
     @GetMapping("/services-by-type/{typeId}")
     public ResponseEntity<List<Service>> getServicesByType(@PathVariable Long typeId) {
