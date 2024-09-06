@@ -53,4 +53,9 @@ public class ServiceController {
         List<Service> allServices = serviceService.getAllServices();
         return new ResponseEntity<>(allServices, HttpStatus.OK);
     }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Service> updateService(@PathVariable Long id, @RequestBody @Valid ServiceDto serviceDto) {
+        Service updatedService = serviceService.updateService(id, serviceDto);
+        return new ResponseEntity<>(updatedService, HttpStatus.OK);
+    }
 }
