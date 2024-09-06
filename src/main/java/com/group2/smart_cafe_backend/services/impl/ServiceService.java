@@ -30,6 +30,28 @@ public class ServiceService implements IServiceService {
     public List<com.group2.smart_cafe_backend.models.Service> getAllServices() {
         return serviceRepository.findAll();
     }
+
+    @Override
+    public com.group2.smart_cafe_backend.models.Service updateService(Long serviceId, @Valid ServiceDto serviceDto) {
+        com.group2.smart_cafe_backend.models.Service existingService = serviceRepository.findById(serviceId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid service ID"));
+
+        ServiceType serviceType = serviceTypeRepository.findById(serviceDto.getTypeId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid service type ID"));
+
+        existingService.setServiceCode(serviceDto.getServiceCode());
+        existingService.setServiceName(serviceDto.getServiceName());
+        existingService.setType(serviceType);
+        existingService.setPrice(serviceDto.getPrice());
+        existingService.setDescription(serviceDto.getDescription());
+        existingService.setImageUrl(serviceDto.getImageUrl());
+        existingService.setWaitTime(serviceDto.getWaitTime());
+        existingService.setStatus(serviceDto.getStatus());
+
+        return serviceRepository.save(existingService);
+    }
+
+
     @Override
     public com.group2.smart_cafe_backend.models.Service addService(@Valid ServiceDto serviceDto) {
         ServiceType serviceType = serviceTypeRepository.findById(serviceDto.getTypeId())
