@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @Entity
@@ -31,6 +32,7 @@ public class User {
 
     @Column(name = "password_expiry_date")
     private Date passwordExpiryDate;
-
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 }
 
