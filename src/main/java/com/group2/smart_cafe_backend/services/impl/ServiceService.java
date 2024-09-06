@@ -32,6 +32,12 @@ public class ServiceService implements IServiceService {
     }
 
     @Override
+    public List<com.group2.smart_cafe_backend.models.Service> getServicesByType(Long typeId) {
+        return serviceRepository.findByTypeId(typeId);
+    }
+
+
+    @Override
     public com.group2.smart_cafe_backend.models.Service updateService(Long serviceId, @Valid ServiceDto serviceDto) {
         com.group2.smart_cafe_backend.models.Service existingService = serviceRepository.findById(serviceId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid service ID"));
