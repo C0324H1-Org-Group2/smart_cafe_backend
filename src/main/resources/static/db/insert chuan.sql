@@ -205,3 +205,41 @@ values  (1, 1, 1, 1),
         (7, 1, 2, 17),
         (8, 3, 2, 21),
         (9, 5, 3, 14);
+
+#News
+INSERT INTO News (title, content, publish_date, image_url, creator_id, status)
+VALUES
+    ('Khám Phá Hương Vị Cà Phê Arabica',
+     'Arabica là loại cà phê nổi tiếng với hương vị nhẹ nhàng, vị chua thanh và hương thơm tinh tế. Cà phê Arabica thường được trồng ở những vùng cao và được ưa chuộng bởi người sành cà phê.',
+     '2024-09-05',
+     'menu-1.jpg',
+     1,
+     'draft'),
+
+    ('Cà Phê Robusta - Đậm Đà Hương Vị',
+     'Robusta là loại cà phê phổ biến với vị đắng mạnh mẽ, hương thơm nồng và hàm lượng caffeine cao hơn. Đây là lựa chọn yêu thích của những ai thích cà phê có vị đậm.',
+     '2024-09-06',
+     'menu-2.jpg',
+     1,
+     'draft'),
+
+    ('Cách Pha Cà Phê Phin Đúng Chuẩn',
+     'Pha cà phê phin là nghệ thuật cần sự kiên nhẫn và tinh tế. Hãy cùng khám phá cách pha cà phê phin truyền thống để có được ly cà phê đậm đà, thơm ngon.',
+     '2024-09-07',
+     'menu-3.jpg',
+     1,
+     'draft'),
+
+    ('Lợi Ích Sức Khỏe Từ Việc Uống Cà Phê',
+     'Nhiều nghiên cứu cho thấy uống cà phê vừa phải có thể mang lại nhiều lợi ích sức khỏe như giảm nguy cơ tiểu đường, bệnh tim mạch và hỗ trợ quá trình đốt cháy mỡ.',
+     '2024-09-08',
+     'drink-9.jpg',
+     1,
+     'draft'),
+
+    ('Thưởng Thức Cà Phê Cùng Bánh Ngọt',
+     'Không gì tuyệt vời hơn khi kết hợp ly cà phê nóng với một chiếc bánh ngọt mềm mại. Sự kết hợp này sẽ mang đến cho bạn trải nghiệm ẩm thực tuyệt vời.',
+     '2024-09-09',
+     'dessert-6.jpg',
+     1,
+     'draft');

@@ -3,7 +3,7 @@ import com.group2.smart_cafe_backend.models.emum.NewsStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -19,7 +19,8 @@ public class News {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    private LocalDate publishDate;
+    @Column(name = "publish_date")
+    private LocalDateTime publishDate;
 
     @Column(length = 255)
     private String imageUrl;
