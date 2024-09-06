@@ -30,6 +30,12 @@ public class ServiceService implements IServiceService {
     public List<com.group2.smart_cafe_backend.models.Service> getAllServices() {
         return serviceRepository.findAll();
     }
+
+    @Override
+    public List<com.group2.smart_cafe_backend.models.Service> getServicesByType(Long typeId) {
+        return serviceRepository.findByTypeId(typeId);
+    }
+
     @Override
     public com.group2.smart_cafe_backend.models.Service addService(@Valid ServiceDto serviceDto) {
         ServiceType serviceType = serviceTypeRepository.findById(serviceDto.getTypeId())

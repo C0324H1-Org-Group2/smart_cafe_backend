@@ -22,4 +22,6 @@ public interface IServiceService {
     List<ServiceType> getAllServiceTypes();
 
     List<Service> getAllServices();
+
+    List<Service> getServicesByType(Long typeId);
 }
