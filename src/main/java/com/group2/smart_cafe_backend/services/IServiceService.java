@@ -24,4 +24,6 @@ public interface IServiceService {
     List<Service> getAllServices();
 
     List<Service> getServicesByType(Long typeId);
+    Service updateService(Long serviceId, ServiceDto serviceDto);
+
 }

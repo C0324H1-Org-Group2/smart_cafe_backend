@@ -59,4 +59,9 @@ public class ServiceController {
         List<Service> servicesByType = serviceService.getServicesByType(typeId);
         return new ResponseEntity<>(servicesByType, HttpStatus.OK);
     }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Service> updateService(@PathVariable Long id, @RequestBody @Valid ServiceDto serviceDto) {
+        Service updatedService = serviceService.updateService(id, serviceDto);
+        return new ResponseEntity<>(updatedService, HttpStatus.OK);
+    }
 }
