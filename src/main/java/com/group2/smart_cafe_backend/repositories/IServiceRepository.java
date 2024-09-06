@@ -3,6 +3,7 @@ package com.group2.smart_cafe_backend.repositories;
 import com.group2.smart_cafe_backend.models.Service;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
@@ -19,5 +20,8 @@ public interface IServiceRepository extends JpaRepository<Service, Long> {
             "GROUP BY bd.service.serviceId " +
             "ORDER BY SUM(bd.quantity) DESC LIMIT 5")
     List<Service> findTop5MostOrderedServices();
+
+    @Query("SELECT s FROM Service s WHERE s.type.typeId = :typeId")
+    List<Service> findByTypeId(@Param("typeId") Long typeId);
 }
 
