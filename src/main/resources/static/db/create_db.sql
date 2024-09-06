@@ -1,6 +1,6 @@
 -- Tạo cơ sở dữ liệu
-CREATE DATABASE smart_cafe;
 
+CREATE DATABASE smart_cafe;
 USE smart_cafe;
 
 -- Bảng lưu thông tin các vai trò

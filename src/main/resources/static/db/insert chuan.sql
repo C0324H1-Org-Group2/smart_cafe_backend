@@ -16,84 +16,84 @@ INSERT INTO service_types (type_name,code, description)
 VALUES ('Khác','OT', null);
 
 #INSERT SẢN PHẨM
-INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0001', 'PHIN ĐEN ĐÁ', 1, 29000.00, 'Dành cho những tín đồ cà phê đích thực! Hương vị cà phê truyền thống được phối trộn độc đáo tại Highlands. Cà phê đậm đà pha hoàn toàn từ Phin, cho thêm 1 thìa đường, một ít đá viên mát lạnh, tạo nên Phin Đen Đá mang vị cà phê đậm đà chất Phin. ', 'HLC_New_logo_5.1_Products__PHIN_DEN_DA.jpg', '00:05:00', 'available', true);
+INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0001', 'PHIN ĐEN ĐÁ', 1, 29000.00, 'Dành cho những tín đồ cà phê đích thực! Hương vị cà phê truyền thống được phối trộn độc đáo tại Highlands. Cà phê đậm đà pha hoàn toàn từ Phin, cho thêm 1 thìa đường, một ít đá viên mát lạnh, tạo nên Phin Đen Đá mang vị cà phê đậm đà chất Phin. ', 'phin-den-da.jpg', '00:05:00', 'available', true);
 
-INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0002', 'PHIN SỮA ĐÁ', 1, 29000.00, 'Hương vị cà phê Việt Nam đích thực! Từng hạt cà phê hảo hạng được chọn bằng tay, phối trộn độc đáo giữa hạt Robusta từ cao nguyên Việt Nam, thêm Arabica thơm lừng. Cà phê được pha từ Phin truyền thống, hoà cùng sữa đặc sánh và thêm vào chút đá tạo nên ly Phin Sữa Đá – Đậm Đà Chất Phin.', 'HLC_New_logo_5.1_Products__PHIN_SUADA.jpg', '00:05:00', 'available', false);
+INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0002', 'PHIN SỮA ĐÁ', 1, 29000.00, 'Hương vị cà phê Việt Nam đích thực! Từng hạt cà phê hảo hạng được chọn bằng tay, phối trộn độc đáo giữa hạt Robusta từ cao nguyên Việt Nam, thêm Arabica thơm lừng. Cà phê được pha từ Phin truyền thống, hoà cùng sữa đặc sánh và thêm vào chút đá tạo nên ly Phin Sữa Đá – Đậm Đà Chất Phin.', 'phin-sua-da.jpg', '00:05:00', 'available', false);
 
-INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0003', 'PHIN ĐEN NÓNG', 1, 29000.00, 'Dành cho những tín đồ cà phê đích thực! Hương vị cà phê truyền thống được phối trộn độc đáo tại Highlands. Cà phê đậm đà pha từ Phin, cho thêm 1 thìa đường, mang đến vị cà phê đậm đà chất Phin.', 'HLC_PHIN_DEN_NONG.jpg', '00:05:00', 'available', false);
+INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0003', 'PHIN ĐEN NÓNG', 1, 29000.00, 'Dành cho những tín đồ cà phê đích thực! Hương vị cà phê truyền thống được phối trộn độc đáo tại Highlands. Cà phê đậm đà pha từ Phin, cho thêm 1 thìa đường, mang đến vị cà phê đậm đà chất Phin.', 'phin-den-nong.jpg', '00:05:00', 'available', false);
 
-INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0004', 'PHIN SỮA NÓNG', 1, 29000.00, 'Hương vị cà phê Việt Nam đích thực! Từng hạt cà phê hảo hạng được chọn bằng tay, phối trộn độc đáo giữa hạt Robusta từ cao nguyên Việt Nam, thêm Arabica thơm lừng. Kết hợp với nước sôi từng giọt cà phê được chiết xuất từ Phin truyền thống, hoà cùng sữa đặc sánh tạo nên ly Phin Sữa Nóng – Đậm đà chất Phin.', 'HLC__PHIN_SUA_NONG.jpg', '00:05:00', 'available', false);
+INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0004', 'PHIN SỮA NÓNG', 1, 29000.00, 'Hương vị cà phê Việt Nam đích thực! Từng hạt cà phê hảo hạng được chọn bằng tay, phối trộn độc đáo giữa hạt Robusta từ cao nguyên Việt Nam, thêm Arabica thơm lừng. Kết hợp với nước sôi từng giọt cà phê được chiết xuất từ Phin truyền thống, hoà cùng sữa đặc sánh tạo nên ly Phin Sữa Nóng – Đậm đà chất Phin.', 'phin-sua-nong.jpg', '00:05:00', 'available', false);
 
-INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0005', 'PHINDI CASSIA', 1, 55000.00, 'Với chất phin êm ái, hương vị cà phê Việt Nam hiện đại kết hợp cùng hương quế nhẹ nhàng và thạch cà phê hấp dẫn.', 'Phindi_Cassia_Highlands_products_Image1.jpg', '00:05:00', 'available', false);
+INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0005', 'PHINDI CASSIA', 1, 55000.00, 'Với chất phin êm ái, hương vị cà phê Việt Nam hiện đại kết hợp cùng hương quế nhẹ nhàng và thạch cà phê hấp dẫn.', 'phindi-cassia.jpg', '00:05:00', 'available', false);
 
- INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0006', 'PHINDI CHOCO', 1, 45000.00, 'PhinDi Choco - Cà phê Phin thế hệ mới với chất Phin êm hơn, kết hợp cùng Choco ngọt tan mang đến hương vị mới lạ, không thể hấp dẫn hơn!', 'HLC_New_logo_5.1_Products__PHINDI_CHOCO.jpg', '00:05:00', 'available', false);
+ INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0006', 'PHINDI CHOCO', 1, 45000.00, 'PhinDi Choco - Cà phê Phin thế hệ mới với chất Phin êm hơn, kết hợp cùng Choco ngọt tan mang đến hương vị mới lạ, không thể hấp dẫn hơn!', 'phindi-choco.jpg', '00:05:00', 'available', false);
 
-INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0007', 'PHINDI HẠNH NHÂN', 1, 45000.00, 'PhinDi Hạnh Nhân - Cà phê Phin thế hệ mới với chất Phin êm hơn, kết hợp cùng Hạnh nhân thơm bùi mang đến hương vị mới lạ, không thể hấp dẫn hơn!', 'HLC_New_logo_5.1_Products__PHINDI_HANH_NHAN.jpg', '00:05:00', 'available', false);
+INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0007', 'PHINDI HẠNH NHÂN', 1, 45000.00, 'PhinDi Hạnh Nhân - Cà phê Phin thế hệ mới với chất Phin êm hơn, kết hợp cùng Hạnh nhân thơm bùi mang đến hương vị mới lạ, không thể hấp dẫn hơn!', 'phindi-hanh-nhan.jpg', '00:05:00', 'available', false);
 
-INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0008', 'PHINDI KEM SỮA', 1, 45000.00, 'PhinDi Kem Sữa - Cà phê Phin thế hệ mới với chất Phin êm hơn, kết hợp cùng Kem Sữa béo ngậy mang đến hương vị mới lạ, không thể hấp dẫn hơn!', 'HLC_New_logo_5.1_Products__PHINDI_KEM_SUA.jpg', '00:05:00', 'available', false);
+INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0008', 'PHINDI KEM SỮA', 1, 45000.00, 'PhinDi Kem Sữa - Cà phê Phin thế hệ mới với chất Phin êm hơn, kết hợp cùng Kem Sữa béo ngậy mang đến hương vị mới lạ, không thể hấp dẫn hơn!', 'phindi-kem-sua.jpg', '00:05:00', 'available', false);
 
-INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0009', 'BẠC XỈU ĐÁ', 1, 29000.00, 'Nếu Phin Sữa Đá dành cho các bạn đam mê vị đậm đà, thì Bạc Xỉu Đá là một sự lựa chọn nhẹ “đô" cà phê nhưng vẫn thơm ngon, chất lừ không kém!', 'HLC_New_logo_5.1_Products__BAC_XIU.jpg', '00:05:00', 'available', false);
+INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0009', 'BẠC XỈU ĐÁ', 1, 29000.00, 'Nếu Phin Sữa Đá dành cho các bạn đam mê vị đậm đà, thì Bạc Xỉu Đá là một sự lựa chọn nhẹ “đô" cà phê nhưng vẫn thơm ngon, chất lừ không kém!', 'bac-xiu-da.jpg', '00:05:00', 'available', false);
 
- INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0010', 'LATTE', 1, 65000.00, 'Ly cà phê sữa ngọt ngào đến khó quên! Với một chút nhẹ nhàng hơn so với Cappuccino, Latte của chúng tôi bắt đầu với cà phê espresso, sau đó thêm sữa tươi và bọt sữa một cách đầy nghệ thuật. Bạn có thể tùy thích lựa chọn uống nóng hoặc dùng chung với đá.', 'HLC_New_logo_5.1_Products__LATTE_1.jpg', '00:05:00', 'available', false);
+ INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0010', 'LATTE', 1, 65000.00, 'Ly cà phê sữa ngọt ngào đến khó quên! Với một chút nhẹ nhàng hơn so với Cappuccino, Latte của chúng tôi bắt đầu với cà phê espresso, sau đó thêm sữa tươi và bọt sữa một cách đầy nghệ thuật. Bạn có thể tùy thích lựa chọn uống nóng hoặc dùng chung với đá.', 'latte.jpg', '00:05:00', 'available', false);
 
- INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0011', 'AMERICANO', 1, 45000.00, 'Americano tại Highlands Coffee là sự kết hợp giữa cà phê espresso thêm vào nước đun sôi. Bạn có thể tùy thích lựa chọn uống nóng hoặc dùng chung với đá.', 'HLC_New_logo_5.1_Products__AMERICANO_NONG.jpg', '00:05:00', 'available', false);
+ INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time, status, is_delete) VALUES ('CF0011', 'AMERICANO', 1, 45000.00, 'Americano tại Highlands Coffee là sự kết hợp giữa cà phê espresso thêm vào nước đun sôi. Bạn có thể tùy thích lựa chọn uống nóng hoặc dùng chung với đá.', 'americano.jpg', '00:05:00', 'available', false);
 
 INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time,
                                          status, is_delete)
 VALUES ('FZ0001', 'FREEZE SÔ-CÔ-LA', 2, 55000.00,
         'Thiên đường đá xay sô cô la! Từ những thanh sô cô la Việt Nam chất lượng được đem xay với đá cho đến khi mềm mịn, sau đó thêm vào thạch sô cô la dai giòn, ở trên được phủ một lớp kem whip beo béo và sốt sô cô la ngọt ngào. Tạo thành Freeze Sô-cô-la ngon mê mẩn chinh phục bất kì ai!',
-        'HLC_New_logo_5.1_Products__FREEZE_CHOCO.jpg', '00:05:00', 'available', false);
+        'freeze-socola.jpg', '00:05:00', 'available', false);
 
 INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time,
                                          status, is_delete)
 VALUES ('FZ0002', 'FREEZE TRÀ XANH', 2, 55000.00,
         'Thức uống rất được ưa chuộng! Trà xanh thượng hạng từ cao nguyên Việt Nam, kết hợp cùng đá xay, thạch trà dai dai, thơm ngon và một lớp kem dày phủ lên trên vô cùng hấp dẫn. Freeze Trà Xanh thơm ngon, mát lạnh, chinh phục bất cứ ai!',
-        'HLC_New_logo_5.1_Products__FREEZE_TRA_XANH.jpg', '00:05:00', 'available', false);
+        'freeze-tra-xanh.jpg', '00:05:00', 'available', false);
 
 INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time,
                                          status, is_delete)
 VALUES ('FZ0003', 'CARAMEL PHIN FREEZE', 2, 55000.00,
         'Thơm ngon khó cưỡng! Được kết hợp từ cà phê truyền thống chỉ có tại Highlands Coffee, cùng với caramel, thạch cà phê và đá xay mát lạnh. Trên cùng là lớp kem tươi thơm béo và caramel ngọt ngào. Món nước phù hợp trong những cuộc gặp gỡ bạn bè, bởi sự ngọt ngào thường mang mọi người xích lại gần nhau.',
-        'HLC_New_logo_5.1_Products__CARAMEL_FREEZE_PHINDI.jpg', '00:05:00', 'available', false);
+        'freeze-caramel.jpg', '00:05:00', 'available', false);
 
 INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time,
                                          status, is_delete)
 VALUES ('FZ0004', 'CLASSIC PHIN FREEZE', 2, 55000.00,
         'Thơm ngon đậm đà! Được kết hợp từ cà phê pha Phin truyền thống chỉ có tại Highlands Coffee, cùng với thạch cà phê và đá xay mát lạnh. Trên cùng là lớp kem tươi thơm béo và bột ca cao đậm đà. Món nước hoàn hảo để khởi đầu câu chuyện cùng bạn bè.',
-        'HLC_New_logo_5.1_Products__CLASSIC_FREEZE_PHINDI.jpg', '00:05:00', 'available', false);
+        'classic-phin-freeze.jpg', '00:05:00', 'available', false);
 
 INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time,
                                          status, is_delete)
 VALUES ('FZ0005', 'COOKIES & CREAM', 2, 55000.00,
         'Một thức uống ngon lạ miệng bởi sự kết hợp hoàn hảo giữa cookies sô cô la giòn xốp cùng hỗn hợp sữa tươi cùng sữa đặc đem say với đá viên, và cuối cùng không thể thiếu được chính là lớp kem whip mềm mịn cùng cookies sô cô la say nhuyễn.',
-        'HLC_New_logo_5.1_Products__COOKIES_FREEZE.jpg', '00:05:00', 'available', false);
+        'freeze-cookies-cream.jpg', '00:05:00', 'available', false);
 INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time,
                                          status, is_delete)
-VALUES ('TEA001', 'TRÀ XANH ĐẬU ĐỎ', 3, 45000.00, null, 'HLC_New_logo_5.1_Products__TRA_XANH_DAU_DO.jpg', '00:05:00',
+VALUES ('TEA001', 'TRÀ XANH ĐẬU ĐỎ', 3, 45000.00, null, 'tra-xanh-dau-do.jpg', '00:05:00',
         'available', false);
 
 INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time,
                                          status, is_delete)
 VALUES ('TEA002', 'TRÀ SEN VÀNG (CỦ NĂNG)', 3, 45000.00,
         'Thức uống chinh phục những thực khách khó tính! Sự kết hợp độc đáo giữa trà Ô long, hạt sen thơm bùi và củ năng giòn tan. Thêm vào chút sữa sẽ để vị thêm ngọt ngào.',
-        'HLC_New_logo_5.1_Products__TRA_SEN_VANG_CU_NANG.jpg', '00:05:00', 'available', false);
+        'tra-sen-vang-cu-nang.jpg', '00:05:00', 'available', false);
 
 INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time,
                                          status, is_delete)
-VALUES ('TEA003', 'TRÀ SEN VÀNG (SEN)', 3, 45000.00, null, 'HLC_New_logo_5.1_Products__TSV.jpg', '00:05:00',
+VALUES ('TEA003', 'TRÀ SEN VÀNG (SEN)', 3, 45000.00, null, 'tra-sen-vang-sen.jpg', '00:05:00',
         'available', false);
 
 INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time,
                                          status, is_delete)
 VALUES ('TEA004', 'TRÀ THẠCH VẢI', 3, 45000.00,
         'Một sự kết hợp thú vị giữa trà đen, những quả vải thơm ngon và thạch giòn khó cưỡng, mang đến thức uống tuyệt hảo!',
-        'HLC_New_logo_5.1_Products__TRA_TACH_VAI.jpg', '00:05:00', 'available', false);
+        'tra-thach-vai.jpg', '00:05:00', 'available', false);
 
 INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time,
                                          status, is_delete)
 VALUES ('TEA005', 'TRÀ THẠCH ĐÀO', 3, 45000.00,
         'Vị trà đậm đà kết hợp cùng những miếng đào thơm ngon mọng nước cùng thạch đào giòn dai. Thêm vào ít sữa để gia tăng vị béo.',
-        'HLC_New_logo_5.1_Products__TRA_THANH_DAO-09.jpg', '00:05:00', 'available', false);
+        'tra-thach-dao.jpg', '00:05:00', 'available', false);
 
 INSERT INTO services (service_code, service_name, type_id, price, description, image_url, wait_time,
                                          status, is_delete)
