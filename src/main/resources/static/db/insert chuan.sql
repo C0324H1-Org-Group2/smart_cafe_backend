@@ -179,11 +179,29 @@ values  (1, 'VỊ TRÍ: QUẢN LÝ', 'QUẢN LÝ'),
 insert into employees(employee_id, address, birthday, email, full_name, gender, image_url, note, salary, tel, position_id)
 values (1, 'Hà Nội', '1997-08-09', 'vuhuyhoang@gmail.com', 'Vũ Huy Hoàng', 'male', 'MALE_EMP.jpg', 'ok', 500000, 0837373732, 2);
 
+# INSERT INTO employees (employee_id, address, birthday, email, full_name, gender, image_url, note, salary, tel, position_id)
+# VALUES (1, 'Ba Đình, Hà Nội', '1997-11-18', 'hoangvhdata@gmail.com', 'Vũ Huy Hoàng', 'male', NULL, NULL, 100000, '0329193149', NULL);
+#
+# INSERT INTO employees (employee_id, address, birthday, email, full_name, gender, image_url, note, salary, tel, position_id)
+# VALUES (2, '123 Admin Street', '1990-01-01', 'admin@example.com', 'Admin User', 'male', NULL, NULL, 100000, '1234567890', NULL);
+#
+# INSERT INTO employees (employee_id, address, birthday, email, full_name, gender, image_url, note, salary, tel, position_id)
+# VALUES (3, '456 Employee Road', '1992-02-02', 'employee@example.com', 'Employee User', 'female', NULL, NULL, 100000, '0987654321', NULL);
+
         
 #------------------------
 #Insert users
 insert into users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
-values  (1, 0, '', null, 'hoangvu1811', null, 1);
+values  (1, 0, '999', '2024-09-05 09:35:19.000000', 'hoangvu1811', null, 1);
+# INSERT INTO users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
+# VALUES (1, 0, '999', '2024-09-05 09:35:19.000000', 'hoangvu1811', NULL, 1);
+#
+# INSERT INTO users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
+# VALUES (2, 1, '$2a$12$IpIh6.8MgB7xy8lTO/SHvOKF3S9pd40HDa6V4vvbvQZ8m.fHvE7Jm', '2024-12-31 00:00:00.000000', 'admin', '', 2);
+#
+# INSERT INTO users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
+# VALUES (3, 1, '$2a$12$IpIh6.8MgB7xy8lTO/SHvOKF3S9pd40HDa6V4vvbvQZ8m.fHvE7Jm', '2024-12-31 00:00:00.000000', 'employee', '', 3);
+
 
 #Feebback
 insert into feedbacks (feedback_id, content, email, feedback_date, creator_id, code)
