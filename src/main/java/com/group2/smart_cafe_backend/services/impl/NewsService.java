@@ -24,4 +24,9 @@ public class NewsService implements INewsService {
         Optional<News> news = newsRepository.findById(newsId);
         return news.orElse(null);
     }
+
+    @Override
+    public News save(News news) {
+        return newsRepository.save(news);
+    }
 }
