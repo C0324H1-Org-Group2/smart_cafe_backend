@@ -14,7 +14,7 @@ public class FirebaseConfig {
 
     @Bean
     public FirebaseApp initializeFirebase() throws IOException {
-        FileInputStream serviceAccount = new FileInputStream("src/main/resources/smartcafe-90ae7-firebase-adminsdk-yy4w2-eaabdb56df.json");
+        FileInputStream serviceAccount = new FileInputStream("src/main/resources/smartcafe-90ae7-firebase-adminsdk-yy4w2-dcf568ba57.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
