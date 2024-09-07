@@ -4,7 +4,6 @@ import com.group2.smart_cafe_backend.models.Bill;
 import com.group2.smart_cafe_backend.models.Feedback;
 import com.group2.smart_cafe_backend.models.Tables;
 import com.group2.smart_cafe_backend.services.ISellService;
-import com.group2.smart_cafe_backend.services.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,13 +32,13 @@ public class SellController {
     }
 
     @GetMapping("/feedbacks/{date}")
-    public ResponseEntity<Feedback> findFeedbackByDate(@PathVariable LocalDate date) {
+    public ResponseEntity<List<Feedback>> findFeedbackByDate(@PathVariable LocalDate date) {
 
-        Feedback feedback = sellService.findFeedbackByDate(date);
-        if (feedback == null) {
+        List<Feedback> feedbackList = sellService.findFeedbackByDate(date);
+        if (feedbackList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(feedback, HttpStatus.OK);
+            return new ResponseEntity<>(feedbackList, HttpStatus.OK);
         }
     }
 

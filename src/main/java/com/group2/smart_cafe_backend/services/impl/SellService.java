@@ -36,7 +36,7 @@ public class SellService implements ISellService {
     }
 
     @Override
-    public Feedback findFeedbackByDate(LocalDate date) {
+    public List<Feedback> findFeedbackByDate(LocalDate date) {
         return feedbackRepository.findFeedbackByDate(date);
     }
 

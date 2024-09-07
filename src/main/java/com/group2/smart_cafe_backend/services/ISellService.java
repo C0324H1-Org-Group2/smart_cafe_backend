@@ -13,7 +13,7 @@ public interface ISellService {
 
     List<Feedback> findAllFeedback();
 
-    Feedback findFeedbackByDate(LocalDate date);
+    List<Feedback> findFeedbackByDate(LocalDate date);
 
     Optional<Bill> findBillByTableId(Long tableId);
 }

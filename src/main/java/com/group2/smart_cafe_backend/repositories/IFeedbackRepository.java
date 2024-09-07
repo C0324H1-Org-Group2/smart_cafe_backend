@@ -7,9 +7,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface IFeedbackRepository extends JpaRepository<Feedback,Long> {
     @Query(nativeQuery = true,value = "SELECT * FROM feedbacks WHERE feedback_date = :date")
-    Feedback findFeedbackByDate( @Param("date") LocalDate date);
+    List<Feedback> findFeedbackByDate(@Param("date") LocalDate date);
 }
