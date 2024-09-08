@@ -8,6 +8,7 @@ import com.group2.smart_cafe_backend.services.INewsUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +26,8 @@ public class NewsController {
     private IFirebaseStorageService firebaseStorageService;
     @Autowired
     private INewsUserService newsUserService;
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @GetMapping
     public ResponseEntity<List<News>> getAllNews() {
@@ -59,6 +62,8 @@ public class NewsController {
         news.setCreator(creator);
 
         News savedNews = newsService.save(news);
+
+        messagingTemplate.convertAndSend("/topic/news", savedNews);
 
         return new ResponseEntity<>(savedNews, HttpStatus.CREATED);
     }
