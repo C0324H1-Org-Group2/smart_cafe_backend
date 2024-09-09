@@ -1,6 +1,7 @@
 package com.group2.smart_cafe_backend.services.impl;
 
 import com.group2.smart_cafe_backend.dtos.OrderDTO;
+import com.group2.smart_cafe_backend.dtos.OrderDetailDTO;
 import com.group2.smart_cafe_backend.repositories.IOrderRepository;
 import com.group2.smart_cafe_backend.services.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,16 @@ public class OrderService implements IOrderService {
     @Override
     public Page<OrderDTO> findAllOrders(String codeSearch, LocalDate dateCreate, Pageable pageable) {
         return orderRepository.findAllOrders("%"+ codeSearch+"%", dateCreate, pageable);
+    }
+
+//    @Override
+//    public List<OrderDetailDTO> getOrderDetailsByBillId(Integer billId) {
+//        return orderRepository.findOrderDetailsByBillId(billId);
+//    }
+
+    @Override
+    public List<OrderDetailDTO> getOrderDetailsByBillCode(String billCode) {
+        return orderRepository.findOrderDetailsByBillCode(billCode);
     }
 
 
