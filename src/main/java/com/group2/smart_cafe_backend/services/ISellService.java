@@ -1,5 +1,6 @@
 package com.group2.smart_cafe_backend.services;
 
+import com.group2.smart_cafe_backend.dtos.BillDTO;
 import com.group2.smart_cafe_backend.models.Bill;
 import com.group2.smart_cafe_backend.models.Feedback;
 import com.group2.smart_cafe_backend.models.Tables;
@@ -11,9 +12,9 @@ import java.util.Optional;
 public interface ISellService {
     List<Tables> findAllTable();
 
-    List<Feedback> findAllFeedback();
-
     List<Feedback> findFeedbackByDate(LocalDate date);
 
-    Optional<Bill> findBillByTableId(Long tableId);
+    List<BillDTO> findBillByTableId(Long tableId);
+
+    List<Feedback> findAllFeedback();
 }

@@ -11,6 +11,7 @@ import java.util.List;
 
 @Repository
 public interface IFeedbackRepository extends JpaRepository<Feedback,Long> {
+
     @Query(nativeQuery = true,value = "SELECT * FROM feedbacks WHERE feedback_date = :date")
     List<Feedback> findFeedbackByDate(@Param("date") LocalDate date);
 }
