@@ -59,9 +59,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers("/api/login").permitAll()
-                                .requestMatchers("/api/news").authenticated()
-                                .requestMatchers("/api/orders").authenticated()
-                                .requestMatchers("/api/services/**").authenticated()
+                                .requestMatchers("/api/news/**").permitAll()
+                                .requestMatchers("/api/orders/**").permitAll()
+                                .requestMatchers("/api/services/**").permitAll()
+                                .requestMatchers("/api/employees/**").permitAll()
+
+
                 )
                 .build();
     }
