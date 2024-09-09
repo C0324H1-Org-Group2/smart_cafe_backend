@@ -8,4 +8,6 @@ public interface INewsService {
     List<News> getAllNews();
 
     News getNewsById(Long newsId);
+
+    News save(News news);
 }

@@ -24,4 +24,7 @@ public class Tables {
 
     @Column(name = "is_delete", nullable = false)
     private boolean isDelete = false;
+
+    @Column(name = "is_bill", nullable = false)
+    private boolean isBill = false;
 }
