@@ -188,7 +188,8 @@ values (1, 'Hà Nội', '1997-08-09', 'vuhuyhoang@gmail.com', 'Vũ Huy Hoàng', 
 # INSERT INTO employees (employee_id, address, birthday, email, full_name, gender, image_url, note, salary, tel, position_id)
 # VALUES (3, '456 Employee Road', '1992-02-02', 'employee@example.com', 'Employee User', 'female', NULL, NULL, 100000, '0987654321', NULL);
 
-        
+INSERT INTO users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
+VALUES (2, 1, '$2a$12$NgHWVxEbjCFrVKEaD8EBruWiSWMvoQhBEuh4S1x58q8//VDZwa/gy', '2024-09-09 09:15:18.000000', 'admin', null, 1);
 #------------------------
 #Insert users
 insert into users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
