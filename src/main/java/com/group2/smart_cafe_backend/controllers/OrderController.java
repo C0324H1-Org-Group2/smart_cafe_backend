@@ -34,6 +34,18 @@ public class OrderController {
 //        return new ResponseEntity<>(orderDTOS, HttpStatus.OK);
 //    }
 
+//    @GetMapping
+//    public ResponseEntity<?> getAllOrders(
+//            @RequestParam(value = "codeSearch", defaultValue = "") String codeSearch,
+//            @RequestParam(value = "dateCreate", required = false) LocalDate dateCreate,
+//            @RequestParam(value = "page", defaultValue = "0") int page,
+//            @RequestParam(value = "size", defaultValue = "2") int size) {
+//
+//        Pageable pageable = PageRequest.of(page, size);
+//        Page<OrderDTO> orderDTOS = orderService.findAllOrders(codeSearch, dateCreate, pageable);
+//        return new ResponseEntity<>(orderDTOS, HttpStatus.OK);
+//    }
+
     @GetMapping
     public ResponseEntity<?> getAllOrders(
             @RequestParam(value = "codeSearch", defaultValue = "") String codeSearch,

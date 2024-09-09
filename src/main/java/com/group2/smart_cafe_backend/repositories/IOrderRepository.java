@@ -33,3 +33,5 @@ public interface IOrderRepository extends JpaRepository<Bill, Long> {
                                  @Param("dateCreate") LocalDate dateCreate, Pageable pageable);
 
 }
+
+}
