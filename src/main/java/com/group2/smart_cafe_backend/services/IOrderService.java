@@ -13,5 +13,7 @@ public interface IOrderService {
 
     Page<OrderDTO> findAllOrders(String codeSearch, LocalDate dateCreate, Pageable pageable);
 
-    List<OrderDetailDTO> getOrderDetailsByBillId(Integer billId);
+//    List<OrderDetailDTO> getOrderDetailsByBillId(Integer billId);
+
+    List<OrderDetailDTO> getOrderDetailsByBillCode(String billCode);
 }

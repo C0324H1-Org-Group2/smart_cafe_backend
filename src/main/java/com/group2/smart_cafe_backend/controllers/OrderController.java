@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,23 +38,43 @@ public class OrderController {
 //        return new ResponseEntity<>(orderDTOS, HttpStatus.OK);
 //    }
 
+//    @GetMapping
+//    public ResponseEntity<?> getAllOrders(
+//            @RequestParam(value = "codeSearch", defaultValue = "") String codeSearch,
+//            @RequestParam(value = "dateCreate", required = false) LocalDate dateCreate,
+//            @RequestParam(value = "page", defaultValue = "0") int page,
+//            @RequestParam(value = "size", defaultValue = "2") int size) {
+//
+//        Pageable pageable = PageRequest.of(page, size);
+//        Page<OrderDTO> orderDTOS = orderService.findAllOrders(codeSearch, dateCreate, pageable);
+//        return new ResponseEntity<>(orderDTOS, HttpStatus.OK);
+//    }
+
     @GetMapping
     public ResponseEntity<?> getAllOrders(
             @RequestParam(value = "codeSearch", defaultValue = "") String codeSearch,
-            @RequestParam(value = "dateCreate", required = false) LocalDate dateCreate,
+            @RequestParam(value = "dateSearch", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateSearch,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "2") int size) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<OrderDTO> orderDTOS = orderService.findAllOrders(codeSearch, dateCreate, pageable);
+        Page<OrderDTO> orderDTOS = orderService.findAllOrders(codeSearch, dateSearch, pageable);
         return new ResponseEntity<>(orderDTOS, HttpStatus.OK);
     }
 
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<List<OrderDetailDTO>> getOrderDetails(@PathVariable Integer id) {
-        List<OrderDetailDTO> orderDetails = orderService.getOrderDetailsByBillId(id);
+
+//    @GetMapping("/detail/{id}")
+//    public ResponseEntity<List<OrderDetailDTO>> getOrderDetails(@PathVariable Integer id) {
+//        List<OrderDetailDTO> orderDetails = orderService.getOrderDetailsByBillId(id);
+//        return new ResponseEntity<>(orderDetails, HttpStatus.OK);
+//    }
+
+    @GetMapping("/detail/{billCode}")
+    public ResponseEntity<List<OrderDetailDTO>> getOrderDetails(@PathVariable String billCode) {
+        List<OrderDetailDTO> orderDetails = orderService.getOrderDetailsByBillCode(billCode);
         return new ResponseEntity<>(orderDetails, HttpStatus.OK);
     }
+
 }
 
 

@@ -23,9 +23,14 @@ public class OrderService implements IOrderService {
         return orderRepository.findAllOrders("%"+ codeSearch+"%", dateCreate, pageable);
     }
 
+//    @Override
+//    public List<OrderDetailDTO> getOrderDetailsByBillId(Integer billId) {
+//        return orderRepository.findOrderDetailsByBillId(billId);
+//    }
+
     @Override
-    public List<OrderDetailDTO> getOrderDetailsByBillId(Integer billId) {
-        return orderRepository.findOrderDetailsByBillId(billId);
+    public List<OrderDetailDTO> getOrderDetailsByBillCode(String billCode) {
+        return orderRepository.findOrderDetailsByBillCode(billCode);
     }
 
 
