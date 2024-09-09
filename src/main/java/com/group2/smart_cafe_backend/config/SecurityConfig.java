@@ -58,11 +58,15 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(
                         auth -> auth
-                                .requestMatchers("/api/login").permitAll()
-                                .requestMatchers("/api/news/**").permitAll()
-                                .requestMatchers("/api/orders/**").permitAll()
-                                .requestMatchers("/api/services/**").permitAll()
-                                .requestMatchers("/api/employees/**").permitAll()
+//                                .requestMatchers("/api/login").permitAll()
+//                                .requestMatchers("/api/news/**").permitAll()
+//                                .requestMatchers("/api/orders/**").permitAll()
+//                                .requestMatchers("/api/services/**").permitAll()
+//                                .requestMatchers("/api/employees/**").permitAll()
+//                                .requestMatchers("/news").permitAll()
+//                                .requestMatchers("/ws").permitAll()
+//                                .requestMatchers("/topic/app").permitAll()
+                                .requestMatchers("/**").permitAll()
 
 
                 )
