@@ -1,10 +1,12 @@
 package com.group2.smart_cafe_backend.controllers;
 
+import com.group2.smart_cafe_backend.dtos.NewsDTO;
 import com.group2.smart_cafe_backend.models.News;
 import com.group2.smart_cafe_backend.models.User;
 import com.group2.smart_cafe_backend.services.IFirebaseStorageService;
 import com.group2.smart_cafe_backend.services.INewsService;
 import com.group2.smart_cafe_backend.services.INewsUserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,8 +45,7 @@ public class NewsController {
 
     @PostMapping("/create")
     public ResponseEntity<News> createNews(
-            @RequestParam("title") String title,
-            @RequestParam("content") String content,
+            @Valid @ModelAttribute NewsDTO newsDTO,
             @RequestParam("file") MultipartFile file,
             @RequestParam("userId") Long userId
     ) throws IOException {
@@ -54,8 +55,8 @@ public class NewsController {
         User creator = newsUserService.getUserById(userId);
 
         News news = new News();
-        news.setTitle(title);
-        news.setContent(content);
+        news.setTitle(newsDTO.getTitle());
+        news.setContent(newsDTO.getContent());
         news.setImageUrl(imageUrl);
         news.setPublishDate(LocalDateTime.now());
         news.setCreator(creator);
