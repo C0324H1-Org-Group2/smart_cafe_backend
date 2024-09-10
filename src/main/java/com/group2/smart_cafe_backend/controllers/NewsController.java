@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -64,5 +65,25 @@ public class NewsController {
         messagingTemplate.convertAndSend("/topic/news", savedNews);
 
         return new ResponseEntity<>(savedNews, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/top-viewed")
+    public List<News> getTopViewedNews() {
+        return newsService.findTop3ByOrderByViewCountDesc();
+    }
+
+    @PutMapping("/{newsId}/increase-views")
+    public ResponseEntity<News> increaseViewCount(@PathVariable Long newsId) {
+        Optional<News> optionalNews = newsService.findById(newsId);
+
+        if (optionalNews.isPresent()) {
+            News news = optionalNews.get();
+            news.setViewCount(news.getViewCount() + 1);
+            newsService.save(news);
+
+            return ResponseEntity.ok(news);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
