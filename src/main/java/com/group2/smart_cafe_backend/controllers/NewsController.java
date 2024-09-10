@@ -68,6 +68,18 @@ public class NewsController {
         return new ResponseEntity<>(savedNews, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{newsId}")
+    public ResponseEntity<Void> deleteNews(@PathVariable Long newsId) {
+        Optional<News> newsOptional = newsService.findById(newsId);
+        if (newsOptional.isPresent()) {
+            newsService.deleteNews(newsId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
     @GetMapping("/top-viewed")
     public List<News> getTopViewedNews() {
         return newsService.findTop3ByOrderByViewCountDesc();
