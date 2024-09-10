@@ -26,7 +26,7 @@ public interface IOrderRepository extends JpaRepository<Bill, Long> {
             "JOIN tables ON bills.table_id = tables.table_id " +
             "JOIN bill_details ON bills.bill_id = bill_details.bill_id " +
             "JOIN services ON bill_details.service_id = services.service_id " +
-            "WHERE bills.status = 'pending' " +
+            "WHERE bills.status = 'completed' " +
             "AND (:codeSearch IS NULL OR bills.code LIKE :codeSearch) " +
             "AND (:dateCreate IS NULL OR DATE(bills.date_created) = :dateCreate) " +
             "GROUP BY bills.code, bills.date_created, employees.full_name, tables.code")
