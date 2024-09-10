@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -44,15 +45,13 @@ public class NewsController {
     public ResponseEntity<News> createNews(
             @RequestParam("title") String title,
             @RequestParam("content") String content,
-            @RequestParam("file") MultipartFile file
-//            @RequestParam("userId") Long userId
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("userId") Long userId
     ) throws IOException {
 
         String imageUrl = firebaseStorageService.uploadFile(file);
 
-//        User creator = newsUserService.getUserById(userId);
-        Long defaultUserId = 1L;
-        User creator = newsUserService.getUserById(defaultUserId);
+        User creator = newsUserService.getUserById(userId);
 
         News news = new News();
         news.setTitle(title);
@@ -66,5 +65,25 @@ public class NewsController {
         messagingTemplate.convertAndSend("/topic/news", savedNews);
 
         return new ResponseEntity<>(savedNews, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/top-viewed")
+    public List<News> getTopViewedNews() {
+        return newsService.findTop3ByOrderByViewCountDesc();
+    }
+
+    @PutMapping("/{newsId}/increase-views")
+    public ResponseEntity<News> increaseViewCount(@PathVariable Long newsId) {
+        Optional<News> optionalNews = newsService.findById(newsId);
+
+        if (optionalNews.isPresent()) {
+            News news = optionalNews.get();
+            news.setViewCount(news.getViewCount() + 1);
+            newsService.save(news);
+
+            return ResponseEntity.ok(news);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
