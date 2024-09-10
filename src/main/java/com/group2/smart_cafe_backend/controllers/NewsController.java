@@ -44,15 +44,13 @@ public class NewsController {
     public ResponseEntity<News> createNews(
             @RequestParam("title") String title,
             @RequestParam("content") String content,
-            @RequestParam("file") MultipartFile file
-//            @RequestParam("userId") Long userId
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("userId") Long userId
     ) throws IOException {
 
         String imageUrl = firebaseStorageService.uploadFile(file);
 
-//        User creator = newsUserService.getUserById(userId);
-        Long defaultUserId = 1L;
-        User creator = newsUserService.getUserById(defaultUserId);
+        User creator = newsUserService.getUserById(userId);
 
         News news = new News();
         news.setTitle(title);
