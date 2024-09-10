@@ -1,4 +1,5 @@
 #Insert category sản phẩm
+        use smart_cafe;
 INSERT INTO service_types (type_name,code, description)
 VALUES ('Cà Phê','CF',
         'Sự kết hợp hoàn hảo giữa hạt cà phê Robusta & Arabica thượng hạng được trồng trên những vùng cao nguyên Việt Nam màu mỡ, qua những bí quyết rang xay độc đáo, Smart Coffee chúng tôi tự hào giới thiệu những dòng sản phẩm Cà phê mang hương vị đậm đà và tinh tế.');
