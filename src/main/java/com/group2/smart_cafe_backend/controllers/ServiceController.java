@@ -1,6 +1,8 @@
 package com.group2.smart_cafe_backend.controllers;
 
 import com.group2.smart_cafe_backend.dtos.ServiceDto;
+import com.group2.smart_cafe_backend.models.Bill;
+import com.group2.smart_cafe_backend.models.BillDetail;
 import com.group2.smart_cafe_backend.models.Service;
 import com.group2.smart_cafe_backend.models.ServiceType;
 import com.group2.smart_cafe_backend.services.IServiceService;
@@ -63,5 +65,11 @@ public class ServiceController {
     public ResponseEntity<Service> updateService(@PathVariable Long id, @RequestBody @Valid ServiceDto serviceDto) {
         Service updatedService = serviceService.updateService(id, serviceDto);
         return new ResponseEntity<>(updatedService, HttpStatus.OK);
+    }
+
+    @PostMapping("/addBillDetail")
+    public ResponseEntity<BillDetail> addBillDetail(@RequestBody BillDetail billDetail) {
+        BillDetail newBillDetail = serviceService.addBillDetail(billDetail);
+        return new ResponseEntity<>(newBillDetail, HttpStatus.OK);
     }
 }
