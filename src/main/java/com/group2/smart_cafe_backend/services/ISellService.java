@@ -17,4 +17,8 @@ public interface ISellService {
     List<BillDTO> findBillByTableId(Long tableId);
 
     List<Feedback> findAllFeedback();
+
+    boolean updateTableStatus(Long tableId);
+
+    boolean updateBillStatus(Long tableId);
 }
