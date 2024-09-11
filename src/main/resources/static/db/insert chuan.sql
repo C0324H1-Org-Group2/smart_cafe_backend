@@ -152,17 +152,18 @@ VALUES ('CF0015', 'Americano', 1, 35000.00, null, 'menu-4.jpg', '00:05:00', 'ava
 
 #----------------------------------------------------------------------------------------------------------------------------
 #Insert table
-insert into tables (table_id, code, is_on, state, is_delete)
-values  (1, 'TB0001', true, 'GOOD', false),
-        (2, 'TB0002', true, 'GOOD', true),
-        (3, 'TB0003', true, 'GOOD', false),
-        (4, 'TB0004', true, 'GOOD', false),
-        (5, 'TB0005', true, 'GOOD', false),
-        (6, 'TB0006', true, 'GOOD', false),
-        (7, 'TB0007', true, 'GOOD', false),
-        (8, 'TB0008', false, 'ERROR', true),
-        (9, 'TB0009', false, 'ERROR', false),
-        (10, 'TB0010', true, 'GOOD', false);
+INSERT INTO tables (table_id, code, is_on, state, is_delete, is_bill)
+VALUES
+    (1, 'TB0001', true, 'GOOD', false, false),
+    (2, 'TB0002', true, 'GOOD', true, false),
+    (3, 'TB0003', true, 'GOOD', false, false),
+    (4, 'TB0004', true, 'GOOD', false, false),
+    (5, 'TB0005', true, 'GOOD', false, false),
+    (6, 'TB0006', true, 'GOOD', false, false),
+    (7, 'TB0007', true, 'GOOD', false, false),
+    (8, 'TB0008', false, 'ERROR', true, false),
+    (9, 'TB0009', false, 'ERROR', false, false),
+    (10, 'TB0010', true, 'GOOD', false, false);
 
 #-----------------
 #Insert role
@@ -197,11 +198,11 @@ values  (1, 0, '999', '2024-09-05 09:35:19.000000', 'hoangvu1811', null, 1);
 # INSERT INTO users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
 # VALUES (1, 0, '999', '2024-09-05 09:35:19.000000', 'hoangvu1811', NULL, 1);
 #
-# INSERT INTO users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
-# VALUES (2, 1, '$2a$12$IpIh6.8MgB7xy8lTO/SHvOKF3S9pd40HDa6V4vvbvQZ8m.fHvE7Jm', '2024-12-31 00:00:00.000000', 'admin', '', 2);
-#
-# INSERT INTO users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
-# VALUES (3, 1, '$2a$12$IpIh6.8MgB7xy8lTO/SHvOKF3S9pd40HDa6V4vvbvQZ8m.fHvE7Jm', '2024-12-31 00:00:00.000000', 'employee', '', 3);
+INSERT INTO users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
+VALUES (2, 1, '$2a$12$IpIh6.8MgB7xy8lTO/SHvOKF3S9pd40HDa6V4vvbvQZ8m.fHvE7Jm', '2024-12-31 00:00:00.000000', 'admin', '', 1);
+
+INSERT INTO users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
+VALUES (3, 1, '$2a$12$IpIh6.8MgB7xy8lTO/SHvOKF3S9pd40HDa6V4vvbvQZ8m.fHvE7Jm', '2024-12-31 00:00:00.000000', 'employee', '', 1);
 
 
 #Feebback
