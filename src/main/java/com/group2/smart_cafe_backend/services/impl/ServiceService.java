@@ -97,8 +97,4 @@ public class ServiceService implements IServiceService {
         return serviceTypeRepository.findAll();
     }
 
-    @Override
-    public BillDetail addBillDetail(BillDetail billDetail) {
-        return billDetailRepository.save(billDetail);
-    }
 }

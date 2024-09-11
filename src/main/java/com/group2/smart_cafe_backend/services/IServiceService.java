@@ -27,5 +27,4 @@ public interface IServiceService {
     List<Service> getServicesByType(Long typeId);
     Service updateService(Long serviceId, ServiceDto serviceDto);
 
-    BillDetail addBillDetail(BillDetail billDetail);
 }

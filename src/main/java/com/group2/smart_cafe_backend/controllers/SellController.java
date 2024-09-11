@@ -34,7 +34,7 @@ public class SellController {
 //        return new ResponseEntity<>(feedbackList, HttpStatus.OK);
 //    }
 
-    @GetMapping("/tables")
+    @GetMapping("/table")
     public ResponseEntity<List<Tables>> findAllTable() {
         List<Tables> tablesList = sellService.findAllTable();
         return new ResponseEntity<>(tablesList, HttpStatus.OK);

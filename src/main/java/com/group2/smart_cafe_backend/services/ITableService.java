@@ -13,4 +13,7 @@ public interface ITableService {
     Tables updateTable(Long id, Tables table);      // Cập nhật bàn
     void softDeleteTable(Long id);                  // Xóa mềm bàn theo ID
     void hardDeleteTable(Long id);                  // Xóa cứng bàn theo ID
+
+    Tables getRandomAvailableTable();
+    Tables updateTableStatus(Long id);
 }

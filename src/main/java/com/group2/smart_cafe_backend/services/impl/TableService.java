@@ -8,13 +8,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class TableService implements ITableService {
 
     @Autowired
     private ITableRepository tableRepository;
+
+    private Random random = new Random();
+
 
     @Override
     public Page<Tables> getAllTables(Pageable pageable) {
@@ -58,5 +63,26 @@ public class TableService implements ITableService {
     @Override
     public void hardDeleteTable(Long id) {
         tableRepository.deleteById(id);  // Xóa cứng
+    }
+
+    @Override
+    public Tables getRandomAvailableTable() {
+        // Lấy danh sách các bảng có trạng thái isOn = true
+        List<Tables> availableTables = tableRepository.findByIsOnTrue();
+
+        if (availableTables.isEmpty()) {
+            throw new RuntimeException("No available tables found");
+        }
+
+        // Chọn ngẫu nhiên một bảng từ danh sách
+        int index = random.nextInt(availableTables.size());
+        return availableTables.get(index);
+    }
+
+    @Override
+    public Tables updateTableStatus(Long id) {
+        Tables table = tableRepository.findById(id).orElseThrow(() -> new RuntimeException("Table not found"));
+        table.setOn(false);
+        return tableRepository.save(table);
     }
 }
