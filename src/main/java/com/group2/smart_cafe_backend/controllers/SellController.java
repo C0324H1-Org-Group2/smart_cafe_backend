@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api")
 public class SellController {
 
-    private static final Logger log = LoggerFactory.getLogger(SellController.class);
     @Autowired
     private ISellService sellService;
 
