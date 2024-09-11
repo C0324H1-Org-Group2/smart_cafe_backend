@@ -79,6 +79,29 @@ public class NewsController {
         }
     }
 
+    @PutMapping("/update/{newsId}")
+    public ResponseEntity<News> updateNews(@PathVariable Long newsId,
+                                           @Valid @ModelAttribute NewsDTO newsDTO,
+                                           @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+        Optional<News> optionalNews = newsService.findById(newsId);
+        if (optionalNews.isPresent()) {
+            News existingNews = optionalNews.get();
+
+            existingNews.setTitle(newsDTO.getTitle());
+            existingNews.setContent(newsDTO.getContent());
+
+            if (file != null && !file.isEmpty()) {
+                String imageUrl = firebaseStorageService.uploadFile(file);
+                existingNews.setImageUrl(imageUrl);
+            }
+
+            News updatedNews = newsService.save(existingNews);
+
+            return new ResponseEntity<>(updatedNews, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @GetMapping("/top-viewed")
     public List<News> getTopViewedNews() {
