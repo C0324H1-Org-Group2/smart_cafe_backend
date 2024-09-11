@@ -27,13 +27,19 @@ public class ClientController {
 
 
     // Endpoint để cập nhật trạng thái bảng thành false
-    @PatchMapping("/tables/{id}/status")
+    @PatchMapping("/tables/{id}/status_createBill")
     public Bill updateTableStatusAndCreateBill(@PathVariable Long id) {
         // Cập nhật trạng thái bảng thành false
         Tables table = tableService.updateTableStatus(id);
 
         // Tạo hóa đơn mới
         return billService.createBill(table);
+    }
+
+    @PatchMapping("/tables/{id}/status")
+    public Tables updateTableStatus(@PathVariable Long id) {
+        // Cập nhật trạng thái bảng
+        return tableService.updateTableStatus1(id);
     }
 
     @PostMapping("/bill-details/order")
@@ -44,6 +50,11 @@ public class ClientController {
     @GetMapping("/tables")
     public List<Tables> getAllTables() {
         return tableService.getAllTablesByClient();
+    }
+
+    @PatchMapping("/billDetails/update-bill")
+    public List<BillDetail> updateProductsWithBill(@RequestBody List<BillDetail> billDetails) {
+        return billDetailService.updateBillDetailsWithBill(billDetails);
     }
 
 }

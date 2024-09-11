@@ -18,4 +18,6 @@ public interface ITableService {
     Tables updateTableStatus(Long id);
 
     List<Tables> getAllTablesByClient();
+
+    Tables updateTableStatus1(Long id);
 }

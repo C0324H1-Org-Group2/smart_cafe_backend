@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface IBillDetailService {
     List<BillDetail> saveBillDetails(List<BillDetail> orderDetails);
+
+    List<BillDetail> updateBillDetailsWithBill(List<BillDetail> billDetails);
 }

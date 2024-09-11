@@ -67,11 +67,20 @@ public class TableService implements ITableService {
     public Tables updateTableStatus(Long id) {
         Tables table = tableRepository.findById(id).orElseThrow(() -> new RuntimeException("Table not found"));
         table.setOn(false);
+        table.setBill(true);
         return tableRepository.save(table);
     }
 
     @Override
     public List<Tables> getAllTablesByClient() {
         return tableRepository.findAll();
+    }
+
+    @Override
+    public Tables updateTableStatus1(Long id) {
+        Tables table = tableRepository.findById(id).orElseThrow(() -> new RuntimeException("Table not found"));
+        table.setOn(true);
+        table.setBill(false);
+        return tableRepository.save(table);
     }
 }

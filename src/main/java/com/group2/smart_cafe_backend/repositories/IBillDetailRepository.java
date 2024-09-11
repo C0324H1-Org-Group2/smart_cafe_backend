@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.util.List;
 
-//public interface IBillDetailRepository extends JpaRepository<BillDetail, Long> {
 public interface IBillDetailRepository extends JpaRepository<BillDetail, Integer> {
 
     @Query("SELECT COALESCE(SUM(bd.quantity * s.price), 0) FROM BillDetail bd " +
@@ -27,4 +27,5 @@ public interface IBillDetailRepository extends JpaRepository<BillDetail, Integer
             "JOIN bd.bill b " +
             "WHERE YEAR(b.dateCreated) = :year")
     double getRevenueForYear(@Param("year") int year);
+
 }
