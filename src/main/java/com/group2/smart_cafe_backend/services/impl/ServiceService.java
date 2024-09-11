@@ -64,6 +64,12 @@ public class ServiceService implements IServiceService {
     }
 
     @Override
+    public com.group2.smart_cafe_backend.models.Service getServiceById(Long id) {
+        return serviceRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Service not found with id " + id));
+    }
+
+    @Override
     public com.group2.smart_cafe_backend.models.Service addService(@Valid ServiceDto serviceDto) {
         ServiceType serviceType = serviceTypeRepository.findById(serviceDto.getTypeId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid service type ID"));

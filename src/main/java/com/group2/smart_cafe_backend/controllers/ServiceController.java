@@ -66,5 +66,10 @@ public class ServiceController {
         Service updatedService = serviceService.updateService(id, serviceDto);
         return new ResponseEntity<>(updatedService, HttpStatus.OK);
     }
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<Service> getServiceById(@PathVariable Long id) {
+        Service service = serviceService.getServiceById(id);
+        return new ResponseEntity<>(service, HttpStatus.OK);
+    }
 
 }
