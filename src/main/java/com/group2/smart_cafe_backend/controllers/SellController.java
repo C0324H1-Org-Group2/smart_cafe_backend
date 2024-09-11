@@ -1,10 +1,11 @@
 package com.group2.smart_cafe_backend.controllers;
 
 import com.group2.smart_cafe_backend.dtos.BillDTO;
-import com.group2.smart_cafe_backend.models.Bill;
 import com.group2.smart_cafe_backend.models.Feedback;
 import com.group2.smart_cafe_backend.models.Tables;
 import com.group2.smart_cafe_backend.services.ISellService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api")
@@ -28,11 +28,11 @@ public class SellController {
     }
 
 
-//    @GetMapping("/feedbacks/{date}")
-//    public ResponseEntity<List<Feedback>> findFeedbackByDate(@PathVariable LocalDate date) {
-//        List<Feedback> feedbackList = sellService.findFeedbackByDate(date);
-//        return new ResponseEntity<>(feedbackList, HttpStatus.OK);
-//    }
+    @GetMapping("/feedbacks/{date}")
+    public ResponseEntity<List<Feedback>> findFeedbackByDate(@PathVariable LocalDate date) {
+        List<Feedback> feedbackList = sellService.findFeedbackByDate(date);
+        return new ResponseEntity<>(feedbackList, HttpStatus.OK);
+    }
 
     @GetMapping("/table")
     public ResponseEntity<List<Tables>> findAllTable() {
@@ -42,11 +42,21 @@ public class SellController {
 
     @GetMapping("/bills/{table_id}")
     public ResponseEntity<List<BillDTO>> findBillByTableId(@PathVariable Long table_id) {
-        List<BillDTO> billDetails = sellService.findBillByTableId(table_id);
-        if (billDetails.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        List<BillDTO> billDTOS = sellService.findBillByTableId(table_id);
+        return new ResponseEntity<>(billDTOS, HttpStatus.OK);
+    }
+
+    @PatchMapping("/bills/delete/{tableId}")
+    public ResponseEntity<Boolean> changeStatusBillByTableId(@PathVariable Long tableId) {
+        boolean statusBills = sellService.updateBillStatus(tableId);
+        boolean statusTable = sellService.updateTableStatus(tableId);
+        boolean isSuccess;
+        if(statusTable == true && statusBills == true){
+             isSuccess = true;
+        }else {
+            isSuccess = false;
         }
-        return new ResponseEntity<>(billDetails, HttpStatus.OK);
+        return new ResponseEntity<>(isSuccess, HttpStatus.OK);
     }
 
 
