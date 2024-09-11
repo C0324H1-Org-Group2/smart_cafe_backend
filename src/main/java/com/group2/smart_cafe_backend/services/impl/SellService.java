@@ -11,7 +11,9 @@ import com.group2.smart_cafe_backend.services.ISellService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -48,8 +50,12 @@ public class SellService implements ISellService {
             Integer quantity = (Integer) result[1];
             BigDecimal price = (BigDecimal) result[2];
             String tableCode = (String) result[3];
+            String status = (String) result[4];
+            Timestamp dateCreated = (Timestamp) result[5]; // Lấy Timestamp
+            LocalDateTime date = dateCreated.toLocalDateTime(); // Chuyển sang LocalDateTime
 
-            BillDTO billDTO = new BillDTO(serviceName, quantity, price, tableCode);
+
+            BillDTO billDTO = new BillDTO(serviceName, quantity, price, tableCode,status,date);
             billDTOs.add(billDTO);
         }
 
@@ -60,4 +66,19 @@ public class SellService implements ISellService {
     public List<Feedback> findAllFeedback() {
         return feedbackRepository.findAll();
     }
+
+    @Override
+    public boolean updateBillStatus(Long tableId) {
+        int updatedRows = billRepository.updateBillStatus(tableId);
+//        số hàng cập nhật lớn hơn 0 thì trả về true, ngược lại trả về false
+        return updatedRows > 0;
+    }
+
+    @Override
+    public boolean updateTableStatus(Long tableId) {
+        int updatedRows = billRepository.updateTableStatus(tableId);
+//        số hàng cập nhật lớn hơn 0 thì trả về true, ngược lại trả về false
+        return updatedRows > 0;
+    }
+
 }
