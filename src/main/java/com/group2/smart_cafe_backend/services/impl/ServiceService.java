@@ -2,7 +2,9 @@ package com.group2.smart_cafe_backend.services.impl;
 
 import com.group2.smart_cafe_backend.dtos.ServiceDto;
 
+import com.group2.smart_cafe_backend.models.BillDetail;
 import com.group2.smart_cafe_backend.models.ServiceType;
+import com.group2.smart_cafe_backend.repositories.IBillDetailRepository;
 import com.group2.smart_cafe_backend.repositories.IServiceRepository;
 import com.group2.smart_cafe_backend.repositories.IServiceTypeRepository;
 import com.group2.smart_cafe_backend.services.IServiceService;
@@ -17,8 +19,12 @@ import java.util.List;
 public class ServiceService implements IServiceService {
     @Autowired
     private IServiceRepository serviceRepository;
+
     @Autowired
     private IServiceTypeRepository serviceTypeRepository;
+
+    @Autowired
+    private IBillDetailRepository billDetailRepository;
 
 
     @Override
@@ -57,7 +63,6 @@ public class ServiceService implements IServiceService {
         return serviceRepository.save(existingService);
     }
 
-
     @Override
     public com.group2.smart_cafe_backend.models.Service addService(@Valid ServiceDto serviceDto) {
         ServiceType serviceType = serviceTypeRepository.findById(serviceDto.getTypeId())
@@ -82,8 +87,6 @@ public class ServiceService implements IServiceService {
 
     }
 
-
-
     @Override
     public List<com.group2.smart_cafe_backend.models.Service> getTop5MostOrderedServices() {
         return serviceRepository.findTop5MostOrderedServices();
@@ -94,4 +97,8 @@ public class ServiceService implements IServiceService {
         return serviceTypeRepository.findAll();
     }
 
+    @Override
+    public BillDetail addBillDetail(BillDetail billDetail) {
+        return billDetailRepository.save(billDetail);
+    }
 }

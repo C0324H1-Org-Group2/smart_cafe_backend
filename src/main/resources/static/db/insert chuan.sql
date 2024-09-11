@@ -1,4 +1,5 @@
 #Insert category sản phẩm
+        use smart_cafe;
 INSERT INTO service_types (type_name,code, description)
 VALUES ('Cà Phê','CF',
         'Sự kết hợp hoàn hảo giữa hạt cà phê Robusta & Arabica thượng hạng được trồng trên những vùng cao nguyên Việt Nam màu mỡ, qua những bí quyết rang xay độc đáo, Smart Coffee chúng tôi tự hào giới thiệu những dòng sản phẩm Cà phê mang hương vị đậm đà và tinh tế.');
@@ -151,17 +152,18 @@ VALUES ('CF0015', 'Americano', 1, 35000.00, null, 'menu-4.jpg', '00:05:00', 'ava
 
 #----------------------------------------------------------------------------------------------------------------------------
 #Insert table
-insert into tables (table_id, code, is_on, state, is_delete)
-values  (1, 'TB0001', true, 'GOOD', false),
-        (2, 'TB0002', true, 'GOOD', true),
-        (3, 'TB0003', true, 'GOOD', false),
-        (4, 'TB0004', true, 'GOOD', false),
-        (5, 'TB0005', true, 'GOOD', false),
-        (6, 'TB0006', true, 'GOOD', false),
-        (7, 'TB0007', true, 'GOOD', false),
-        (8, 'TB0008', false, 'ERROR', true),
-        (9, 'TB0009', false, 'ERROR', false),
-        (10, 'TB0010', true, 'GOOD', false);
+INSERT INTO tables (table_id, code, is_on, state, is_delete, is_bill)
+VALUES
+    (1, 'TB0001', true, 'GOOD', false, false),
+    (2, 'TB0002', true, 'GOOD', true, false),
+    (3, 'TB0003', true, 'GOOD', false, false),
+    (4, 'TB0004', true, 'GOOD', false, false),
+    (5, 'TB0005', true, 'GOOD', false, false),
+    (6, 'TB0006', true, 'GOOD', false, false),
+    (7, 'TB0007', true, 'GOOD', false, false),
+    (8, 'TB0008', false, 'ERROR', true, false),
+    (9, 'TB0009', false, 'ERROR', false, false),
+    (10, 'TB0010', true, 'GOOD', false, false);
 
 #-----------------
 #Insert role
@@ -179,11 +181,29 @@ values  (1, 'VỊ TRÍ: QUẢN LÝ', 'QUẢN LÝ'),
 insert into employees(employee_id, address, birthday, email, full_name, gender, image_url, note, salary, tel, position_id)
 values (1, 'Hà Nội', '1997-08-09', 'vuhuyhoang@gmail.com', 'Vũ Huy Hoàng', 'male', 'MALE_EMP.jpg', 'ok', 500000, 0837373732, 2);
 
+# INSERT INTO employees (employee_id, address, birthday, email, full_name, gender, image_url, note, salary, tel, position_id)
+# VALUES (1, 'Ba Đình, Hà Nội', '1997-11-18', 'hoangvhdata@gmail.com', 'Vũ Huy Hoàng', 'male', NULL, NULL, 100000, '0329193149', NULL);
+#
+# INSERT INTO employees (employee_id, address, birthday, email, full_name, gender, image_url, note, salary, tel, position_id)
+# VALUES (2, '123 Admin Street', '1990-01-01', 'admin@example.com', 'Admin User', 'male', NULL, NULL, 100000, '1234567890', NULL);
+#
+# INSERT INTO employees (employee_id, address, birthday, email, full_name, gender, image_url, note, salary, tel, position_id)
+# VALUES (3, '456 Employee Road', '1992-02-02', 'employee@example.com', 'Employee User', 'female', NULL, NULL, 100000, '0987654321', NULL);
+
         
 #------------------------
 #Insert users
 insert into users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
-values  (1, 0, '', null, 'hoangvu1811', null, 1);
+values  (1, 0, '999', '2024-09-05 09:35:19.000000', 'hoangvu1811', null, 1);
+# INSERT INTO users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
+# VALUES (1, 0, '999', '2024-09-05 09:35:19.000000', 'hoangvu1811', NULL, 1);
+#
+INSERT INTO users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
+VALUES (2, 1, '$2a$12$IpIh6.8MgB7xy8lTO/SHvOKF3S9pd40HDa6V4vvbvQZ8m.fHvE7Jm', '2024-12-31 00:00:00.000000', 'admin', '', 1);
+
+INSERT INTO users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
+VALUES (3, 1, '$2a$12$IpIh6.8MgB7xy8lTO/SHvOKF3S9pd40HDa6V4vvbvQZ8m.fHvE7Jm', '2024-12-31 00:00:00.000000', 'employee', '', 1);
+
 
 #Feebback
 insert into feedbacks (feedback_id, content, email, feedback_date, creator_id, code)

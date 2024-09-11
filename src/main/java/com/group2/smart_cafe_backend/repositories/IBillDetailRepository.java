@@ -137,5 +137,3 @@ public interface IBillDetailRepository extends JpaRepository<BillDetail, Integer
 
 }
 
-
-
