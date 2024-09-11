@@ -55,7 +55,7 @@ public class OrderController {
             @RequestParam(value = "codeSearch", defaultValue = "") String codeSearch,
             @RequestParam(value = "dateSearch", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateSearch,
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "2") int size) {
+            @RequestParam(value = "size", defaultValue = "10") int size) {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<OrderDTO> orderDTOS = orderService.findAllOrders(codeSearch, dateSearch, pageable);
