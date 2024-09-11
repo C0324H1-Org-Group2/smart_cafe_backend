@@ -33,5 +33,7 @@ public class News {
     @Column(columnDefinition = "ENUM('published', 'draft', 'archived') DEFAULT 'draft'")
     private NewsStatus status;
 
+    @Column(name = "view_count", nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int viewCount;
 }
 
