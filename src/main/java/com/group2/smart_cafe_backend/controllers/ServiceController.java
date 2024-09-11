@@ -67,9 +67,4 @@ public class ServiceController {
         return new ResponseEntity<>(updatedService, HttpStatus.OK);
     }
 
-    @PostMapping("/addBillDetail")
-    public ResponseEntity<BillDetail> addBillDetail(@RequestBody BillDetail billDetail) {
-        BillDetail newBillDetail = serviceService.addBillDetail(billDetail);
-        return new ResponseEntity<>(newBillDetail, HttpStatus.OK);
-    }
 }
