@@ -39,4 +39,9 @@ public class NewsService implements INewsService {
     public Optional<News> findById(Long id) {
         return newsRepository.findById(id);
     }
+
+    @Override
+    public void deleteNews(Long newsId) {
+        newsRepository.deleteById(newsId);
+    }
 }

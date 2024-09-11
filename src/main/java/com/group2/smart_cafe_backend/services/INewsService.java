@@ -15,4 +15,6 @@ public interface INewsService {
     List<News> findTop3ByOrderByViewCountDesc();
 
     Optional<News> findById(Long id);
+
+    void deleteNews(Long newsId);
 }
