@@ -46,5 +46,7 @@ public class Employee {
 
     @Column(name = "image_url")
     private String imageUrl;
+
+
 }
 
