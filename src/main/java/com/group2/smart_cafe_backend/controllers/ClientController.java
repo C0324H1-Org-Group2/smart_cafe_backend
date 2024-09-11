@@ -25,11 +25,6 @@ public class ClientController {
     @Autowired
     private IBillDetailService billDetailService;
 
-    // Endpoint để lấy một bảng ngẫu nhiên có trạng thái isOn = true
-    @GetMapping("/table/random")
-    public Tables getRandomAvailableTable() {
-        return tableService.getRandomAvailableTable();
-    }
 
     // Endpoint để cập nhật trạng thái bảng thành false
     @PatchMapping("/tables/{id}/status")
@@ -44,6 +39,11 @@ public class ClientController {
     @PostMapping("/bill-details/order")
     public List<BillDetail> saveBillDetails(@RequestBody List<BillDetail> orderDetails) {
         return billDetailService.saveBillDetails(orderDetails);
+    }
+
+    @GetMapping("/tables")
+    public List<Tables> getAllTables() {
+        return tableService.getAllTablesByClient();
     }
 
 }
