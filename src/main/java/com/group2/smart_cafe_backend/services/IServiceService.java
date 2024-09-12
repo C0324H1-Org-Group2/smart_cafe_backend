@@ -2,7 +2,6 @@ package com.group2.smart_cafe_backend.services;
 
 
 import com.group2.smart_cafe_backend.dtos.ServiceDto;
-import com.group2.smart_cafe_backend.models.BillDetail;
 import com.group2.smart_cafe_backend.models.Service;
 import com.group2.smart_cafe_backend.models.ServiceType;
 
@@ -28,4 +27,7 @@ public interface IServiceService {
     Service updateService(Long serviceId, ServiceDto serviceDto);
 
     Service getServiceById(Long id);
+
+    Service createService(Service service);
+
 }
