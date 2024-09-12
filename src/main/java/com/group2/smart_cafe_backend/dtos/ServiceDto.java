@@ -33,6 +33,9 @@ public class ServiceDto {
     @NotNull
     private ServiceStatus status;
 
+    @NotNull
+    private boolean isDelete = false;
+
     // Getters and setters
     public @NotNull Long getTypeId() {
         return typeId;
@@ -97,5 +100,13 @@ public class ServiceDto {
 
     public void setStatus(@NotNull ServiceStatus status) {
         this.status = status;
+    }
+
+    public @NotNull boolean isIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(@NotNull boolean isDelete) {
+        this.isDelete = isDelete;
     }
 }
