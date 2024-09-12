@@ -5,10 +5,13 @@ import com.group2.smart_cafe_backend.dtos.ServiceRevenueDTO;
 import com.group2.smart_cafe_backend.dtos.TopSellServiceDTO;
 import com.group2.smart_cafe_backend.services.IRevenueService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,5 +70,25 @@ public class RevenueController {
         List<TopSellServiceDTO> topSellService = revenueService.getTopSellService(yearValue);
         return ResponseEntity.ok(topSellService);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<Map<String, Double>> getRevenueSearch(
+            @RequestParam(value = "dateFrom", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+            @RequestParam(value = "dateTo", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo) {
+        // Cung cấp giá trị mặc định
+        if (dateFrom == null) {
+            dateFrom = LocalDate.now().withDayOfYear(1); // Ngày đầu năm hiện tại
+        }
+        if (dateTo == null) {
+            dateTo = LocalDate.now(); // Ngày hiện tại
+        }
+        Map<String, Double> revenueSearch = new HashMap<>();
+        revenueSearch.put("thisYear", revenueService.getTotalRevenue(dateFrom, dateTo));
+        revenueSearch.put("lastYear", revenueService.getTotalRevenueLastYear(dateFrom, dateTo));
+        return ResponseEntity.ok(revenueSearch);
+    }
 }
+
 

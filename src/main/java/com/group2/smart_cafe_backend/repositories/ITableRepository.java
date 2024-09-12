@@ -13,5 +13,5 @@ import java.util.Optional;
 public interface ITableRepository extends JpaRepository<Tables, Long> {
     Page<Tables> findByIsDeleteFalse(Pageable pageable);  // Cập nhật để hỗ trợ phân trang
 
-    List<Tables> findByIsOnTrue();
+    Page<Tables> findByStateContainingIgnoreCase(String state, Pageable pageable);
 }

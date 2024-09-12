@@ -19,8 +19,9 @@ public class BillDetail {
 
     private int quantity;
 
-    @Column(name = "is_order")
+    @Column(name = "is_order", nullable = false)
     private boolean isOrder;
+
 
 }
 

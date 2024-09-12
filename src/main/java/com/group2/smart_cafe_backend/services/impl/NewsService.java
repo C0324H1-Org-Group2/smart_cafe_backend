@@ -44,4 +44,14 @@ public class NewsService implements INewsService {
     public void deleteNews(Long newsId) {
         newsRepository.deleteById(newsId);
     }
+
+    @Override
+    public void softDeleteNews(Long newsId) {
+        Optional<News> newsOptional = newsRepository.findById(newsId);
+        if (newsOptional.isPresent()) {
+            News news = newsOptional.get();
+            news.setDeleted(true);
+            newsRepository.save(news);
+        }
+    }
 }

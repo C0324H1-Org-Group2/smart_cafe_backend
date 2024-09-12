@@ -18,8 +18,11 @@ public class TableService implements ITableService {
     @Autowired
     private ITableRepository tableRepository;
 
-    private Random random = new Random();
 
+    @Override
+    public Optional<Tables> findById(Long id) {
+        return tableRepository.findById(id);
+    }
 
     @Override
     public Page<Tables> getAllTables(Pageable pageable) {
@@ -66,23 +69,28 @@ public class TableService implements ITableService {
     }
 
     @Override
-    public Tables getRandomAvailableTable() {
-        // Lấy danh sách các bảng có trạng thái isOn = true
-        List<Tables> availableTables = tableRepository.findByIsOnTrue();
-
-        if (availableTables.isEmpty()) {
-            throw new RuntimeException("No available tables found");
-        }
-
-        // Chọn ngẫu nhiên một bảng từ danh sách
-        int index = random.nextInt(availableTables.size());
-        return availableTables.get(index);
-    }
-
-    @Override
     public Tables updateTableStatus(Long id) {
         Tables table = tableRepository.findById(id).orElseThrow(() -> new RuntimeException("Table not found"));
         table.setOn(false);
+        table.setBill(true);
         return tableRepository.save(table);
+    }
+
+    @Override
+    public List<Tables> getAllTablesByClient() {
+        return tableRepository.findAll();
+    }
+
+    @Override
+    public Tables updateTableStatus1(Long id) {
+        Tables table = tableRepository.findById(id).orElseThrow(() -> new RuntimeException("Table not found"));
+        table.setOn(true);
+        table.setBill(false);
+        return tableRepository.save(table);
+    }
+
+    @Override
+    public Page<Tables> findByState(String state, Pageable pageable) {
+        return tableRepository.findByStateContainingIgnoreCase(state, pageable);
     }
 }
