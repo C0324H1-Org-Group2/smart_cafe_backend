@@ -35,5 +35,8 @@ public class News {
 
     @Column(name = "view_count", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int viewCount;
+
+    @Column(name = "is_deleted", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean isDeleted = false;
 }
 
