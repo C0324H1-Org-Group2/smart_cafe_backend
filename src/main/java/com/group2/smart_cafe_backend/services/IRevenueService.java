@@ -4,6 +4,7 @@ import com.group2.smart_cafe_backend.dtos.MonthRevenueDTO;
 import com.group2.smart_cafe_backend.dtos.ServiceRevenueDTO;
 import com.group2.smart_cafe_backend.dtos.TopSellServiceDTO;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IRevenueService {
@@ -26,4 +27,9 @@ public interface IRevenueService {
     Double calculateLastYearRevenue();
 
     List<TopSellServiceDTO> getTopSellService(int year);
+
+    Double getTotalRevenue(LocalDate dateFrom, LocalDate dateTo);
+
+    Double getTotalRevenueLastYear(LocalDate dateFrom, LocalDate dateTo);
 }
+
