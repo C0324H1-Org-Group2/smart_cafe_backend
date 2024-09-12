@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface IServiceRepository extends JpaRepository<Service, Long> {
     @Query(value = "SELECT * FROM Services ORDER BY service_id DESC LIMIT 5", nativeQuery = true)
@@ -23,5 +25,7 @@ public interface IServiceRepository extends JpaRepository<Service, Long> {
 
     @Query("SELECT s FROM Service s WHERE s.type.typeId = :typeId")
     List<Service> findByTypeId(@Param("typeId") Long typeId);
+
+    Optional<Service> findById(Long id);
 }
 

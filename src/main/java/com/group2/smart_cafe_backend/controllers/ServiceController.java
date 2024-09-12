@@ -61,10 +61,15 @@ public class ServiceController {
         List<Service> servicesByType = serviceService.getServicesByType(typeId);
         return new ResponseEntity<>(servicesByType, HttpStatus.OK);
     }
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Service> updateService(@PathVariable Long id, @RequestBody @Valid ServiceDto serviceDto) {
-        Service updatedService = serviceService.updateService(id, serviceDto);
+    @PatchMapping("/update/{serviceId}")
+    public ResponseEntity<Service> updateService(@PathVariable Long serviceId, @RequestBody @Valid ServiceDto serviceDto) {
+        Service updatedService = serviceService.updateService(serviceId, serviceDto);
         return new ResponseEntity<>(updatedService, HttpStatus.OK);
+    }
+    @GetMapping("/detail/{serviceId}")
+    public ResponseEntity<Service> getServiceById(@PathVariable Long serviceId) {
+        Service service = serviceService.getServiceById(serviceId);
+        return new ResponseEntity<>(service, HttpStatus.OK);
     }
 
 }
