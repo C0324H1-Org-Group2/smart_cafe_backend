@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,8 @@ public class UserService implements IUserService, UserDetailsService {
     private IUserRepository userRepository;
     @Autowired
     private IEmployeeRepository employeeRepository;
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -44,8 +46,14 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     @Override
-    public User findByUser(long defaultUser) {
-        return userRepository.findById(defaultUser).orElseThrow();
+    public void updatePassword(User user, String newPassword) {
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
+
+    @Override
+    public User findByUser(Employee employee) {
+        return userRepository.findByEmployee(employee);
     }
 
 }

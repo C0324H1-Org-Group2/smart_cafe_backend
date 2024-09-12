@@ -37,4 +37,12 @@ public class PasswordResetService {
     private LocalDateTime calculateExpiryDate(int expiryTimeInMinutes) {
         return LocalDateTime.now().plusMinutes(expiryTimeInMinutes);
     }
+
+    public User findUserByToken(String token) {
+        PasswordResetToken resetToken = tokenRepository.findByToken(token);
+        if (resetToken != null) {
+            return resetToken.getUser();
+        }
+        return null;
+    }
 }

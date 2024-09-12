@@ -15,10 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -57,16 +54,38 @@ public class AuthController {
         if (employees.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email không tồn tại");
         }
-//        Employee employee = employees.get(0);
-        long defaultUser = 1L;
-        User user = userService.findByUser(defaultUser);
+        Employee employee = employees.get(0);
+        User user = userService.findByUser(employee);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Không tìm thấy người dùng tương ứng");
         }
         String token = UUID.randomUUID().toString();
         passwordResetService.createPasswordResetToken(user, token);
-        String resetUrl = "http://localhost:8080/api/reset-password?token=" + token;
+        String resetUrl = "http://localhost:3000/admin/reset-password?token=" + token;
         emailService.sendResetPasswordEmail(email, resetUrl);
         return ResponseEntity.ok("Vui lòng kiểm tra email để đặt lại mật khẩu");
     }
+    @PostMapping("/api/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestParam String token, @RequestBody Map<String, String> passwordRequest) {
+        String newPassword = passwordRequest.get("newPassword");
+        String confirmPassword = passwordRequest.get("confirmPassword");
+
+        if (newPassword == null || newPassword.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mật khẩu mới không được để trống");
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mật khẩu mới và xác nhận mật khẩu không khớp");
+        }
+
+        User user = passwordResetService.findUserByToken(token);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Token không hợp lệ hoặc đã hết hạn");
+        }
+
+        userService.updatePassword(user, newPassword);
+
+        return ResponseEntity.ok("Mật khẩu đã được cập nhật thành công");
+    }
+
 }
