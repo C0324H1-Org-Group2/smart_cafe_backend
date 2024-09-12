@@ -18,4 +18,9 @@ public class BillDetailService implements IBillDetailService {
     public List<BillDetail> saveBillDetails(List<BillDetail> orderDetails) {
         return billDetailRepository.saveAll(orderDetails);
     }
+
+    @Override
+    public List<BillDetail> updateBillDetailsWithBill(List<BillDetail> billDetails) {
+        return billDetailRepository.saveAll(billDetails);
+    }
 }
