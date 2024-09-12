@@ -25,14 +25,9 @@ public class ClientController {
     @Autowired
     private IBillDetailService billDetailService;
 
-    // Endpoint để lấy một bảng ngẫu nhiên có trạng thái isOn = true
-    @GetMapping("/table/random")
-    public Tables getRandomAvailableTable() {
-        return tableService.getRandomAvailableTable();
-    }
 
     // Endpoint để cập nhật trạng thái bảng thành false
-    @PatchMapping("/tables/{id}/status")
+    @PatchMapping("/tables/{id}/status_createBill")
     public Bill updateTableStatusAndCreateBill(@PathVariable Long id) {
         // Cập nhật trạng thái bảng thành false
         Tables table = tableService.updateTableStatus(id);
@@ -41,9 +36,25 @@ public class ClientController {
         return billService.createBill(table);
     }
 
+    @PatchMapping("/tables/{id}/status")
+    public Tables updateTableStatus(@PathVariable Long id) {
+        // Cập nhật trạng thái bảng
+        return tableService.updateTableStatus1(id);
+    }
+
     @PostMapping("/bill-details/order")
     public List<BillDetail> saveBillDetails(@RequestBody List<BillDetail> orderDetails) {
         return billDetailService.saveBillDetails(orderDetails);
+    }
+
+    @GetMapping("/tables")
+    public List<Tables> getAllTables() {
+        return tableService.getAllTablesByClient();
+    }
+
+    @PatchMapping("/billDetails/update-bill")
+    public List<BillDetail> updateProductsWithBill(@RequestBody List<BillDetail> billDetails) {
+        return billDetailService.updateBillDetailsWithBill(billDetails);
     }
 
 }
