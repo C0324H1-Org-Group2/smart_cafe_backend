@@ -17,6 +17,11 @@ public class TableService implements ITableService {
     private ITableRepository tableRepository;
 
     @Override
+    public Optional<Tables> findById(Long id) {
+        return tableRepository.findById(id);
+    }
+
+    @Override
     public Page<Tables> getAllTables(Pageable pageable) {
         // Chỉ lấy các bàn chưa bị xóa (isDelete = false) với phân trang
         return tableRepository.findByIsDeleteFalse(pageable);
@@ -58,5 +63,10 @@ public class TableService implements ITableService {
     @Override
     public void hardDeleteTable(Long id) {
         tableRepository.deleteById(id);  // Xóa cứng
+    }
+
+    @Override
+    public Page<Tables> findByState(String state, Pageable pageable) {
+        return tableRepository.findByStateContainingIgnoreCase(state, pageable);
     }
 }
