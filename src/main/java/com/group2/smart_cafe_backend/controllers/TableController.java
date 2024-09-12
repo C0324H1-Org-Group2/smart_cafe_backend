@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,13 +29,36 @@ public class TableController {
         return ResponseEntity.ok(tables);
     }
 
+
     // Lấy bàn theo ID
     @GetMapping("/{id}")
     public ResponseEntity<Tables> getTableById(@PathVariable Long id) {
         Optional<Tables> table = serviceTable.getTableById(id);
         return table.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+    @GetMapping("/search")
+    public ResponseEntity<?> searchById(@RequestParam("id") Long id) {
+        Optional<Tables> table = serviceTable.findById(id);
+        if (table.isPresent()) {
+            return ResponseEntity.ok(table.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found!");
+        }
+    }
 
+
+    @GetMapping("/searchByState")
+    public ResponseEntity<?> getTablesByState(@RequestParam String state, @RequestParam int page, @RequestParam int size) {
+        if (state.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Please enter a keyword!");
+        }
+        Page<Tables> tables = serviceTable.findByState(state, PageRequest.of(page, size));
+        if (tables.hasContent()) {
+            return ResponseEntity.ok(tables);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found!");
+        }
+    }
     // Tạo mới bàn
     @PostMapping("/create")
     public ResponseEntity<Tables> createTable(@RequestBody Tables table) {

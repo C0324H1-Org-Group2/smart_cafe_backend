@@ -135,5 +135,12 @@ public interface IBillDetailRepository extends JpaRepository<BillDetail, Integer
             "LIMIT 10")
     List<TopSellServiceDTO> getTopSellService(@Param("year") int year);
 
+    @Query("SELECT COALESCE(SUM(bd.quantity * s.price), 0) FROM BillDetail bd " +
+            "JOIN bd.service s " +
+            "JOIN bd.bill b " +
+            "WHERE DATE(b.dateCreated) BETWEEN :dateFrom AND :dateTo")
+    Double getTotalRevenue(@Param("dateFrom") LocalDate dateFrom, @Param("dateTo") LocalDate dateTo);
+
+
 }
 

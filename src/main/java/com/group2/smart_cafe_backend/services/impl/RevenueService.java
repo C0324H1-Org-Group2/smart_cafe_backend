@@ -74,4 +74,16 @@ public class RevenueService implements IRevenueService {
         return billDetailRepository.getTopSellService(year);
     }
 
+    @Override
+    public Double getTotalRevenue(LocalDate dateFrom, LocalDate dateTo) {
+        return billDetailRepository.getTotalRevenue(dateFrom, dateTo);
+    }
+
+    @Override
+    public Double getTotalRevenueLastYear(LocalDate dateFrom, LocalDate dateTo) {
+        // Trừ đi 1 năm cho cả dateFrom và dateTo
+        LocalDate lastYearStartDate = dateFrom.minusYears(1);
+        LocalDate lastYearEndDate = dateTo.minusYears(1);
+        return billDetailRepository.getTotalRevenue(lastYearStartDate, lastYearEndDate);
+    }
 }
