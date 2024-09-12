@@ -27,4 +27,10 @@ public class Tables {
 
     @Column(name = "is_bill", nullable = false)
     private boolean isBill = false;
+
+    @Column(name = "is_pay", nullable = false)
+    private boolean isPay = false;
+
+    @Column(name = "is_call_employee", nullable = false)
+    private boolean isCallEmployee = false;
 }
