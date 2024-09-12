@@ -1,10 +1,14 @@
 package com.group2.smart_cafe_backend.controllers;
 
+import com.group2.smart_cafe_backend.dtos.FeedbackRequestDTO;
 import com.group2.smart_cafe_backend.models.Bill;
 import com.group2.smart_cafe_backend.models.BillDetail;
+import com.group2.smart_cafe_backend.models.Feedback;
 import com.group2.smart_cafe_backend.models.Tables;
+import com.group2.smart_cafe_backend.repositories.IFeedbackRepository;
 import com.group2.smart_cafe_backend.services.IBillDetailService;
 import com.group2.smart_cafe_backend.services.IBillService;
+import com.group2.smart_cafe_backend.services.IFeedbackService;
 import com.group2.smart_cafe_backend.services.ITableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +28,9 @@ public class ClientController {
 
     @Autowired
     private IBillDetailService billDetailService;
+
+    @Autowired
+    private IFeedbackService feedbackService;
 
 
     // Endpoint để cập nhật trạng thái bảng thành false
@@ -56,5 +63,11 @@ public class ClientController {
     public List<BillDetail> updateProductsWithBill(@RequestBody List<BillDetail> billDetails) {
         return billDetailService.updateBillDetailsWithBill(billDetails);
     }
+
+    @PostMapping("/feedback_client")
+    public Feedback submitFeedback(@RequestBody FeedbackRequestDTO feedbackRequest) {
+        return feedbackService.saveFeedback(feedbackRequest.getEmail(),feedbackRequest.getMessage());
+    }
+
 
 }
