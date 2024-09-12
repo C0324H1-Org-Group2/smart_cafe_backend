@@ -21,4 +21,8 @@ public interface ISellService {
     boolean updateTableStatus(Long tableId);
 
     boolean updateBillStatus(Long tableId);
+
+    void setStatusEmployee(Long tableId);
+
+    void setStatusOrder(Long tableId);
 }
