@@ -68,6 +68,17 @@ public class NewsController {
         return new ResponseEntity<>(savedNews, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/soft-delete/{newsId}")
+    public ResponseEntity<Void> softDeleteNews(@PathVariable Long newsId) {
+        Optional<News> newsOptional = newsService.findById(newsId);
+        if (newsOptional.isPresent()) {
+            newsService.softDeleteNews(newsId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @DeleteMapping("/{newsId}")
     public ResponseEntity<Void> deleteNews(@PathVariable Long newsId) {
         Optional<News> newsOptional = newsService.findById(newsId);
