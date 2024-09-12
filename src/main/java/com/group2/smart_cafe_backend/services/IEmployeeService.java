@@ -11,6 +11,6 @@ public interface IEmployeeService {
 
     void updateEmployee(Long employeeId, EmployeeDTO employeeDTO);
 
-    void deleteEmployee(Long employeeId);
 
- }
+    void deleteEmployee(Long employeeId);
+}

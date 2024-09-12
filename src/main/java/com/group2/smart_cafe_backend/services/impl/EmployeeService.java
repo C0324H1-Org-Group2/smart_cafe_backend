@@ -107,15 +107,23 @@ public class EmployeeService implements IEmployeeService {
     }
 
 
+
     @Override
     public void deleteEmployee(Long employeeId) {
-        // Xóa các bản ghi liên quan trong bảng Users
-        User user = userRepository.findByEmployee(employeeRepository.findById(employeeId).orElse(null));
+        // Tìm kiếm Employee
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new RuntimeException("Employee not found with id: " + employeeId));
+
+        // Tìm kiếm User liên kết với Employee
+        User user = userRepository.findByEmployee(employee);
         if (user != null) {
+            // Xóa User
             userRepository.delete(user);
         }
 
-        // Xóa nhân viên
-        employeeRepository.deleteById(employeeId);
+        // Xóa Employee
+        employeeRepository.delete(employee);
     }
+
+
 }

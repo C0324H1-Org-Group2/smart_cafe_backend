@@ -32,7 +32,13 @@ public class User {
 
     @Column(name = "password_expiry_date")
     private Date passwordExpiryDate;
+
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "User_Roles", // Tên bảng liên kết
+            joinColumns = @JoinColumn(name = "user_id"), // Cột khóa chính của User
+            inverseJoinColumns = @JoinColumn(name = "role_id") // Cột khóa chính của Role
+    )
     private Set<Role> roles;
 }
 

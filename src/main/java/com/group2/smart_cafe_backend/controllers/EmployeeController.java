@@ -6,6 +6,7 @@ import com.group2.smart_cafe_backend.dtos.UserDTO;
 import com.group2.smart_cafe_backend.models.Employee;
 import com.group2.smart_cafe_backend.services.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,7 @@ public class EmployeeController {
         }
     }
 
-    @PutMapping("/{employeeId}")
+    @PutMapping("/update/{employeeId}")
     public ResponseEntity<?> updateEmployee(@PathVariable Long employeeId, @RequestBody EmployeeDTO employeeDTO) {
         try {
             employeeService.updateEmployee(employeeId, employeeDTO);
@@ -49,7 +50,7 @@ public class EmployeeController {
     }
 
 
-    @DeleteMapping("/{employeeId}")
+    @DeleteMapping("/delete/{employeeId}")
     public ResponseEntity<?> deleteEmployee(@PathVariable Long employeeId) {
         try {
             employeeService.deleteEmployee(employeeId);
