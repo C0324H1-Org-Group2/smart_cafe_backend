@@ -152,17 +152,18 @@ VALUES ('CF0015', 'Americano', 1, 35000.00, null, 'menu-4.jpg', '00:05:00', 'ava
 
 #----------------------------------------------------------------------------------------------------------------------------
 #Insert table
-insert into tables (table_id, code, is_on, state, is_delete)
-values  (1, 'TB0001', true, 'GOOD', false),
-        (2, 'TB0002', true, 'GOOD', true),
-        (3, 'TB0003', true, 'GOOD', false),
-        (4, 'TB0004', true, 'GOOD', false),
-        (5, 'TB0005', true, 'GOOD', false),
-        (6, 'TB0006', true, 'GOOD', false),
-        (7, 'TB0007', true, 'GOOD', false),
-        (8, 'TB0008', false, 'ERROR', true),
-        (9, 'TB0009', false, 'ERROR', false),
-        (10, 'TB0010', true, 'GOOD', false);
+INSERT INTO tables (table_id, code, is_on, state, is_delete, is_bill)
+VALUES
+    (1, 'TB0001', true, 'GOOD', false, false),
+    (2, 'TB0002', true, 'GOOD', true, false),
+    (3, 'TB0003', true, 'GOOD', false, false),
+    (4, 'TB0004', true, 'GOOD', false, false),
+    (5, 'TB0005', true, 'GOOD', false, false),
+    (6, 'TB0006', true, 'GOOD', false, false),
+    (7, 'TB0007', true, 'GOOD', false, false),
+    (8, 'TB0008', false, 'ERROR', true, false),
+    (9, 'TB0009', false, 'ERROR', false, false),
+    (10, 'TB0010', true, 'GOOD', false, false);
 
 #-----------------
 #Insert role
@@ -197,11 +198,11 @@ values  (1, 0, '999', '2024-09-05 09:35:19.000000', 'hoangvu1811', null, 1);
 # INSERT INTO users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
 # VALUES (1, 0, '999', '2024-09-05 09:35:19.000000', 'hoangvu1811', NULL, 1);
 #
-# INSERT INTO users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
-# VALUES (2, 1, '$2a$12$IpIh6.8MgB7xy8lTO/SHvOKF3S9pd40HDa6V4vvbvQZ8m.fHvE7Jm', '2024-12-31 00:00:00.000000', 'admin', '', 2);
-#
-# INSERT INTO users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
-# VALUES (3, 1, '$2a$12$IpIh6.8MgB7xy8lTO/SHvOKF3S9pd40HDa6V4vvbvQZ8m.fHvE7Jm', '2024-12-31 00:00:00.000000', 'employee', '', 3);
+INSERT INTO users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
+VALUES (2, 1, '$2a$12$IpIh6.8MgB7xy8lTO/SHvOKF3S9pd40HDa6V4vvbvQZ8m.fHvE7Jm', '2024-12-31 00:00:00.000000', 'admin', '', 1);
+
+INSERT INTO users (user_id, is_verified, password, password_expiry_date, username, verification_token, employee_id)
+VALUES (3, 1, '$2a$12$IpIh6.8MgB7xy8lTO/SHvOKF3S9pd40HDa6V4vvbvQZ8m.fHvE7Jm', '2024-12-31 00:00:00.000000', 'employee', '', 1);
 
 
 #Feebback
@@ -262,3 +263,42 @@ VALUES
      'dessert-6.jpg',
      1,
      'draft');
+
+-- Thêm 15 bản ghi vào bảng Bills cho năm 2023
+INSERT INTO Bills (table_id, creator_id, code, date_created, status)
+VALUES
+    (1, 1, 'BILL202301', '2023-01-05 10:00:00', 'completed'),
+    (2, 1, 'BILL202302', '2023-02-10 11:00:00', 'completed'),
+    (3, 1, 'BILL202303', '2023-03-15 12:00:00', 'completed'),
+    (4, 1, 'BILL202304', '2023-04-20 13:00:00', 'completed'),
+    (5, 1, 'BILL202305', '2023-05-25 14:00:00', 'completed'),
+    (6, 1, 'BILL202306', '2023-06-05 15:00:00', 'completed'),
+    (7, 1, 'BILL202307', '2023-07-10 16:00:00', 'completed'),
+    (8, 1, 'BILL202308', '2023-08-15 17:00:00', 'completed'),
+    (9, 1, 'BILL202309', '2023-09-20 18:00:00', 'completed'),
+    (10, 1, 'BILL202310', '2023-10-25 19:00:00', 'completed'),
+    (11, 1, 'BILL202311', '2023-11-05 10:00:00', 'completed'),
+    (12, 1, 'BILL202312', '2023-12-10 11:00:00', 'completed'),
+    (1, 1, 'BILL202313', '2023-12-15 12:00:00', 'completed'),
+    (2, 1, 'BILL202314', '2023-12-20 13:00:00', 'completed'),
+    (5, 1, 'BILL202315', '2023-12-25 14:00:00', 'completed');
+
+-- Thêm 15 bản ghi vào bảng Bills cho năm 2024
+INSERT INTO Bills (table_id, creator_id, code, date_created, status)
+VALUES
+    (1, 1, 'BILL202401', '2024-01-05 10:00:00', 'completed'),
+    (2, 1, 'BILL202402', '2024-02-10 11:00:00', 'completed'),
+    (3, 1, 'BILL202403', '2024-03-15 12:00:00', 'completed'),
+    (4, 1, 'BILL202404', '2024-04-20 13:00:00', 'completed'),
+    (5, 1, 'BILL202405', '2024-05-25 14:00:00', 'completed'),
+    (6, 1, 'BILL202406', '2024-06-05 15:00:00', 'completed'),
+    (7, 1, 'BILL202407', '2024-07-10 16:00:00', 'completed'),
+    (8, 1, 'BILL202408', '2024-08-15 17:00:00', 'completed'),
+    (9, 1, 'BILL202409', '2024-09-20 18:00:00', 'completed'),
+    (10, 1, 'BILL202410', '2024-10-25 19:00:00', 'completed'),
+    (11, 1, 'BILL202411', '2024-11-05 10:00:00', 'completed'),
+    (12, 2, 'BILL202412', '2024-12-10 11:00:00', 'completed'),
+    (1, 3, 'BILL202413', '2024-12-15 12:00:00', 'completed'),
+    (4, 1, 'BILL202414', '2024-12-20 13:00:00', 'completed'),
+    (5, 2, 'BILL202415', '2024-12-25 14:00:00', 'completed');
+

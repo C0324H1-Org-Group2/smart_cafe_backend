@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ITableService {
@@ -15,6 +16,12 @@ public interface ITableService {
     Tables updateTable(Long id, Tables table);      // Cập nhật bàn
     void softDeleteTable(Long id);                  // Xóa mềm bàn theo ID
     void hardDeleteTable(Long id);                  // Xóa cứng bàn theo ID
+
+    Tables updateTableStatus(Long id);
+
+    List<Tables> getAllTablesByClient();
+
+    Tables updateTableStatus1(Long id);
 
     Page<Tables> findByState(String state, Pageable pageable);
 }

@@ -8,13 +8,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class TableService implements ITableService {
 
     @Autowired
     private ITableRepository tableRepository;
+
 
     @Override
     public Optional<Tables> findById(Long id) {
@@ -63,6 +66,27 @@ public class TableService implements ITableService {
     @Override
     public void hardDeleteTable(Long id) {
         tableRepository.deleteById(id);  // Xóa cứng
+    }
+
+    @Override
+    public Tables updateTableStatus(Long id) {
+        Tables table = tableRepository.findById(id).orElseThrow(() -> new RuntimeException("Table not found"));
+        table.setOn(false);
+        table.setBill(true);
+        return tableRepository.save(table);
+    }
+
+    @Override
+    public List<Tables> getAllTablesByClient() {
+        return tableRepository.findAll();
+    }
+
+    @Override
+    public Tables updateTableStatus1(Long id) {
+        Tables table = tableRepository.findById(id).orElseThrow(() -> new RuntimeException("Table not found"));
+        table.setOn(true);
+        table.setBill(false);
+        return tableRepository.save(table);
     }
 
     @Override

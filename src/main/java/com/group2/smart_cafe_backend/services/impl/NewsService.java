@@ -29,4 +29,29 @@ public class NewsService implements INewsService {
     public News save(News news) {
         return newsRepository.save(news);
     }
+
+    @Override
+    public List<News> findTop3ByOrderByViewCountDesc() {
+        return newsRepository.findTop3ByOrderByViewCountDesc();
+    }
+
+    @Override
+    public Optional<News> findById(Long id) {
+        return newsRepository.findById(id);
+    }
+
+    @Override
+    public void deleteNews(Long newsId) {
+        newsRepository.deleteById(newsId);
+    }
+
+    @Override
+    public void softDeleteNews(Long newsId) {
+        Optional<News> newsOptional = newsRepository.findById(newsId);
+        if (newsOptional.isPresent()) {
+            News news = newsOptional.get();
+            news.setDeleted(true);
+            newsRepository.save(news);
+        }
+    }
 }
