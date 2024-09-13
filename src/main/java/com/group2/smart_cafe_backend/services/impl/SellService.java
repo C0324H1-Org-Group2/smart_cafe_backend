@@ -41,6 +41,7 @@ public class SellService implements ISellService {
         return feedbackRepository.findFeedbackByDate(date);
     }
 
+
     public List<BillDTO> findBillByTableId(Long tableId) {
         List<Object[]> results = billRepository.findBillByTableId(tableId);
         List<BillDTO> billDTOs = new ArrayList<>();
