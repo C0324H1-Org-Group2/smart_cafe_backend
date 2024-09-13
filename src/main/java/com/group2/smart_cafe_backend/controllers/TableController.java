@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 @CrossOrigin("*")
 @RestController
@@ -22,13 +23,13 @@ public class TableController {
     // Lấy tất cả các bàn chưa bị xóa
     @GetMapping
     public ResponseEntity<Page<Tables>> getAllTables(
+            @RequestParam(value = "code", defaultValue = "") String code,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Tables> tables = serviceTable.getAllTables(pageable);
+        Page<Tables> tables = serviceTable.getAllTables(code, pageable);
         return ResponseEntity.ok(tables);
     }
-
 
     // Lấy bàn theo ID
     @GetMapping("/{id}")
@@ -36,16 +37,6 @@ public class TableController {
         Optional<Tables> table = serviceTable.getTableById(id);
         return table.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-    @GetMapping("/search")
-    public ResponseEntity<?> searchById(@RequestParam("id") Long id) {
-        Optional<Tables> table = serviceTable.findById(id);
-        if (table.isPresent()) {
-            return ResponseEntity.ok(table.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found!");
-        }
-    }
-
 
     @GetMapping("/searchByState")
     public ResponseEntity<?> getTablesByState(@RequestParam String state, @RequestParam int page, @RequestParam int size) {
@@ -62,8 +53,13 @@ public class TableController {
     // Tạo mới bàn
     @PostMapping("/create")
     public ResponseEntity<Tables> createTable(@RequestBody Tables table) {
-        Tables createdTable = serviceTable.createTable(table);
-        return ResponseEntity.ok(createdTable);
+        try {
+            Tables createdTable = serviceTable.createTable(table);
+            return ResponseEntity.ok(createdTable);
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi chi tiết vào log
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     // Cập nhật bàn

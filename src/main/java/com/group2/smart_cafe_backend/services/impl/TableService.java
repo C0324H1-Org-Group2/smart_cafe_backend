@@ -25,11 +25,13 @@ public class TableService implements ITableService {
     }
 
     @Override
-    public Page<Tables> getAllTables(Pageable pageable) {
-        // Chỉ lấy các bàn chưa bị xóa (isDelete = false) với phân trang
-        return tableRepository.findByIsDeleteFalse(pageable);
+    public Page<Tables> getAllTables(String code, Pageable pageable) {
+        if (code == null || code.trim().isEmpty()) {
+            return tableRepository.findByIsDeleteFalse(pageable); // Lấy toàn bộ nếu không tìm kiếm
+        } else {
+            return tableRepository.findByCodeContainingAndIsDeleteFalse(code, pageable); // Tìm kiếm nếu có mã bàn
+        }
     }
-
     @Override
     public Optional<Tables> getTableById(Long id) {
         return tableRepository.findById(id).filter(table -> !table.isDelete());
@@ -67,7 +69,6 @@ public class TableService implements ITableService {
     public void hardDeleteTable(Long id) {
         tableRepository.deleteById(id);  // Xóa cứng
     }
-
     @Override
     public Tables updateTableStatus(Long id) {
         Tables table = tableRepository.findById(id).orElseThrow(() -> new RuntimeException("Table not found"));

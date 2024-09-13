@@ -10,13 +10,12 @@ import java.util.Optional;
 
 public interface ITableService {
     Optional<Tables> findById(Long id);
-    Page<Tables> getAllTables(Pageable pageable);
+    Page<Tables> getAllTables(String code, Pageable pageable);
     Optional<Tables> getTableById(Long id);         // Lấy bàn theo ID
     Tables createTable(Tables table);               // Tạo mới bàn
     Tables updateTable(Long id, Tables table);      // Cập nhật bàn
     void softDeleteTable(Long id);                  // Xóa mềm bàn theo ID
     void hardDeleteTable(Long id);                  // Xóa cứng bàn theo ID
-
     Tables updateTableStatus(Long id);
 
     List<Tables> getAllTablesByClient();
