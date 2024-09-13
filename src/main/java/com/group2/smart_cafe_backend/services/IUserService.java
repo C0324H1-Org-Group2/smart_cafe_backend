@@ -12,6 +12,9 @@ public interface IUserService {
     User findByUsername(String username);
     List<Employee> findEmployeeByEmail(String email);
     User    findByEmployee(Employee employee);
+    
 
-    User findByUser(long defaultUser);
+    void updatePassword(User user, String newPassword);
+
+    User findByUser(Employee employee);
 }

@@ -4,8 +4,6 @@ import com.group2.smart_cafe_backend.dtos.BillDTO;
 import com.group2.smart_cafe_backend.models.Feedback;
 import com.group2.smart_cafe_backend.models.Tables;
 import com.group2.smart_cafe_backend.services.ISellService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +14,7 @@ import java.util.List;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api")
-public class SellController {
+public class Sell_Feedback_Controller {
 
     @Autowired
     private ISellService sellService;
@@ -57,6 +55,16 @@ public class SellController {
             isSuccess = false;
         }
         return new ResponseEntity<>(isSuccess, HttpStatus.OK);
+    }
+
+    @PatchMapping("/table/employee/{tableId}")
+    public void setStatusEmployee(@PathVariable Long tableId){
+        sellService.setStatusEmployee(tableId);
+    }
+
+    @PatchMapping("table/order/{tableId}")
+    public void setStatusOrder(@PathVariable Long tableId){
+        sellService.setStatusOrder(tableId);
     }
 
 

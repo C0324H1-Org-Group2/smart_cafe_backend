@@ -75,6 +75,16 @@ public class SellService implements ISellService {
     }
 
     @Override
+    public void setStatusEmployee(Long tableId) {
+        billRepository.setStatusEmployee(tableId);
+    }
+
+    @Override
+    public void setStatusOrder(Long tableId) {
+        billRepository.setStatusOrder(tableId);
+    }
+
+    @Override
     public boolean updateTableStatus(Long tableId) {
         int updatedRows = billRepository.updateTableStatus(tableId);
 //        số hàng cập nhật lớn hơn 0 thì trả về true, ngược lại trả về false
