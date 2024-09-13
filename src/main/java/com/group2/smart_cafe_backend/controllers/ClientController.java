@@ -49,6 +49,12 @@ public class ClientController {
         return tableService.updateTableStatus1(id);
     }
 
+    @PatchMapping("/tables/{id}/statusBill")
+    public Tables updateTableStatusBill(@PathVariable Long id) {
+        // Cập nhật trạng thái bảng
+        return tableService.updateTableStatusBill(id);
+    }
+
     @PostMapping("/bill-details/order")
     public List<BillDetail> saveBillDetails(@RequestBody List<BillDetail> orderDetails) {
         return billDetailService.saveBillDetails(orderDetails);

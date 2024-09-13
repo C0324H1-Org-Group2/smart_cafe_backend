@@ -2,7 +2,6 @@ package com.group2.smart_cafe_backend.services.impl;
 
 import com.group2.smart_cafe_backend.dtos.ServiceDto;
 
-import com.group2.smart_cafe_backend.models.BillDetail;
 import com.group2.smart_cafe_backend.models.ServiceType;
 import com.group2.smart_cafe_backend.repositories.IBillDetailRepository;
 import com.group2.smart_cafe_backend.repositories.IServiceRepository;
@@ -67,6 +66,11 @@ public class ServiceService implements IServiceService {
     public com.group2.smart_cafe_backend.models.Service getServiceById(Long id) {
         return serviceRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Service not found with id " + id));
+    }
+
+    @Override
+    public com.group2.smart_cafe_backend.models.Service createService(com.group2.smart_cafe_backend.models.Service service) {
+        return serviceRepository.save(service);
     }
 
     @Override
