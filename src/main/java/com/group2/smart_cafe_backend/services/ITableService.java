@@ -26,4 +26,9 @@ public interface ITableService {
     Page<Tables> findByState(String state, Pageable pageable);
 
     Tables updateTableStatusBill(Long id);
+
+    Tables getTableCurrent(Long tableId);
+    boolean isTableBill(Long tableId);
+
+    Tables callEmployee(Long id);
 }

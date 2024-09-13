@@ -99,4 +99,22 @@ public class TableService implements ITableService {
         table.setBill(true);
         return tableRepository.save(table);
     }
+
+    @Override
+    public Tables getTableCurrent(Long tableId) {
+        return tableRepository.findByTableId(tableId);
+    }
+
+    @Override
+    public boolean isTableBill(Long tableId) {
+        Tables table = getTableCurrent(tableId);
+        return table != null && table.isBill();
+    }
+
+    @Override
+    public Tables callEmployee(Long id) {
+        Tables table = getTableCurrent(id);
+        table.setCallEmployee(true);
+        return tableRepository.save(table);
+    }
 }

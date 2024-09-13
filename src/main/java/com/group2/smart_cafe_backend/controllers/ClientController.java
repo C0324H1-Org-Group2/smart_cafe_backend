@@ -75,5 +75,13 @@ public class ClientController {
         return feedbackService.saveFeedback(feedbackRequest.getEmail(),feedbackRequest.getMessage());
     }
 
+    @GetMapping("/tables/{id}/check-is-bill")
+    public boolean checkIsBill(@PathVariable Long id) {
+        return tableService.isTableBill(id);
+    }
 
+    @PostMapping("/tables/{id}/callEmployee")
+    public Tables callEmployee(@PathVariable Long id){
+        return tableService.callEmployee(id);
+    }
 }
