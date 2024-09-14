@@ -21,4 +21,6 @@ public interface INewsService {
     void softDeleteNews(Long newsId);
 
     List<News> findAll();
+
+    List<News> searchByTitle(String title);
 }

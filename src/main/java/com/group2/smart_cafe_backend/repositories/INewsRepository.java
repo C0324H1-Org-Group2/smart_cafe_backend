@@ -18,4 +18,7 @@ public interface INewsRepository extends JpaRepository<News, Long> {
 
     @Query("SELECT n FROM News n WHERE n.status = 'Deleted'")
     List<News> findAllDeletedNews();
+
+    @Query("SELECT n FROM News n WHERE LOWER(n.title) LIKE LOWER(CONCAT('%', :title, '%'))")
+    List<News> searchByTitle(@Param("title") String title);
 }

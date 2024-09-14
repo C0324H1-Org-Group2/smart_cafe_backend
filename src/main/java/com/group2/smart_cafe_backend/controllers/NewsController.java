@@ -91,6 +91,7 @@ public class NewsController {
         return ResponseEntity.ok("Tin tức đã bị xóa vĩnh viễn");
     }
 
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/update/{newsId}")
     public ResponseEntity<News> updateNews(@PathVariable Long newsId,
                                            @Valid @ModelAttribute NewsDTO newsDTO,
@@ -133,5 +134,11 @@ public class NewsController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<News>> searchNewsByTitle(@RequestParam("title") String title) {
+        List<News> searchResults = newsService.searchByTitle(title);
+        return new ResponseEntity<>(searchResults, HttpStatus.OK);
     }
 }

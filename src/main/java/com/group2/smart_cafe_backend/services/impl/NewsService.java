@@ -26,6 +26,11 @@ public class NewsService implements INewsService {
     }
 
     @Override
+    public List<News> searchByTitle(String title) {
+        return newsRepository.searchByTitle(title);
+    }
+
+    @Override
     public News getNewsById(Long newsId) {
         Optional<News> news = newsRepository.findById(newsId);
         return news.orElse(null);
