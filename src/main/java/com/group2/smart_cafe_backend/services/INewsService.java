@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface INewsService {
-    List<News> getAllNews();
+    List<News> findAllActiveNews();
 
     News getNewsById(Long newsId);
 

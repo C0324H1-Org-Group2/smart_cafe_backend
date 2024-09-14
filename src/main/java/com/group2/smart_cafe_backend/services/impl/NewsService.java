@@ -15,8 +15,8 @@ public class NewsService implements INewsService {
     private INewsRepository newsRepository;
 
     @Override
-    public List<News> getAllNews() {
-        return newsRepository.findAll();
+    public List<News> findAllActiveNews() {
+        return newsRepository.findAllActiveNews();
     }
 
     @Override

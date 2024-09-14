@@ -33,8 +33,8 @@ public class NewsController {
     private SimpMessagingTemplate messagingTemplate;
 
     @GetMapping
-    public ResponseEntity<List<News>> getAllNews() {
-        List<News> allNews = newsService.getAllNews();
+    public ResponseEntity<List<News>> getAllActiveNews() {
+        List<News> allNews = newsService.findAllActiveNews();
         return new ResponseEntity<>(allNews, HttpStatus.OK);
     }
 
