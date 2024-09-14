@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,10 +33,17 @@ public class NewsController {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
-    @GetMapping
+    @GetMapping("/active")
     public ResponseEntity<List<News>> getAllActiveNews() {
         List<News> allNews = newsService.findAllActiveNews();
         return new ResponseEntity<>(allNews, HttpStatus.OK);
+    }
+
+    @GetMapping
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<List<News>> getAllNews() {
+        List<News> newsList = newsService.findAll();
+        return new ResponseEntity<>(newsList, HttpStatus.OK);
     }
 
     @GetMapping("/{newsId}")
@@ -44,6 +52,7 @@ public class NewsController {
     }
 
     @PostMapping("/create")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<News> createNews(
             @Valid @ModelAttribute NewsDTO newsDTO,
             @RequestParam("file") MultipartFile file,
@@ -68,26 +77,18 @@ public class NewsController {
         return new ResponseEntity<>(savedNews, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/soft-delete/{newsId}")
-    public ResponseEntity<Void> softDeleteNews(@PathVariable Long newsId) {
-        Optional<News> newsOptional = newsService.findById(newsId);
-        if (newsOptional.isPresent()) {
-            newsService.softDeleteNews(newsId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @PutMapping("/soft-delete/{id}")
+//    @PreAuthorize("hasRole('ROLE_EMPLOYEE') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> softDeleteNews(@PathVariable Long id) {
+        newsService.softDeleteNews(id);
+        return ResponseEntity.ok("Tin tức đã bị xóa mềm");
     }
 
-    @DeleteMapping("/{newsId}")
-    public ResponseEntity<Void> deleteNews(@PathVariable Long newsId) {
-        Optional<News> newsOptional = newsService.findById(newsId);
-        if (newsOptional.isPresent()) {
-            newsService.deleteNews(newsId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @DeleteMapping("/hard-delete/{id}")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> hardDeleteNews(@PathVariable Long id) {
+        newsService.hardDeleteNews(id);
+        return ResponseEntity.ok("Tin tức đã bị xóa vĩnh viễn");
     }
 
     @PutMapping("/update/{newsId}")

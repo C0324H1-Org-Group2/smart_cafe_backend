@@ -1,6 +1,7 @@
 package com.group2.smart_cafe_backend.services.impl;
 
 import com.group2.smart_cafe_backend.models.News;
+import com.group2.smart_cafe_backend.models.emum.NewsStatus;
 import com.group2.smart_cafe_backend.repositories.INewsRepository;
 import com.group2.smart_cafe_backend.services.INewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,12 @@ public class NewsService implements INewsService {
 
     @Override
     public List<News> findAllActiveNews() {
-        return newsRepository.findAllActiveNews();
+        return newsRepository.findAllByStatus(NewsStatus.Active);
+    }
+
+    @Override
+    public List<News> findAll() {
+        return newsRepository.findAll();
     }
 
     @Override
@@ -41,7 +47,7 @@ public class NewsService implements INewsService {
     }
 
     @Override
-    public void deleteNews(Long newsId) {
+    public void hardDeleteNews(Long newsId) {
         newsRepository.deleteById(newsId);
     }
 
@@ -50,7 +56,7 @@ public class NewsService implements INewsService {
         Optional<News> newsOptional = newsRepository.findById(newsId);
         if (newsOptional.isPresent()) {
             News news = newsOptional.get();
-            news.setDeleted(true);
+            news.setStatus(NewsStatus.valueOf("Deleted"));
             newsRepository.save(news);
         }
     }

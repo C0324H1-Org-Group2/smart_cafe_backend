@@ -16,7 +16,9 @@ public interface INewsService {
 
     Optional<News> findById(Long id);
 
-    void deleteNews(Long newsId);
+    void hardDeleteNews(Long newsId);
 
     void softDeleteNews(Long newsId);
+
+    List<News> findAll();
 }
