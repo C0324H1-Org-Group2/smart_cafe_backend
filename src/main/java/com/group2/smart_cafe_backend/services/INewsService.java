@@ -1,12 +1,14 @@
 package com.group2.smart_cafe_backend.services;
 
 import com.group2.smart_cafe_backend.models.News;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface INewsService {
-    List<News> findAllActiveNews();
+    Page<News> findAllActiveNews(Pageable page);
 
     News getNewsById(Long newsId);
 
@@ -20,7 +22,7 @@ public interface INewsService {
 
     void softDeleteNews(Long newsId);
 
-    List<News> findAll();
+    Page<News> findAll(Pageable pageable);
 
     List<News> searchByTitle(String title);
 }

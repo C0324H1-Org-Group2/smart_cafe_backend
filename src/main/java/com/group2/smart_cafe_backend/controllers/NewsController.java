@@ -8,6 +8,9 @@ import com.group2.smart_cafe_backend.services.INewsService;
 import com.group2.smart_cafe_backend.services.INewsUserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -34,15 +37,20 @@ public class NewsController {
     private SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("/active")
-    public ResponseEntity<List<News>> getAllActiveNews() {
-        List<News> allNews = newsService.findAllActiveNews();
-        return new ResponseEntity<>(allNews, HttpStatus.OK);
+    public ResponseEntity<Page<News>> getAllActiveNews(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size) {
+        Page<News> newsList = newsService.findAllActiveNews(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "publishDate")));
+        return new ResponseEntity<>(newsList, HttpStatus.OK);
     }
 
     @GetMapping
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<List<News>> getAllNews() {
-        List<News> newsList = newsService.findAll();
+    public ResponseEntity<Page<News>> getAllNews(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size
+    ) {
+        Page<News> newsList = newsService.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "publishDate")));
         return new ResponseEntity<>(newsList, HttpStatus.OK);
     }
 

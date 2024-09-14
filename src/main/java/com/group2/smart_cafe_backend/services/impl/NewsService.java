@@ -5,6 +5,8 @@ import com.group2.smart_cafe_backend.models.emum.NewsStatus;
 import com.group2.smart_cafe_backend.repositories.INewsRepository;
 import com.group2.smart_cafe_backend.services.INewsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,13 +18,13 @@ public class NewsService implements INewsService {
     private INewsRepository newsRepository;
 
     @Override
-    public List<News> findAllActiveNews() {
-        return newsRepository.findAllByStatus(NewsStatus.Active);
+    public Page<News> findAllActiveNews(Pageable pageable) {
+        return newsRepository.findAllByStatus(NewsStatus.Active, pageable);
     }
 
     @Override
-    public List<News> findAll() {
-        return newsRepository.findAll();
+    public Page<News> findAll(Pageable pageable) {
+        return newsRepository.findAll(pageable);
     }
 
     @Override
