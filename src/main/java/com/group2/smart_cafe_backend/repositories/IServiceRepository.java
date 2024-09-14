@@ -2,6 +2,7 @@ package com.group2.smart_cafe_backend.repositories;
 
 import com.group2.smart_cafe_backend.models.Service;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -27,5 +28,15 @@ public interface IServiceRepository extends JpaRepository<Service, Long> {
     List<Service> findByTypeId(@Param("typeId") Long typeId);
 
     Optional<Service> findById(Long id);
+
+    @Query("SELECT s FROM Service s  ORDER BY s.serviceId DESC")
+    List<Service> findAllByOrderByServiceIdDesc();
+
+    @Modifying
+    @Query("UPDATE Service s SET s.isDelete = true WHERE s.serviceId = :serviceId")
+    void logicalDeleteService(@Param("serviceId") Long serviceId);
+
+    @Query("SELECT s FROM Service s WHERE s.isDelete = false ORDER BY s.serviceId DESC")
+    List<Service> findAllByOrderByServiceIdDescAndIsDeleteFalse();
 }
 
