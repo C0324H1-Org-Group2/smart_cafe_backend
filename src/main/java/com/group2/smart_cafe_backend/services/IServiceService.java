@@ -24,10 +24,15 @@ public interface IServiceService {
     List<Service> getAllServices();
 
     List<Service> getServicesByType(Long typeId);
-    Service updateService(Long serviceId, ServiceDto serviceDto);
+//    Service updateService(Long serviceId, ServiceDto serviceDto);
 
     Service getServiceById(Long id);
 
     Service createService(Service service);
 
+    Service updateService(Service existingService);
+
+    List<Service> findAllByOrderByServiceIdDesc();
+
+    List<Service> getAllServicesSortedByIdDescAndNotDeleted();
 }
