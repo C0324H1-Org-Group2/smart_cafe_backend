@@ -62,7 +62,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
                     config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-                    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+                    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH"));
                     config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
                     config.setAllowCredentials(true);
                     return config;
@@ -70,10 +70,10 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers("/api/login","/api/logout","api/reset-password").permitAll()
-                                .requestMatchers("/api/services/**","/api/feedbacks/**","/api/tables/**").hasAuthority("ROLE_EMPLOYEE")
-                                .requestMatchers("/**").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                                .anyRequest().authenticated()
+//                                .requestMatchers("/api/services/**","/api/feedbacks/**","/api/tables/**","/api/news/**").hasAuthority("ROLE_EMPLOYEE")
+                                .requestMatchers("**").permitAll()
+//                        .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+//                                .anyRequest().authenticated()
                 )
                 .build();
     }
