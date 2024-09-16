@@ -10,6 +10,7 @@ import com.group2.smart_cafe_backend.services.IServiceService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -42,24 +43,40 @@ public class ServiceService implements IServiceService {
     }
 
 
+//    @Override
+//    public com.group2.smart_cafe_backend.models.Service updateService(Long serviceId, @Valid ServiceDto serviceDto) {
+//        com.group2.smart_cafe_backend.models.Service existingService = serviceRepository.findById(serviceId)
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid service ID"));
+//
+//        ServiceType serviceType = serviceTypeRepository.findById(serviceDto.getTypeId())
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid service type ID"));
+//
+//        existingService.setServiceCode(serviceDto.getServiceCode());
+//        existingService.setServiceName(serviceDto.getServiceName());
+//        existingService.setType(serviceType);
+//        existingService.setPrice(serviceDto.getPrice());
+//        existingService.setDescription(serviceDto.getDescription());
+//        existingService.setImageUrl(serviceDto.getImageUrl());
+//        existingService.setWaitTime(serviceDto.getWaitTime());
+//        existingService.setStatus(serviceDto.getStatus());
+//
+//        return serviceRepository.save(existingService);
+//    }
+@Override
+public com.group2.smart_cafe_backend.models.Service updateService(com.group2.smart_cafe_backend.models.Service service) {
+    return serviceRepository.save(service);
+}
+
     @Override
-    public com.group2.smart_cafe_backend.models.Service updateService(Long serviceId, @Valid ServiceDto serviceDto) {
-        com.group2.smart_cafe_backend.models.Service existingService = serviceRepository.findById(serviceId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid service ID"));
+    public List<com.group2.smart_cafe_backend.models.Service> findAllByOrderByServiceIdDesc() {
+        return serviceRepository.findAllByOrderByServiceIdDesc();
 
-        ServiceType serviceType = serviceTypeRepository.findById(serviceDto.getTypeId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid service type ID"));
+    }
 
-        existingService.setServiceCode(serviceDto.getServiceCode());
-        existingService.setServiceName(serviceDto.getServiceName());
-        existingService.setType(serviceType);
-        existingService.setPrice(serviceDto.getPrice());
-        existingService.setDescription(serviceDto.getDescription());
-        existingService.setImageUrl(serviceDto.getImageUrl());
-        existingService.setWaitTime(serviceDto.getWaitTime());
-        existingService.setStatus(serviceDto.getStatus());
+    @Override
+    public List<com.group2.smart_cafe_backend.models.Service> getAllServicesSortedByIdDescAndNotDeleted() {
+        return serviceRepository.findAllByOrderByServiceIdDescAndIsDeleteFalse();
 
-        return serviceRepository.save(existingService);
     }
 
     @Override
@@ -92,8 +109,9 @@ public class ServiceService implements IServiceService {
     }
 
     @Override
+    @Transactional
     public void deleteService(Long serviceId) {
-        serviceRepository.deleteById(serviceId);
+        serviceRepository.logicalDeleteService(serviceId);
 
     }
 
