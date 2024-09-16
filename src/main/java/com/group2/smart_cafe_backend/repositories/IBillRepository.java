@@ -37,11 +37,6 @@ public interface IBillRepository extends JpaRepository<Bill,Long> {
 
     @Modifying
     @Transactional
-    @Query(nativeQuery = true, value = "UPDATE tables SET is_call_employee = 0 WHERE table_id = :id")
-    void setStatusEmployee(@Param("id") Long tableId);
-
-    @Modifying
-    @Transactional
     @Query(nativeQuery = true, value = "UPDATE tables SET is_bill = 0 WHERE table_id = :id")
     void setStatusOrder(@Param("id") Long tableId);
 }

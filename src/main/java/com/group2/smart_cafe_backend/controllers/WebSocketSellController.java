@@ -34,4 +34,8 @@ public class WebSocketSellController {
     @MessageMapping("/admin/sell")
     @SendTo("/topic/client/order")
     public List<Tables> sendAllTables(List<Tables> tables) {return tables;}
+
+    @MessageMapping("/admin/sell")
+    @SendTo("/topic/client/callEmployee")
+    public Tables sendAllTables(Tables tables) {return tables;}
 }
