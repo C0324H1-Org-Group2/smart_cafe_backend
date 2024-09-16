@@ -58,7 +58,9 @@ public class ClientController {
     @PatchMapping("/tables/{id}/statusBill")
     public Tables updateTableStatusBill(@PathVariable Long id) {
         // Cập nhật trạng thái bảng
-        return tableService.updateTableStatusBill(id);
+        Tables tables = tableService.updateTableStatusBill(id);
+        messagingTemplate.convertAndSend("/topic/admin/sell", tables);
+        return tables;
     }
 
     @PostMapping("/bill-details/order")
