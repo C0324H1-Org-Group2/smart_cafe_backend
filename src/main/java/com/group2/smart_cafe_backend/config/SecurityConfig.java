@@ -5,6 +5,7 @@ import com.group2.smart_cafe_backend.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -68,10 +69,11 @@ public class SecurityConfig {
                 }))
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/api/login").permitAll()
-                                .requestMatchers("**").permitAll()
+                                .requestMatchers("/api/login","/api/logout","api/reset-password").permitAll()
+                                .requestMatchers("/api/services/**","/api/feedbacks/**","/api/tables/**").hasAuthority("ROLE_EMPLOYEE")
+                                .requestMatchers("/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                                 .anyRequest().authenticated()
-
                 )
                 .build();
     }
