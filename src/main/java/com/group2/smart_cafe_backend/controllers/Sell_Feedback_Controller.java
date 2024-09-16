@@ -7,6 +7,8 @@ import com.group2.smart_cafe_backend.services.ISellService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -18,6 +20,9 @@ public class Sell_Feedback_Controller {
 
     @Autowired
     private ISellService sellService;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("/feedbacks")
     public ResponseEntity<List<Feedback>> findAllFeedback() {
@@ -35,6 +40,8 @@ public class Sell_Feedback_Controller {
     @GetMapping("/table")
     public ResponseEntity<List<Tables>> findAllTable() {
         List<Tables> tablesList = sellService.findAllTable();
+
+        messagingTemplate.convertAndSend("/topic/client/order", tablesList);
         return new ResponseEntity<>(tablesList, HttpStatus.OK);
     }
 
