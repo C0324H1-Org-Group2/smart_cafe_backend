@@ -7,8 +7,20 @@ import org.springframework.messaging.handler.annotation.SendTo;
 public class WebSocketSellController {
 
     @MessageMapping("/menu")
-    @SendTo("/topic/admin/sell")
-    public Tables sendSell(Tables tables) {
+    @SendTo("/topic/admin/sell/order")
+    public Tables sendOdrder(Tables tables) {
+        return tables;
+    }
+
+    @MessageMapping("/menu")
+    @SendTo("/topic/admin/sell/callEmployee")
+    public Tables sendEmployee(Tables tables) {
+        return tables;
+    }
+
+    @MessageMapping("/menu")
+    @SendTo("/topic/admin/sell/pay")
+    public Tables sendPay(Tables tables) {
         return tables;
     }
 }

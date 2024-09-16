@@ -43,7 +43,7 @@ public class ClientController {
         // Cập nhật trạng thái bảng thành false
         Tables table = tableService.updateTableStatus(id);
 
-        messagingTemplate.convertAndSend("/topic/admin/sell", table);
+        messagingTemplate.convertAndSend("/topic/admin/sell/order", table);
 
         // Tạo hóa đơn mới
         return billService.createBill(table);
@@ -52,13 +52,17 @@ public class ClientController {
     @PatchMapping("/tables/{id}/status")
     public Tables updateTableStatus(@PathVariable Long id) {
         // Cập nhật trạng thái bảng
-        return tableService.updateTableStatus1(id);
+        Tables table = tableService.updateTableStatus1(id);
+        messagingTemplate.convertAndSend("/topic/admin/sell/pay", table);
+        return table;
     }
 
     @PatchMapping("/tables/{id}/statusBill")
     public Tables updateTableStatusBill(@PathVariable Long id) {
         // Cập nhật trạng thái bảng
-        return tableService.updateTableStatusBill(id);
+        Tables tables = tableService.updateTableStatusBill(id);
+        messagingTemplate.convertAndSend("/topic/admin/sell/order", tables);
+        return tables;
     }
 
     @PostMapping("/bill-details/order")
@@ -88,6 +92,8 @@ public class ClientController {
 
     @PostMapping("/tables/{id}/callEmployee")
     public Tables callEmployee(@PathVariable Long id){
-        return tableService.callEmployee(id);
+        Tables table = tableService.callEmployee(id);
+        messagingTemplate.convertAndSend("/topic/admin/sell/callEmployee", table);
+        return table;
     }
 }
