@@ -1,9 +1,12 @@
 package com.group2.smart_cafe_backend.services.impl;
 
 import com.group2.smart_cafe_backend.models.News;
+import com.group2.smart_cafe_backend.models.emum.NewsStatus;
 import com.group2.smart_cafe_backend.repositories.INewsRepository;
 import com.group2.smart_cafe_backend.services.INewsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +18,18 @@ public class NewsService implements INewsService {
     private INewsRepository newsRepository;
 
     @Override
-    public List<News> getAllNews() {
-        return newsRepository.findAll();
+    public Page<News> findAllActiveNews(Pageable pageable) {
+        return newsRepository.findAllByStatus(NewsStatus.Active, pageable);
+    }
+
+    @Override
+    public Page<News> findAll(Pageable pageable) {
+        return newsRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<News> searchByTitle(String title) {
+        return newsRepository.searchByTitle(title);
     }
 
     @Override
@@ -41,7 +54,7 @@ public class NewsService implements INewsService {
     }
 
     @Override
-    public void deleteNews(Long newsId) {
+    public void hardDeleteNews(Long newsId) {
         newsRepository.deleteById(newsId);
     }
 
@@ -50,7 +63,7 @@ public class NewsService implements INewsService {
         Optional<News> newsOptional = newsRepository.findById(newsId);
         if (newsOptional.isPresent()) {
             News news = newsOptional.get();
-            news.setDeleted(true);
+            news.setStatus(NewsStatus.valueOf("Deleted"));
             newsRepository.save(news);
         }
     }

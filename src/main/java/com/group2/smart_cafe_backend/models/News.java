@@ -30,13 +30,13 @@ public class News {
     private User creator;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('published', 'draft', 'archived') DEFAULT 'draft'")
-    private NewsStatus status;
+    @Column(columnDefinition = "ENUM('Deleted', 'Active') DEFAULT 'Active'", nullable = false)
+    private NewsStatus status = NewsStatus.Active;
 
     @Column(name = "view_count", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int viewCount;
 
     @Column(name = "is_deleted", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean isDeleted = false;
+    private boolean isDeleted;
 }
 
