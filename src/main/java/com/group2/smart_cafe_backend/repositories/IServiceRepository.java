@@ -19,7 +19,7 @@ public interface IServiceRepository extends JpaRepository<Service, Long> {
     @Override
     <S extends Service> S save(S entity);
 
-    @Query("SELECT bd.service FROM BillDetail bd WHERE bd.service.isDelete = false " +
+    @Query("SELECT bd.service FROM BillDetail bd WHERE bd.service.isDelete = com.group2.smart_cafe_backend.models.emum.ServiceIsDelete.ACTIVE " +
             "GROUP BY bd.service.serviceId " +
             "ORDER BY SUM(bd.quantity) DESC LIMIT 5")
     List<Service> findTop5MostOrderedServices();
@@ -33,10 +33,10 @@ public interface IServiceRepository extends JpaRepository<Service, Long> {
     List<Service> findAllByOrderByServiceIdDesc();
 
     @Modifying
-    @Query("UPDATE Service s SET s.isDelete = true WHERE s.serviceId = :serviceId")
+    @Query("UPDATE Service s SET s.isDelete = com.group2.smart_cafe_backend.models.emum.ServiceIsDelete.DELETED WHERE s.serviceId = :serviceId")
     void logicalDeleteService(@Param("serviceId") Long serviceId);
 
-    @Query("SELECT s FROM Service s WHERE s.isDelete = false ORDER BY s.serviceId DESC")
+    @Query("SELECT s FROM Service s WHERE s.isDelete = com.group2.smart_cafe_backend.models.emum.ServiceIsDelete.ACTIVE ORDER BY s.serviceId DESC")
     List<Service> findAllByOrderByServiceIdDescAndIsDeleteFalse();
 }
 
