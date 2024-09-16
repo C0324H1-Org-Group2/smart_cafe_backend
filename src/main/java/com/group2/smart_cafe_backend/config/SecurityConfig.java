@@ -20,6 +20,9 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.Arrays;
 
 @EnableWebSecurity
 @Configuration
@@ -55,19 +58,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(request -> {
+                    CorsConfiguration config = new CorsConfiguration();
+                    config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+                    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+                    config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+                    config.setAllowCredentials(true);
+                    return config;
+                }))
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
-                .authorizeHttpRequests(
-                        auth -> auth
-//                                .requestMatchers("/api/login").permitAll()
-//                                .requestMatchers("/api/news/**").permitAll()
-//                                .requestMatchers("/api/orders/**").permitAll()
-//                                .requestMatchers("/api/services/**").permitAll()
-//                                .requestMatchers("/api/employees/**").permitAll()
-//                                .requestMatchers("/news").permitAll()
-//                                .requestMatchers("/ws").permitAll()
-//                                .requestMatchers("/topic/app").permitAll()
-                                .requestMatchers("/**").permitAll()
-
+                .authorizeHttpRequests(auth -> auth
+                                .requestMatchers("/api/login").permitAll()
+                                .requestMatchers("**").permitAll()
+                                .anyRequest().authenticated()
 
                 )
                 .build();
