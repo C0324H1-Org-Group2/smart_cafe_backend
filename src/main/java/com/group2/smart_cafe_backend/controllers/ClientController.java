@@ -11,6 +11,7 @@ import com.group2.smart_cafe_backend.services.IBillService;
 import com.group2.smart_cafe_backend.services.IFeedbackService;
 import com.group2.smart_cafe_backend.services.ITableService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,12 +33,17 @@ public class ClientController {
     @Autowired
     private IFeedbackService feedbackService;
 
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
 
     // Endpoint để cập nhật trạng thái bảng thành false
     @PatchMapping("/tables/{id}/status_createBill")
     public Bill updateTableStatusAndCreateBill(@PathVariable Long id) {
         // Cập nhật trạng thái bảng thành false
         Tables table = tableService.updateTableStatus(id);
+
+        messagingTemplate.convertAndSend("/topic/admin/sell", table);
 
         // Tạo hóa đơn mới
         return billService.createBill(table);
