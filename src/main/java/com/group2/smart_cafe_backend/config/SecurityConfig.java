@@ -68,9 +68,10 @@ public class SecurityConfig {
                 }))
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/api/login").permitAll()
-                                .requestMatchers("**").permitAll()
-                                .anyRequest().authenticated()
+                        .requestMatchers("/api/login").permitAll()
+//                        .requestMatchers("/api/news/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("**").permitAll()
+//                        .anyRequest().authenticated()
 
                 )
                 .build();
