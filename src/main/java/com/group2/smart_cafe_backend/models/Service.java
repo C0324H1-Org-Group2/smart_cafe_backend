@@ -1,4 +1,5 @@
 package com.group2.smart_cafe_backend.models;
+import com.group2.smart_cafe_backend.models.emum.ServiceIsDelete;
 import com.group2.smart_cafe_backend.models.emum.ServiceStatus;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -39,7 +40,8 @@ public class Service {
     @Column(columnDefinition = "ENUM('available', 'unavailable', 'out_of_stock')")
     private ServiceStatus status;
 
-    @Column(name = "is_delete", nullable = false)
-    private boolean isDelete = false;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('ACTIVE', 'DELETED') DEFAULT 'ACTIVE'", nullable = false)
+    private ServiceIsDelete isDelete = ServiceIsDelete.ACTIVE;
 }
 

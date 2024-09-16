@@ -12,7 +12,7 @@ public class EmployeeController {
     @Autowired
     private IEmployeeService employeeService;
     @GetMapping("/{employeeId}")
-    public Employee getNewsById(@PathVariable Long employeeId) {
+    public Employee getEmployeeById(@PathVariable Long employeeId) {
         return employeeService.getEmployeeById(employeeId);
     }
 }
