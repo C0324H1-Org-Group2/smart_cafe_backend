@@ -49,6 +49,12 @@ public class ClientController {
         return tableService.updateTableStatus1(id);
     }
 
+    @PatchMapping("/tables/{id}/statusBill")
+    public Tables updateTableStatusBill(@PathVariable Long id) {
+        // Cập nhật trạng thái bảng
+        return tableService.updateTableStatusBill(id);
+    }
+
     @PostMapping("/bill-details/order")
     public List<BillDetail> saveBillDetails(@RequestBody List<BillDetail> orderDetails) {
         return billDetailService.saveBillDetails(orderDetails);
@@ -69,5 +75,13 @@ public class ClientController {
         return feedbackService.saveFeedback(feedbackRequest.getEmail(),feedbackRequest.getMessage());
     }
 
+    @GetMapping("/tables/{id}/check-is-bill")
+    public boolean checkIsBill(@PathVariable Long id) {
+        return tableService.isTableBill(id);
+    }
 
+    @PostMapping("/tables/{id}/callEmployee")
+    public Tables callEmployee(@PathVariable Long id){
+        return tableService.callEmployee(id);
+    }
 }

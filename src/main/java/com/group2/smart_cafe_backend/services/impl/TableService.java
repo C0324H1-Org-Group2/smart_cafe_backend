@@ -84,13 +84,37 @@ public class TableService implements ITableService {
     @Override
     public Tables updateTableStatus1(Long id) {
         Tables table = tableRepository.findById(id).orElseThrow(() -> new RuntimeException("Table not found"));
-        table.setOn(true);
-        table.setBill(false);
+        table.setPay(true);
         return tableRepository.save(table);
     }
 
     @Override
     public Page<Tables> findByState(String state, Pageable pageable) {
         return tableRepository.findByStateContainingIgnoreCase(state, pageable);
+    }
+
+    @Override
+    public Tables updateTableStatusBill(Long id) {
+        Tables table = tableRepository.findById(id).orElseThrow(() -> new RuntimeException("Table not found"));
+        table.setBill(true);
+        return tableRepository.save(table);
+    }
+
+    @Override
+    public Tables getTableCurrent(Long tableId) {
+        return tableRepository.findByTableId(tableId);
+    }
+
+    @Override
+    public boolean isTableBill(Long tableId) {
+        Tables table = getTableCurrent(tableId);
+        return table != null && table.isBill();
+    }
+
+    @Override
+    public Tables callEmployee(Long id) {
+        Tables table = getTableCurrent(id);
+        table.setCallEmployee(true);
+        return tableRepository.save(table);
     }
 }

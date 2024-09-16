@@ -59,6 +59,7 @@ public class Sell_Feedback_Controller {
 
     @PatchMapping("/table/employee/{tableId}")
     public void setStatusEmployee(@PathVariable Long tableId){
+
         sellService.setStatusEmployee(tableId);
     }
 
