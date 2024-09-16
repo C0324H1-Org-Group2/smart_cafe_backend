@@ -8,9 +8,13 @@ import com.group2.smart_cafe_backend.services.INewsService;
 import com.group2.smart_cafe_backend.services.INewsUserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,10 +36,22 @@ public class NewsController {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
+    @GetMapping("/active")
+    public ResponseEntity<Page<News>> getAllActiveNews(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size) {
+        Page<News> newsList = newsService.findAllActiveNews(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "publishDate")));
+        return new ResponseEntity<>(newsList, HttpStatus.OK);
+    }
+
     @GetMapping
-    public ResponseEntity<List<News>> getAllNews() {
-        List<News> allNews = newsService.getAllNews();
-        return new ResponseEntity<>(allNews, HttpStatus.OK);
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Page<News>> getAllNews(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size
+    ) {
+        Page<News> newsList = newsService.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "publishDate")));
+        return new ResponseEntity<>(newsList, HttpStatus.OK);
     }
 
     @GetMapping("/{newsId}")
@@ -44,6 +60,7 @@ public class NewsController {
     }
 
     @PostMapping("/create")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<News> createNews(
             @Valid @ModelAttribute NewsDTO newsDTO,
             @RequestParam("file") MultipartFile file,
@@ -68,28 +85,21 @@ public class NewsController {
         return new ResponseEntity<>(savedNews, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/soft-delete/{newsId}")
-    public ResponseEntity<Void> softDeleteNews(@PathVariable Long newsId) {
-        Optional<News> newsOptional = newsService.findById(newsId);
-        if (newsOptional.isPresent()) {
-            newsService.softDeleteNews(newsId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @PutMapping("/soft-delete/{id}")
+//    @PreAuthorize("hasRole('ROLE_EMPLOYEE') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> softDeleteNews(@PathVariable Long id) {
+        newsService.softDeleteNews(id);
+        return ResponseEntity.ok("Tin tức đã bị xóa mềm");
     }
 
-    @DeleteMapping("/{newsId}")
-    public ResponseEntity<Void> deleteNews(@PathVariable Long newsId) {
-        Optional<News> newsOptional = newsService.findById(newsId);
-        if (newsOptional.isPresent()) {
-            newsService.deleteNews(newsId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @DeleteMapping("/hard-delete/{id}")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> hardDeleteNews(@PathVariable Long id) {
+        newsService.hardDeleteNews(id);
+        return ResponseEntity.ok("Tin tức đã bị xóa vĩnh viễn");
     }
 
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/update/{newsId}")
     public ResponseEntity<News> updateNews(@PathVariable Long newsId,
                                            @Valid @ModelAttribute NewsDTO newsDTO,
@@ -132,5 +142,11 @@ public class NewsController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<News>> searchNewsByTitle(@RequestParam("title") String title) {
+        List<News> searchResults = newsService.searchByTitle(title);
+        return new ResponseEntity<>(searchResults, HttpStatus.OK);
     }
 }
