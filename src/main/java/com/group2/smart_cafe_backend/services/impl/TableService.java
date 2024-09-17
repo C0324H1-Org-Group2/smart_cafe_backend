@@ -27,23 +27,15 @@ public class TableService implements ITableService {
 
     @Autowired
     private IBillRepository billRepository;
-    @Override
-    public Optional<Tables> findById(Long id) {
-        return tableRepository.findById(id);
-    }
 
-    @Override
-    public Page<Tables> findAllTablesByCode(String code, Pageable pageable) {
-        return tableRepository.findAllTablesByCode(code == null || code.isEmpty() ? null : "%" + code + "%", pageable);
+@Override
+public Page<Tables> getAllTables(String code, Boolean on, boolean includeDeleted, Pageable pageable) {
+    if (includeDeleted) {
+        return tableRepository.findAllTablesByCodeAndOnIncludingDeleted(code == null || code.isEmpty() ? null : code, on, pageable);
+    } else {
+        return tableRepository.findAllTablesByCodeAndOn(code == null || code.isEmpty() ? null : code, on, pageable);
     }
-    @Override
-    public Page<Tables> getAllTables(String code, boolean includeDeleted, Pageable pageable) {
-        if (includeDeleted) {
-            return tableRepository.findAllTablesByCodeIncludingDeleted(code == null || code.isEmpty() ? null : code, pageable);
-        } else {
-            return tableRepository.findAllTablesByCode(code == null || code.isEmpty() ? null : code, pageable);
-        }
-    }
+}
 
     @Override
     public Optional<Tables> getTableById(Long id) {
@@ -100,6 +92,11 @@ public class TableService implements ITableService {
         table.setOn(false);
         table.setBill(true);
         return tableRepository.save(table);
+    }
+
+    @Override
+    public Page<Tables> getTablesByIsOn(boolean isOn, Pageable pageable) {
+        return null;
     }
 
     @Override

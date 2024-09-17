@@ -13,12 +13,10 @@ import java.util.Optional;
 
 @Repository
 public interface ITableRepository extends JpaRepository<Tables, Long> {
-    @Query("SELECT t FROM Tables t WHERE t.isDelete = false AND (:code IS NULL OR t.code LIKE %:code%)")
-    Page<Tables> findAllTablesByCode(@Param("code") String code, Pageable pageable);
+    @Query("SELECT t FROM Tables t WHERE (:code IS NULL OR t.code LIKE %:code%) AND t.isDelete = false AND (:on IS NULL OR t.isOn = :on)")
+    Page<Tables> findAllTablesByCodeAndOn(@Param("code") String code, @Param("on") Boolean on, Pageable pageable);
     Page<Tables> findByStateContainingIgnoreCase(String state, Pageable pageable);
-
-    @Query("SELECT t FROM Tables t WHERE (:code IS NULL OR t.code LIKE %:code%)")
-    Page<Tables> findAllTablesByCodeIncludingDeleted(@Param("code") String code, Pageable pageable);
-
+@Query("SELECT t FROM Tables t WHERE (:code IS NULL OR t.code LIKE %:code%) AND (:on IS NULL OR t.isOn = :on)")
+Page<Tables> findAllTablesByCodeAndOnIncludingDeleted(@Param("code") String code, @Param("on") Boolean on, Pageable pageable);
     Tables findByTableId(Long tableId);
 }

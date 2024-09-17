@@ -70,6 +70,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/login").permitAll()
 //                        .requestMatchers("/api/news/**").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers("/api/tables/**").hasAnyRole("ADMIN", "USER") // Quyền truy cập cho bảng
                         .requestMatchers("**").permitAll()
 //                        .anyRequest().authenticated()
 

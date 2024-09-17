@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,19 +21,29 @@ public class TableController {
 
     @Autowired
     private ITableService serviceTable;
-
-    // Lấy tất cả các bàn chưa bị xóa
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Page<Tables>> getAllTables(
             @RequestParam(value = "code", defaultValue = "") String code,
+            @RequestParam(value = "on", required = false) Boolean on,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
             @RequestParam(value = "includeDeleted", defaultValue = "false") boolean includeDeleted) {
+
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id"))); // Sắp xếp theo id giảm dần
-        Page<Tables> tables = serviceTable.getAllTables(code, includeDeleted, pageable);
+        Page<Tables> tables = serviceTable.getAllTables(code, on, includeDeleted, pageable);
         return new ResponseEntity<>(tables, HttpStatus.OK);
     }
 
+    @GetMapping("/byIsOn")
+    public Page<Tables> getTablesByIsOn(
+            @RequestParam boolean isOn,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        return serviceTable.getTablesByIsOn(isOn, pageable);
+    }
     // Lấy bàn theo ID
     @GetMapping("/{id}")
     public ResponseEntity<Tables> getTableById(@PathVariable Long id) {
@@ -54,6 +65,7 @@ public class TableController {
     }
     // Tạo mới bàn
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Tables> createTable(@RequestBody Tables table) {
         try {
             Tables createdTable = serviceTable.createTable(table);
@@ -66,6 +78,7 @@ public class TableController {
 
     // Cập nhật bàn
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Tables> updateTable(@PathVariable Long id, @RequestBody Tables table) {
         Tables updatedTable = serviceTable.updateTable(id, table);
         return ResponseEntity.ok(updatedTable);
@@ -73,6 +86,7 @@ public class TableController {
 
     // Xóa mềm bàn theo ID
     @DeleteMapping("/soft/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> softDeleteTable(@PathVariable Long id) {
         serviceTable.softDeleteTable(id);
         return ResponseEntity.noContent().build();
@@ -80,6 +94,7 @@ public class TableController {
 
     // Xóa cứng bàn theo ID
     @DeleteMapping("/hard/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteTable(@PathVariable Long id) {
         try {
             serviceTable.hardDeleteTable(id);
