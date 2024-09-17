@@ -48,7 +48,7 @@ public class AuthController {
         String jwt = jwtService.generateTokenLogin(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User currentUser = userService.findByUsername(username.getUsername());
-        return ResponseEntity.ok(new JwtResponse(currentUser.getUserId(), jwt, userDetails.getUsername(), userDetails.getUsername(), userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(currentUser.getUserId(), jwt, userDetails.getUsername(), userDetails.getUsername(), userDetails.getAuthorities(),currentUser.getEmployee().getFullName()));
     }
     @PostMapping("/api/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> emailRequest) {
