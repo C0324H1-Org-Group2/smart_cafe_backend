@@ -43,4 +43,9 @@ public interface IBillRepository extends JpaRepository<Bill,Long> {
     @Query("SELECT b.code FROM Bill b ORDER BY b.code DESC LIMIT 1")
     String findMaxBillCode();
 
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Bill b WHERE b.table.tableId = :tableId")
+    void deleteBillsByTableId(@Param("tableId") Long tableId);
 }
