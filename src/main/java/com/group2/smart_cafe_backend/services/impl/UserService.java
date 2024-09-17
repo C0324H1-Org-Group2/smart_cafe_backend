@@ -6,6 +6,7 @@ import com.group2.smart_cafe_backend.models.User;
 import com.group2.smart_cafe_backend.repositories.IEmployeeRepository;
 import com.group2.smart_cafe_backend.repositories.IUserRepository;
 import com.group2.smart_cafe_backend.services.IUserService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,7 +14,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService implements IUserService, UserDetailsService {
@@ -23,6 +26,11 @@ public class UserService implements IUserService, UserDetailsService {
     private IEmployeeRepository employeeRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordResetService passwordResetService;
+
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -55,5 +63,34 @@ public class UserService implements IUserService, UserDetailsService {
     public User findByUser(Employee employee) {
         return userRepository.findByEmployee(employee);
     }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User findById(Long userId) {
+        return userRepository.findById(userId).orElseThrow();
+    }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public void updatePasswordDateAndNotify(Long userId, LocalDate newPasswordExpiryDate) throws MessagingException {
+        User user = findById(userId);
+        if (user != null) {
+            user.setPasswordExpiryDate(newPasswordExpiryDate);
+            save(user);
+            String token = UUID.randomUUID().toString();
+            passwordResetService.createPasswordResetToken(user, token);
+            String resetUrl = "http://localhost:3000/admin/reset-password?token=" + token;
+            emailService.sendResetPasswordEmail30Days(user.getEmployee().getEmail(), resetUrl);
+        }
+    }
+
 
 }
