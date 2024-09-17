@@ -82,7 +82,9 @@ public class ClientController {
 
     @PostMapping("/feedback_client")
     public Feedback submitFeedback(@RequestBody FeedbackRequestDTO feedbackRequest) {
-        return feedbackService.saveFeedback(feedbackRequest.getEmail(),feedbackRequest.getMessage());
+        Feedback feedback = feedbackService.saveFeedback(feedbackRequest.getEmail(),feedbackRequest.getMessage());
+        messagingTemplate.convertAndSend("/topic/admin/feedback", feedback);
+        return feedback;
     }
 
     @GetMapping("/tables/{id}/check-is-bill")
