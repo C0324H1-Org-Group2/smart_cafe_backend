@@ -17,7 +17,7 @@ import java.util.Optional;
 public interface IBillRepository extends JpaRepository<Bill,Long> {
 
 
-    @Query(nativeQuery = true, value = "SELECT s.service_name, bd.quantity, s.price, t.code,b.status, b.date_created " +
+    @Query(nativeQuery = true, value = "SELECT s.service_name, bd.quantity, s.price, t.code,b.status, b.date_created,b.code " +
             "FROM bills b " +
             "JOIN bill_details bd ON b.bill_id = bd.bill_id " +
             "JOIN services s ON s.service_id = bd.service_id " +

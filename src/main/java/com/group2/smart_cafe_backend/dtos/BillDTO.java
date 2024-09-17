@@ -12,14 +12,16 @@ public class BillDTO {
     private String tableCode;
     private String status;
     private LocalDateTime date;
+    private String code;
 
-    public BillDTO(String serviceName, Integer quantity, BigDecimal price, String tableCode, String status, LocalDateTime date) {
+    public BillDTO(String serviceName, Integer quantity, BigDecimal price, String tableCode, String status, LocalDateTime date, String code) {
         this.name = serviceName;
         this.quantity = quantity;
         this.price = price;
         this.tableCode = tableCode;
         this.status = status;
         this.date = date;
+        this.code = code;
     }
 
 
