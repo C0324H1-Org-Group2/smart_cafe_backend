@@ -31,7 +31,7 @@ public class User {
     private String verificationToken;
 
     @Column(name = "password_expiry_date")
-    private Date passwordExpiryDate;
+    private LocalDate passwordExpiryDate;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 }
