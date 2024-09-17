@@ -34,5 +34,6 @@ public class User {
     private LocalDate passwordExpiryDate;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
+
 }
 
