@@ -22,7 +22,7 @@ public interface ISellService {
 
     boolean updateBillStatus(Long tableId);
 
-    void setStatusEmployee(Long tableId);
+    Tables setStatusEmployee(Long tableId);
 
     void setStatusOrder(Long tableId);
 }
