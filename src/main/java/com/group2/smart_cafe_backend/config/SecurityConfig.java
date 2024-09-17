@@ -5,7 +5,6 @@ import com.group2.smart_cafe_backend.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -74,6 +73,7 @@ public class SecurityConfig {
                                 .requestMatchers("**").permitAll()
 //                        .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
 //                                .anyRequest().authenticated()
+
                 )
                 .build();
     }
