@@ -68,11 +68,12 @@ public class SecurityConfig {
                 }))
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/api/login").permitAll()
-                                .requestMatchers("**").permitAll()
-                                .anyRequest().authenticated()
-
+                        .requestMatchers("/api/login").permitAll()
+                        .requestMatchers("**").permitAll()
+//                        .requestMatchers("/api/orders/**", "/api/revenue/**").authenticated()
+                        .anyRequest().authenticated()
                 )
                 .build();
     }
+
 }
