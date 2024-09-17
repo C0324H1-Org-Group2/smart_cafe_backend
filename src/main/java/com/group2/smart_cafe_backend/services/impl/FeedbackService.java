@@ -69,8 +69,18 @@ public class FeedbackService implements IFeedbackService {
     }
 
     private String generateFeedbackCode() {
-        Long count = feedbackRepository.count();
-        Long nextNumber = count + 1;
-        return "FB" + String.format("%03d", nextNumber);
+        // Lấy mã phản hồi có giá trị lớn nhất từ bảng
+        String maxCode = feedbackRepository.findMaxFeedbackCode();
+
+        if (maxCode != null) {
+            // Tách phần số từ mã phản hồi (bỏ đi ký tự "FB")
+            int maxNumber = Integer.parseInt(maxCode.substring(2));
+
+            int nextNumber = maxNumber + 1;
+            return "FB" + nextNumber;
+        } else {
+            return "FB001";
+        }
     }
+
 }
