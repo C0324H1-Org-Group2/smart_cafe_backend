@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,10 +37,12 @@ public Page<Tables> getAllTables(String code, Boolean on, boolean includeDeleted
         return tableRepository.findAllTablesByCodeAndOn(code == null || code.isEmpty() ? null : code, on, pageable);
     }
 }
-
+    public boolean existsByCode(String code) {
+        return tableRepository.existsByCode(code);
+    }
     @Override
     public Optional<Tables> getTableById(Long id) {
-        return tableRepository.findById(id).filter(table -> !table.isDelete());
+        return tableRepository.findById(id);
     }
 
     @Override
@@ -54,11 +57,15 @@ public Page<Tables> getAllTables(String code, Boolean on, boolean includeDeleted
     @Override
     public Tables updateTable(Long id, Tables table) {
         // Kiểm tra nếu ID không tồn tại thì báo lỗi
-        if (!tableRepository.existsById(id)) {
-            throw new IllegalArgumentException("Table with ID " + id + " does not exist.");
-        }
-        table.setTableId(id);
-        return tableRepository.save(table);
+        Tables existingTable = tableRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Table with ID " + id + " does not exist."));
+        // Cập nhật các trường dữ liệu của bàn, bao gồm isDelete
+        existingTable.setCode(table.getCode());
+        existingTable.setState(table.getState());
+        existingTable.setOn(table.isOn());
+        existingTable.setDelete(table.isDelete());  // Cho phép cập nhật isDelete
+
+        return tableRepository.save(existingTable);
     }
 
     @Override
