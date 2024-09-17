@@ -11,6 +11,7 @@ import com.group2.smart_cafe_backend.services.IBillService;
 import com.group2.smart_cafe_backend.services.IFeedbackService;
 import com.group2.smart_cafe_backend.services.ITableService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,12 +33,17 @@ public class ClientController {
     @Autowired
     private IFeedbackService feedbackService;
 
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
 
     // Endpoint để cập nhật trạng thái bảng thành false
     @PatchMapping("/tables/{id}/status_createBill")
     public Bill updateTableStatusAndCreateBill(@PathVariable Long id) {
         // Cập nhật trạng thái bảng thành false
         Tables table = tableService.updateTableStatus(id);
+
+        messagingTemplate.convertAndSend("/topic/admin/sell/order", table);
 
         // Tạo hóa đơn mới
         return billService.createBill(table);
@@ -46,7 +52,17 @@ public class ClientController {
     @PatchMapping("/tables/{id}/status")
     public Tables updateTableStatus(@PathVariable Long id) {
         // Cập nhật trạng thái bảng
-        return tableService.updateTableStatus1(id);
+        Tables table = tableService.updateTableStatus1(id);
+        messagingTemplate.convertAndSend("/topic/admin/sell/pay", table);
+        return table;
+    }
+
+    @PatchMapping("/tables/{id}/statusBill")
+    public Tables updateTableStatusBill(@PathVariable Long id) {
+        // Cập nhật trạng thái bảng
+        Tables tables = tableService.updateTableStatusBill(id);
+        messagingTemplate.convertAndSend("/topic/admin/sell/order", tables);
+        return tables;
     }
 
     @PostMapping("/bill-details/order")
@@ -69,5 +85,15 @@ public class ClientController {
         return feedbackService.saveFeedback(feedbackRequest.getEmail(),feedbackRequest.getMessage());
     }
 
+    @GetMapping("/tables/{id}/check-is-bill")
+    public boolean checkIsBill(@PathVariable Long id) {
+        return tableService.isTableBill(id);
+    }
 
+    @PostMapping("/tables/{id}/callEmployee")
+    public Tables callEmployee(@PathVariable Long id){
+        Tables table = tableService.callEmployee(id);
+        messagingTemplate.convertAndSend("/topic/admin/sell/callEmployee", table);
+        return table;
+    }
 }

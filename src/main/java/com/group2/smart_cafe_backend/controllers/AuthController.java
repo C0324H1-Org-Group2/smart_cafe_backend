@@ -15,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +34,8 @@ public class AuthController {
     private PasswordResetService passwordResetService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     public AuthController(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
@@ -87,5 +90,41 @@ public class AuthController {
 
         return ResponseEntity.ok("Mật khẩu đã được cập nhật thành công");
     }
+    @PostMapping("/api/logout")
+    public ResponseEntity<?> logout() {
+        SecurityContextHolder.clearContext();
+        return ResponseEntity.ok("Đăng xuất thành công");
+    }
+    @PostMapping("/api/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody Map<String, String> passwordRequest) {
+        String username = passwordRequest.get("username");
+        String currentPassword = passwordRequest.get("currentPassword");
+        String newPassword = passwordRequest.get("newPassword");
+        String confirmPassword = passwordRequest.get("confirmPassword");
 
+        if (newPassword == null || newPassword.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mật khẩu mới không được để trống");
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mật khẩu mới và xác nhận mật khẩu không khớp");
+        }
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(username, currentPassword)
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        User currentUser = userService.findByUsername(username);
+        if (currentUser == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Người dùng không tồn tại");
+        }
+
+        if (!passwordEncoder.matches(currentPassword, currentUser.getPassword())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mật khẩu hiện tại không đúng");
+        }
+
+        userService.updatePassword(currentUser, newPassword);
+
+        return ResponseEntity.ok("Mật khẩu đã được cập nhật thành công");
+    }
 }

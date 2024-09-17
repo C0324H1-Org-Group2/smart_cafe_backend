@@ -19,4 +19,6 @@ public interface ITableRepository extends JpaRepository<Tables, Long> {
 
     @Query("SELECT t FROM Tables t WHERE (:code IS NULL OR t.code LIKE %:code%)")
     Page<Tables> findAllTablesByCodeIncludingDeleted(@Param("code") String code, Pageable pageable);
+
+    Tables findByTableId(Long tableId);
 }
