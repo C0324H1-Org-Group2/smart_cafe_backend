@@ -8,6 +8,7 @@ import com.group2.smart_cafe_backend.services.impl.EmailService;
 import com.group2.smart_cafe_backend.services.impl.JwtService;
 import com.group2.smart_cafe_backend.services.impl.PasswordResetService;
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,8 @@ public class AuthController {
     private EmailService emailService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private HttpSession session;
     public AuthController(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
@@ -95,6 +98,7 @@ public class AuthController {
     }
     @PostMapping("/api/logout")
     public ResponseEntity<?> logout() {
+        session.invalidate();
         SecurityContextHolder.clearContext();
         return ResponseEntity.ok("Đăng xuất thành công");
     }

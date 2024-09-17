@@ -42,12 +42,21 @@ public class BillService implements IBillService {
         return billRepository.save(bill);
     }
 
-    // Tạo mã hóa đơn theo định dạng BIxxx
     private String generateBillCode() {
-        Long count = billRepository.count();
-        Long nextNumber = count + 1;
-        return "BI" + String.format("%03d", nextNumber);
+        // Lấy mã hóa đơn có giá trị lớn nhất từ bảng
+        String maxCode = billRepository.findMaxBillCode();
+
+        if (maxCode != null) {
+            // Tách phần số từ mã hóa đơn (Bỏ đi ký tự "BI")
+            int maxNumber = Integer.parseInt(maxCode.substring(2));
+
+            int nextNumber = maxNumber + 1;
+            return "BI" + nextNumber;
+        } else {
+            return "BI001";
+        }
     }
+
 
     // Lấy ngẫu nhiên một User từ bảng User
     private User getRandomUser() {

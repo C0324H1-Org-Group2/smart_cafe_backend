@@ -14,4 +14,8 @@ public interface IFeedbackRepository extends JpaRepository<Feedback,Long> {
 
     @Query(nativeQuery = true,value = "SELECT * FROM feedbacks WHERE feedback_date = :date")
     List<Feedback> findFeedbackByDate(@Param("date") LocalDate date);
+
+    @Query("SELECT f.code FROM Feedback f ORDER BY f.code DESC LIMIT 1")
+    String findMaxFeedbackCode();
+
 }

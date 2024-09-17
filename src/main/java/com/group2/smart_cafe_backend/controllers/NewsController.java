@@ -45,7 +45,7 @@ public class NewsController {
     }
 
     @GetMapping
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Page<News>> getAllNews(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "6") int size
@@ -60,7 +60,7 @@ public class NewsController {
     }
 
     @PostMapping("/create")
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<News> createNews(
             @Valid @ModelAttribute NewsDTO newsDTO,
             @RequestParam("file") MultipartFile file,
@@ -86,20 +86,20 @@ public class NewsController {
     }
 
     @PutMapping("/soft-delete/{id}")
-//    @PreAuthorize("hasRole('ROLE_EMPLOYEE') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_EMPLOYEE') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> softDeleteNews(@PathVariable Long id) {
         newsService.softDeleteNews(id);
         return ResponseEntity.ok("Tin tức đã bị xóa mềm");
     }
 
     @DeleteMapping("/hard-delete/{id}")
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> hardDeleteNews(@PathVariable Long id) {
         newsService.hardDeleteNews(id);
         return ResponseEntity.ok("Tin tức đã bị xóa vĩnh viễn");
     }
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/update/{newsId}")
     public ResponseEntity<News> updateNews(@PathVariable Long newsId,
                                            @Valid @ModelAttribute NewsDTO newsDTO,
