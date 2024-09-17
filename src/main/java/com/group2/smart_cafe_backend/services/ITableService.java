@@ -31,4 +31,6 @@ public interface ITableService {
     boolean isTableBill(Long tableId);
 
     Tables callEmployee(Long id);
+
+    boolean isTableCall(Long id);
 }
