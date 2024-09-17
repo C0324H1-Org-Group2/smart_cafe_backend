@@ -76,8 +76,10 @@ public class SellService implements ISellService {
     }
 
     @Override
-    public void setStatusEmployee(Long tableId) {
-        billRepository.setStatusEmployee(tableId);
+    public Tables setStatusEmployee(Long tableId) {
+        Tables table = tableRepository.findByTableId(tableId);
+        table.setCallEmployee(false);
+        return tableRepository.save(table);
     }
 
     @Override

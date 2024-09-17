@@ -61,7 +61,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
                     config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-                    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+                    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH"));
                     config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
                     config.setAllowCredentials(true);
                     return config;
@@ -69,11 +69,11 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/login").permitAll()
+//                        .requestMatchers("/api/news/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("**").permitAll()
-//                        .requestMatchers("/api/orders/**", "/api/revenue/**").authenticated()
-                        .anyRequest().authenticated()
+//                        .anyRequest().authenticated()
+
                 )
                 .build();
     }
-
 }
