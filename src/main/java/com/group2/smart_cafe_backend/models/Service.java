@@ -37,7 +37,7 @@ public class Service {
     private LocalTime waitTime;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('available', 'unavailable', 'out_of_stock')")
+    @Column(columnDefinition = "ENUM('available', 'unavailable', 'out_ of_stock')")
     private ServiceStatus status;
 
     @Enumerated(EnumType.STRING)
