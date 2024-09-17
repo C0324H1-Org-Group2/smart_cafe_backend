@@ -117,4 +117,10 @@ public class TableService implements ITableService {
         table.setCallEmployee(true);
         return tableRepository.save(table);
     }
+
+    @Override
+    public boolean isTableCall(Long id) {
+        Tables table = getTableCurrent(id);
+        return table != null && table.isCallEmployee();
+    }
 }
