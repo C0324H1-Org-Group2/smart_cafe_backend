@@ -17,7 +17,7 @@ import java.util.Optional;
 public interface IBillRepository extends JpaRepository<Bill,Long> {
 
 
-    @Query(nativeQuery = true, value = "SELECT s.service_name, bd.quantity, s.price, t.code,b.status, b.date_created " +
+    @Query(nativeQuery = true, value = "SELECT s.service_name, bd.quantity, s.price, t.code,b.status, b.date_created,b.code " +
             "FROM bills b " +
             "JOIN bill_details bd ON b.bill_id = bd.bill_id " +
             "JOIN services s ON s.service_id = bd.service_id " +
@@ -39,4 +39,13 @@ public interface IBillRepository extends JpaRepository<Bill,Long> {
     @Transactional
     @Query(nativeQuery = true, value = "UPDATE tables SET is_bill = 0 WHERE table_id = :id")
     void setStatusOrder(@Param("id") Long tableId);
+
+    @Query("SELECT b.code FROM Bill b ORDER BY b.code DESC LIMIT 1")
+    String findMaxBillCode();
+
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Bill b WHERE b.table.tableId = :tableId")
+    void deleteBillsByTableId(@Param("tableId") Long tableId);
 }

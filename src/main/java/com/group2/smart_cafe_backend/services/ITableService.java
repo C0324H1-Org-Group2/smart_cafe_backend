@@ -9,15 +9,16 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ITableService {
-    Optional<Tables> findById(Long id);
-    Page<Tables> getAllTables(Pageable pageable);
-    Optional<Tables> getTableById(Long id);         // Lấy bàn theo ID
+Page<Tables> getAllTables(String code, Boolean on, boolean includeDeleted, Pageable pageable);
+    Optional<Tables> getTableById(Long id);
+    boolean existsByCode(String code);// Lấy bàn theo ID
     Tables createTable(Tables table);               // Tạo mới bàn
     Tables updateTable(Long id, Tables table);      // Cập nhật bàn
     void softDeleteTable(Long id);                  // Xóa mềm bàn theo ID
-    void hardDeleteTable(Long id);                  // Xóa cứng bàn theo ID
-
+    void hardDeleteTable(Long id);               // Xóa cứng bàn theo ID
     Tables updateTableStatus(Long id);
+
+    Page<Tables> getTablesByIsOn(boolean isOn, Pageable pageable);
 
     List<Tables> getAllTablesByClient();
 
