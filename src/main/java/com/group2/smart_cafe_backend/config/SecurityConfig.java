@@ -72,7 +72,6 @@ public class SecurityConfig {
 //                        .requestMatchers("/api/news/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("**").permitAll()
 //                        .anyRequest().authenticated()
-
                 )
                 .build();
     }
