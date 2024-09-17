@@ -11,8 +11,11 @@ import com.group2.smart_cafe_backend.services.IBillService;
 import com.group2.smart_cafe_backend.services.IFeedbackService;
 import com.group2.smart_cafe_backend.services.ITableService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -80,11 +83,21 @@ public class ClientController {
         return billDetailService.updateBillDetailsWithBill(billDetails);
     }
 
+//    @PostMapping("/feedback_client")
+//    public Feedback submitFeedback(@RequestBody FeedbackRequestDTO feedbackRequest) {
+//        Feedback feedback = feedbackService.saveFeedback(feedbackRequest.getEmail(),feedbackRequest.getMessage(),feedbackRequest.getImageUrl());
+//        messagingTemplate.convertAndSend("/topic/admin/feedback", feedback);
+//        return feedback;
+//    }
+
     @PostMapping("/feedback_client")
-    public Feedback submitFeedback(@RequestBody FeedbackRequestDTO feedbackRequest) {
-        Feedback feedback = feedbackService.saveFeedback(feedbackRequest.getEmail(),feedbackRequest.getMessage());
+    public ResponseEntity<Feedback> submitFeedback(
+            @RequestParam("email") String email,
+            @RequestParam("message") String message,
+            @RequestPart("imageFile") MultipartFile imageFile) {
+        Feedback feedback = feedbackService.saveFeedback(email,message,imageFile);
         messagingTemplate.convertAndSend("/topic/admin/feedback", feedback);
-        return feedback;
+        return new ResponseEntity<>(feedback, HttpStatus.CREATED);
     }
 
     @GetMapping("/tables/{id}/check-is-bill")
