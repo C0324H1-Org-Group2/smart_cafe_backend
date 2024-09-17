@@ -1,10 +1,14 @@
 package com.group2.smart_cafe_backend.services.impl;
 
 import com.group2.smart_cafe_backend.models.Tables;
+import com.group2.smart_cafe_backend.repositories.IBillDetailRepository;
+import com.group2.smart_cafe_backend.repositories.IBillRepository;
 import com.group2.smart_cafe_backend.repositories.ITableRepository;
 import com.group2.smart_cafe_backend.services.ITableService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -18,20 +22,29 @@ public class TableService implements ITableService {
     @Autowired
     private ITableRepository tableRepository;
 
+    @Autowired
+    private IBillDetailRepository billDetailRepository;
 
+    @Autowired
+    private IBillRepository billRepository;
     @Override
     public Optional<Tables> findById(Long id) {
         return tableRepository.findById(id);
     }
 
     @Override
-    public Page<Tables> getAllTables(String code, Pageable pageable) {
-        if (code == null || code.trim().isEmpty()) {
-            return tableRepository.findByIsDeleteFalse(pageable); // Lấy toàn bộ nếu không tìm kiếm
+    public Page<Tables> findAllTablesByCode(String code, Pageable pageable) {
+        return tableRepository.findAllTablesByCode(code == null || code.isEmpty() ? null : "%" + code + "%", pageable);
+    }
+    @Override
+    public Page<Tables> getAllTables(String code, boolean includeDeleted, Pageable pageable) {
+        if (includeDeleted) {
+            return tableRepository.findAllTablesByCodeIncludingDeleted(code == null || code.isEmpty() ? null : code, pageable);
         } else {
-            return tableRepository.findByCodeContainingAndIsDeleteFalse(code, pageable); // Tìm kiếm nếu có mã bàn
+            return tableRepository.findAllTablesByCode(code == null || code.isEmpty() ? null : code, pageable);
         }
     }
+
     @Override
     public Optional<Tables> getTableById(Long id) {
         return tableRepository.findById(id).filter(table -> !table.isDelete());
@@ -61,13 +74,25 @@ public class TableService implements ITableService {
         Optional<Tables> tableOptional = tableRepository.findById(id);
         tableOptional.ifPresent(table -> {
             table.setDelete(true);  // Đánh dấu xóa mềm
+            table.setOn(false);
+            table.setBill(false);
+            table.setPay(false);
+            table.setCallEmployee(false);
             tableRepository.save(table);
         });
     }
 
     @Override
+    @Transactional
     public void hardDeleteTable(Long id) {
-        tableRepository.deleteById(id);  // Xóa cứng
+        // Bước 1: Xóa các chi tiết hóa đơn (BillDetail) liên quan đến bảng cần xóa
+        billDetailRepository.deleteBillDetailsByTableId(id);
+
+        // Bước 2: Xóa các hóa đơn (Bill) liên quan đến bảng cần xóa
+        billRepository.deleteBillsByTableId(id);
+
+        // Bước 3: Xóa bảng chính từ bảng Tables
+        tableRepository.deleteById(id);
     }
     @Override
     public Tables updateTableStatus(Long id) {

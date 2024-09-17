@@ -4,7 +4,9 @@ import com.group2.smart_cafe_backend.dtos.MonthRevenueDTO;
 import com.group2.smart_cafe_backend.dtos.ServiceRevenueDTO;
 import com.group2.smart_cafe_backend.dtos.TopSellServiceDTO;
 import com.group2.smart_cafe_backend.models.BillDetail;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -141,6 +143,9 @@ public interface IBillDetailRepository extends JpaRepository<BillDetail, Integer
             "WHERE DATE(b.dateCreated) BETWEEN :dateFrom AND :dateTo")
     Double getTotalRevenue(@Param("dateFrom") LocalDate dateFrom, @Param("dateTo") LocalDate dateTo);
 
-
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM BillDetail bd WHERE bd.bill.billId IN (SELECT b.billId FROM Bill b WHERE b.table.tableId = :tableId)")
+    void deleteBillDetailsByTableId(@Param("tableId") Long tableId);
 }
 

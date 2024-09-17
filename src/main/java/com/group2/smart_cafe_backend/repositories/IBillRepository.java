@@ -44,4 +44,9 @@ public interface IBillRepository extends JpaRepository<Bill,Long> {
     @Transactional
     @Query(nativeQuery = true, value = "UPDATE tables SET is_bill = 0 WHERE table_id = :id")
     void setStatusOrder(@Param("id") Long tableId);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Bill b WHERE b.table.tableId = :tableId")
+    void deleteBillsByTableId(@Param("tableId") Long tableId);
 }

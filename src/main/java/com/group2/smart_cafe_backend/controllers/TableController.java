@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +26,11 @@ public class TableController {
     public ResponseEntity<Page<Tables>> getAllTables(
             @RequestParam(value = "code", defaultValue = "") String code,
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Tables> tables = serviceTable.getAllTables(code, pageable);
-        return ResponseEntity.ok(tables);
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "includeDeleted", defaultValue = "false") boolean includeDeleted) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id"))); // Sắp xếp theo id giảm dần
+        Page<Tables> tables = serviceTable.getAllTables(code, includeDeleted, pageable);
+        return new ResponseEntity<>(tables, HttpStatus.OK);
     }
 
     // Lấy bàn theo ID
@@ -78,8 +80,12 @@ public class TableController {
 
     // Xóa cứng bàn theo ID
     @DeleteMapping("/hard/{id}")
-    public ResponseEntity<Void> hardDeleteTable(@PathVariable Long id) {
-        serviceTable.hardDeleteTable(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteTable(@PathVariable Long id) {
+        try {
+            serviceTable.hardDeleteTable(id);
+            return ResponseEntity.ok("Xóa bàn thành công");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi xóa bàn: " + e.getMessage());
+        }
     }
 }
