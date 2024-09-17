@@ -54,9 +54,10 @@ public class SellService implements ISellService {
             String status = (String) result[4];
             Timestamp dateCreated = (Timestamp) result[5]; // Lấy Timestamp
             LocalDateTime date = dateCreated.toLocalDateTime(); // Chuyển sang LocalDateTime
+            String code = (String) result[6];
 
 
-            BillDTO billDTO = new BillDTO(serviceName, quantity, price, tableCode,status,date);
+            BillDTO billDTO = new BillDTO(serviceName, quantity, price, tableCode,status,date,code);
             billDTOs.add(billDTO);
         }
 
