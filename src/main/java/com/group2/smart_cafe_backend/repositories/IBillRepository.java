@@ -40,6 +40,10 @@ public interface IBillRepository extends JpaRepository<Bill,Long> {
     @Query(nativeQuery = true, value = "UPDATE tables SET is_bill = 0 WHERE table_id = :id")
     void setStatusOrder(@Param("id") Long tableId);
 
+    @Query("SELECT b.code FROM Bill b ORDER BY b.code DESC LIMIT 1")
+    String findMaxBillCode();
+
+
     @Modifying
     @Transactional
     @Query("DELETE FROM Bill b WHERE b.table.tableId = :tableId")

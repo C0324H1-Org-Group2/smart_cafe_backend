@@ -32,4 +32,6 @@ Page<Tables> getAllTables(String code, Boolean on, boolean includeDeleted, Pagea
     boolean isTableBill(Long tableId);
 
     Tables callEmployee(Long id);
+
+    boolean isTableCall(Long id);
 }
