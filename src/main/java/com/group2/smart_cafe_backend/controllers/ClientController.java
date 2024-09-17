@@ -92,6 +92,11 @@ public class ClientController {
         return tableService.isTableBill(id);
     }
 
+    @GetMapping("/tables/{id}/check-is-call")
+    public boolean checkIsCall(@PathVariable Long id) {
+        return tableService.isTableCall(id);
+    }
+
     @PostMapping("/tables/{id}/callEmployee")
     public Tables callEmployee(@PathVariable Long id){
         Tables table = tableService.callEmployee(id);

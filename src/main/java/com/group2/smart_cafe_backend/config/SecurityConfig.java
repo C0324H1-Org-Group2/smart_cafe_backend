@@ -68,10 +68,12 @@ public class SecurityConfig {
                 }))
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/login").permitAll()
-//                        .requestMatchers("/api/news/**").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers("**").permitAll()
-//                        .anyRequest().authenticated()
+                                .requestMatchers("/api/login","/api/logout","api/reset-password").permitAll()
+//                                .requestMatchers("/api/services/**","/api/feedbacks/**","/api/tables/**","/api/news/**").hasAuthority("ROLE_EMPLOYEE")
+                                .requestMatchers("**").permitAll()
+//                        .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+//                                .anyRequest().authenticated()
+
                 )
                 .build();
     }

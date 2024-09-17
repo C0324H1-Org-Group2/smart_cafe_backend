@@ -7,6 +7,8 @@ import com.group2.smart_cafe_backend.services.IUserService;
 import com.group2.smart_cafe_backend.services.impl.EmailService;
 import com.group2.smart_cafe_backend.services.impl.JwtService;
 import com.group2.smart_cafe_backend.services.impl.PasswordResetService;
+import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -36,6 +40,8 @@ public class AuthController {
     private EmailService emailService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private HttpSession session;
     public AuthController(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
@@ -48,10 +54,10 @@ public class AuthController {
         String jwt = jwtService.generateTokenLogin(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User currentUser = userService.findByUsername(username.getUsername());
-        return ResponseEntity.ok(new JwtResponse(currentUser.getUserId(), jwt, userDetails.getUsername(), userDetails.getUsername(), userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(currentUser.getUserId(), jwt, userDetails.getUsername(), userDetails.getUsername(), userDetails.getAuthorities(),currentUser.getEmployee().getFullName()));
     }
     @PostMapping("/api/forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> emailRequest) {
+    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> emailRequest) throws MessagingException {
         String email = emailRequest.get("email");
         List<Employee> employees = userService.findEmployeeByEmail(email);
         if (employees.isEmpty()) {
@@ -92,6 +98,7 @@ public class AuthController {
     }
     @PostMapping("/api/logout")
     public ResponseEntity<?> logout() {
+        session.invalidate();
         SecurityContextHolder.clearContext();
         return ResponseEntity.ok("Đăng xuất thành công");
     }
@@ -126,5 +133,27 @@ public class AuthController {
         userService.updatePassword(currentUser, newPassword);
 
         return ResponseEntity.ok("Mật khẩu đã được cập nhật thành công");
+    }
+    @PatchMapping("/api/{userId}/update-password-date")
+    public ResponseEntity<?> updatePasswordDate(@PathVariable Long userId, @RequestBody Map<String, String> dateRequest) throws MessagingException {
+        String dateString = dateRequest.get("passwordLastUpdatedDate");
+        if (dateString == null || dateString.isEmpty()) {
+            return ResponseEntity.badRequest().body("Ngày cập nhật mật khẩu không được để trống");
+        }
+
+        LocalDate passwordLastUpdatedDate;
+        try {
+            passwordLastUpdatedDate = LocalDate.parse(dateString);
+        } catch (DateTimeParseException e) {
+            return ResponseEntity.badRequest().body("Ngày không hợp lệ");
+        }
+
+        User user = userService.findById(userId);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        userService.updatePasswordDateAndNotify(userId, passwordLastUpdatedDate);
+
+        return ResponseEntity.ok("Ngày cập nhật mật khẩu đã được thay đổi và email đã được gửi");
     }
 }
