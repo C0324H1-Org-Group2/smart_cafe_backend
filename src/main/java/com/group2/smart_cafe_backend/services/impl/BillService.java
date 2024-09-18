@@ -51,7 +51,7 @@ public class BillService implements IBillService {
             int maxNumber = Integer.parseInt(maxCode.substring(2));
 
             int nextNumber = maxNumber + 1;
-            return "BI" + nextNumber;
+            return "BI" + String.format("%03d", nextNumber);
         } else {
             return "BI001";
         }
