@@ -77,7 +77,7 @@ public class FeedbackService implements IFeedbackService {
             int maxNumber = Integer.parseInt(maxCode.substring(2));
 
             int nextNumber = maxNumber + 1;
-            return "FB" + nextNumber;
+            return "FB" + String.format("%03d", nextNumber);
         } else {
             return "FB001";
         }
