@@ -2,6 +2,7 @@ package com.group2.smart_cafe_backend.controllers;
 
 import com.group2.smart_cafe_backend.dtos.NewsDTO;
 import com.group2.smart_cafe_backend.models.News;
+import com.group2.smart_cafe_backend.models.Service;
 import com.group2.smart_cafe_backend.models.User;
 import com.group2.smart_cafe_backend.services.IFirebaseStorageService;
 import com.group2.smart_cafe_backend.services.INewsService;
@@ -83,6 +84,16 @@ public class NewsController {
         messagingTemplate.convertAndSend("/topic/news", savedNews);
 
         return new ResponseEntity<>(savedNews, HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/{newsId}/restore")
+    public ResponseEntity<?> restoreNews(@PathVariable Long newsId) {
+        try {
+            News restoredNews = newsService.restoreService(newsId);
+            return new ResponseEntity<>(restoredNews, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Lỗi khôi phục tin tuc: " + e.getMessage());
+        }
     }
 
     @PutMapping("/soft-delete/{id}")
