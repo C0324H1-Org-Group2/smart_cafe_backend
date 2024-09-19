@@ -12,6 +12,7 @@ public interface ITableService {
 Page<Tables> getAllTables(String code, Boolean on, boolean includeDeleted, Pageable pageable);
     Optional<Tables> getTableById(Long id);
     boolean existsByCode(String code);// Lấy bàn theo ID
+    Tables restoreTable(Long tableId);
     Tables createTable(Tables table);               // Tạo mới bàn
     Tables updateTable(Long id, Tables table);      // Cập nhật bàn
     void softDeleteTable(Long id);                  // Xóa mềm bàn theo ID

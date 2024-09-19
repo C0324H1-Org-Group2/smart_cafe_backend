@@ -91,7 +91,6 @@ public class NewsController {
         newsService.softDeleteNews(id);
         return ResponseEntity.ok("Tin tức đã bị xóa mềm");
     }
-
     @DeleteMapping("/hard-delete/{id}")
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> hardDeleteNews(@PathVariable Long id) {
