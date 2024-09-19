@@ -3,6 +3,7 @@ package com.group2.smart_cafe_backend.services.impl;
 import com.group2.smart_cafe_backend.dtos.ServiceDto;
 
 import com.group2.smart_cafe_backend.models.ServiceType;
+import com.group2.smart_cafe_backend.models.emum.ServiceIsDelete;
 import com.group2.smart_cafe_backend.repositories.IBillDetailRepository;
 import com.group2.smart_cafe_backend.repositories.IServiceRepository;
 import com.group2.smart_cafe_backend.repositories.IServiceTypeRepository;
@@ -80,13 +81,34 @@ public com.group2.smart_cafe_backend.models.Service updateService(com.group2.sma
     }
 
     @Override
+    @Transactional
+    public com.group2.smart_cafe_backend.models.Service restoreService(Long serviceId) {
+        com.group2.smart_cafe_backend.models.Service service = serviceRepository.findById(serviceId)
+                .orElseThrow(() -> new RuntimeException("Dịch vụ không tìm thấy"));
+
+        if (service.getIsDelete() == ServiceIsDelete.DELETED) {
+            service.setIsDelete(ServiceIsDelete.ACTIVE);
+            return serviceRepository.save(service);
+        } else {
+            throw new RuntimeException("Dịch vụ không ở trạng thái đã xóa");
+        }
+    }
+
+    @Override
     public com.group2.smart_cafe_backend.models.Service getServiceById(Long id) {
         return serviceRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Service not found with id " + id));
     }
 
+    public String generateServiceCode() {
+        Long count = serviceRepository.count();
+        String code = String.format("CF-%04d", count + 1);
+        return code;
+    }
+
     @Override
     public com.group2.smart_cafe_backend.models.Service createService(com.group2.smart_cafe_backend.models.Service service) {
+        service.setServiceCode(generateServiceCode());
         return serviceRepository.save(service);
     }
 

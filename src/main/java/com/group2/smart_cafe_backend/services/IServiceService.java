@@ -35,4 +35,6 @@ public interface IServiceService {
     List<Service> findAllByOrderByServiceIdDesc();
 
     List<Service> getAllServicesSortedByIdDescAndNotDeleted();
+
+    Service restoreService(Long serviceId);
 }

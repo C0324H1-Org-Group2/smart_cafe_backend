@@ -46,7 +46,6 @@ public class ServiceController {
 
     @PostMapping
     public ResponseEntity<?> createService(@RequestParam("imageUrl") MultipartFile file,
-                                           @RequestParam("serviceCode") String serviceCode,
                                            @RequestParam("serviceName") String serviceName,
                                            @RequestParam("typeId") Long typeId,
                                            @RequestParam("price") BigDecimal price,
@@ -60,7 +59,6 @@ public class ServiceController {
                     .orElseThrow(() -> new RuntimeException("Service Type không tìm thấy"));
 
             Service newService = new Service();
-            newService.setServiceCode(serviceCode);
             newService.setServiceName(serviceName);
             newService.setType(serviceType);
             newService.setPrice(price);
@@ -86,6 +84,16 @@ public class ServiceController {
     public ResponseEntity<Void> deleteService(@PathVariable Long id) {
         serviceService.deleteService(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PatchMapping("/{serviceId}/restore")
+    public ResponseEntity<?> restoreService(@PathVariable Long serviceId) {
+        try {
+            Service restoredService = serviceService.restoreService(serviceId);
+            return new ResponseEntity<>(restoredService, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Lỗi khôi phục món: " + e.getMessage());
+        }
     }
 
     @GetMapping("/top5-most-ordered")
@@ -129,7 +137,7 @@ public class ServiceController {
 //    }
 @PutMapping("/update/{serviceId}")
 public ResponseEntity<?> updateService(@PathVariable Long serviceId, @RequestParam("imageUrl") MultipartFile file,
-                                             @RequestParam("serviceCode") String serviceCode,
+//                                             @RequestParam("serviceCode") String serviceCode,
                                              @RequestParam("serviceName") String serviceName,
                                              @RequestParam("typeId") Long typeId,
                                              @RequestParam("price") BigDecimal price,
@@ -143,7 +151,7 @@ public ResponseEntity<?> updateService(@PathVariable Long serviceId, @RequestPar
                 .orElseThrow(() -> new RuntimeException("Service Type không tìm thấy"));
 
         Service existingService = serviceService.getServiceById(serviceId);
-        existingService.setServiceCode(serviceCode);
+//        existingService.setServiceCode(serviceCode);
         existingService.setServiceName(serviceName);
         existingService.setType(serviceType);
         existingService.setPrice(price);
