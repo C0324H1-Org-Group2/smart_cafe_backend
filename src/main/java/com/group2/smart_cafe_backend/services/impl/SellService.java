@@ -55,9 +55,10 @@ public class SellService implements ISellService {
             Timestamp dateCreated = (Timestamp) result[5]; // Lấy Timestamp
             LocalDateTime date = dateCreated.toLocalDateTime(); // Chuyển sang LocalDateTime
             String code = (String) result[6];
+            Long billId =(Long) result[7];
 
 
-            BillDTO billDTO = new BillDTO(serviceName, quantity, price, tableCode,status,date,code);
+            BillDTO billDTO = new BillDTO(serviceName, quantity, price, tableCode,status,date,code,billId);
             billDTOs.add(billDTO);
         }
 
@@ -70,8 +71,8 @@ public class SellService implements ISellService {
     }
 
     @Override
-    public boolean updateBillStatus(Long tableId) {
-        int updatedRows = billRepository.updateBillStatus(tableId);
+    public boolean updateBillStatus(Long tableId,Long userId) {
+        int updatedRows = billRepository.updateBillStatus(tableId,userId);
 //        số hàng cập nhật lớn hơn 0 thì trả về true, ngược lại trả về false
         return updatedRows > 0;
     }

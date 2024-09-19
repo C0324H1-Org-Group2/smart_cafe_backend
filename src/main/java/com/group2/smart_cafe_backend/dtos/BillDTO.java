@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 @Data
 public class BillDTO {
+    private Long billId;
     private String name;
     private Integer quantity;
     private BigDecimal price;
@@ -14,7 +15,7 @@ public class BillDTO {
     private LocalDateTime date;
     private String code;
 
-    public BillDTO(String serviceName, Integer quantity, BigDecimal price, String tableCode, String status, LocalDateTime date, String code) {
+    public BillDTO(String serviceName, Integer quantity, BigDecimal price, String tableCode, String status, LocalDateTime date, String code, Long billId) {
         this.name = serviceName;
         this.quantity = quantity;
         this.price = price;
@@ -22,6 +23,7 @@ public class BillDTO {
         this.status = status;
         this.date = date;
         this.code = code;
+        this.billId = billId;
     }
 
 

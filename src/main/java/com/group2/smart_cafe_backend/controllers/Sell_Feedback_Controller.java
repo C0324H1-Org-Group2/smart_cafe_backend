@@ -4,6 +4,7 @@ import com.group2.smart_cafe_backend.dtos.BillDTO;
 import com.group2.smart_cafe_backend.models.Feedback;
 import com.group2.smart_cafe_backend.models.Tables;
 import com.group2.smart_cafe_backend.services.ISellService;
+import com.group2.smart_cafe_backend.services.impl.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,8 @@ public class Sell_Feedback_Controller {
 
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
+    @Autowired
+    private TableService tableService;
 
     @GetMapping("/feedbacks")
     public ResponseEntity<List<Feedback>> findAllFeedback() {
@@ -51,9 +54,12 @@ public class Sell_Feedback_Controller {
         return new ResponseEntity<>(billDTOS, HttpStatus.OK);
     }
 
-    @PatchMapping("/bills/delete/{tableId}")
-    public ResponseEntity<Boolean> changeStatusBillByTableId(@PathVariable Long tableId) {
-        boolean statusBills = sellService.updateBillStatus(tableId);
+    @PatchMapping("/bills/delete/{tableId}/{userId}")
+    public ResponseEntity<Boolean> changeStatusBillByTableId(@PathVariable Long tableId,@PathVariable Long userId) {
+
+
+
+        boolean statusBills = sellService.updateBillStatus(tableId,userId);
         boolean statusTable = sellService.updateTableStatus(tableId);
         boolean isSuccess;
         if(statusTable == true && statusBills == true){
