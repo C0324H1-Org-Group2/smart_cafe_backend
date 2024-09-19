@@ -153,4 +153,18 @@ public Page<Tables> getAllTables(String code, Boolean on, boolean includeDeleted
         Tables table = getTableCurrent(id);
         return table != null && table.isCallEmployee();
     }
+
+    @Override
+    @Transactional
+    public Tables restoreTable(Long tableId) {
+        Tables table = tableRepository.findById(tableId)
+                .orElseThrow(() -> new RuntimeException("Bàn không tìm thấy"));
+
+        if (table.isDelete()) {
+            table.setDelete(false);  // Khôi phục bàn bằng cách chuyển trạng thái isDelete về false
+            return tableRepository.save(table);
+        } else {
+            throw new RuntimeException("Bàn không ở trạng thái đã xóa");
+        }
+    }
 }

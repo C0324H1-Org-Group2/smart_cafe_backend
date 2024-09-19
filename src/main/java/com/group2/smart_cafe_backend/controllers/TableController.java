@@ -116,4 +116,14 @@ public class TableController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi xóa bàn: " + e.getMessage());
         }
     }
+
+    @PatchMapping("/{tableId}/restore")
+    public ResponseEntity<?> restoreTable(@PathVariable Long tableId) {
+        try {
+            Tables restoredTable = serviceTable.restoreTable(tableId);
+            return new ResponseEntity<>(restoredTable, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Lỗi khôi phục bàn: " + e.getMessage());
+        }
+    }
 }
