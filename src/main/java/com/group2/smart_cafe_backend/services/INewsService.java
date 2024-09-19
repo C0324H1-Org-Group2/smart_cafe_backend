@@ -25,4 +25,6 @@ public interface INewsService {
     Page<News> findAll(Pageable pageable);
 
     List<News> searchByTitle(String title);
+
+    News restoreService(Long newsId);
 }

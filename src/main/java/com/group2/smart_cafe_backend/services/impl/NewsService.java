@@ -2,8 +2,10 @@ package com.group2.smart_cafe_backend.services.impl;
 
 import com.group2.smart_cafe_backend.models.News;
 import com.group2.smart_cafe_backend.models.emum.NewsStatus;
+import com.group2.smart_cafe_backend.models.emum.ServiceIsDelete;
 import com.group2.smart_cafe_backend.repositories.INewsRepository;
 import com.group2.smart_cafe_backend.services.INewsService;
+import jdk.jshell.Snippet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +32,19 @@ public class NewsService implements INewsService {
     @Override
     public List<News> searchByTitle(String title) {
         return newsRepository.searchByTitle(title);
+    }
+
+    @Override
+    public News restoreService(Long newsId) {
+        News news = newsRepository.findById(newsId)
+                .orElseThrow(() -> new RuntimeException("Tin tuc không tìm thấy"));
+
+        if (news.getStatus() == NewsStatus.Deleted) {
+            news.setStatus(NewsStatus.Active);
+            return newsRepository.save(news);
+        } else {
+            throw new RuntimeException("Dịch vụ không ở trạng thái đã xóa");
+        }
     }
 
     @Override
