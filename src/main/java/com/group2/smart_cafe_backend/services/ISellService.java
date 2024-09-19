@@ -20,7 +20,7 @@ public interface ISellService {
 
     boolean updateTableStatus(Long tableId);
 
-    boolean updateBillStatus(Long tableId);
+    boolean updateBillStatus(Long tableId,Long userId);
 
     Tables setStatusEmployee(Long tableId);
 

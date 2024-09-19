@@ -17,7 +17,7 @@ import java.util.Optional;
 public interface IBillRepository extends JpaRepository<Bill,Long> {
 
 
-    @Query(nativeQuery = true, value = "SELECT s.service_name, bd.quantity, s.price, t.code,b.status, b.date_created,b.code " +
+    @Query(nativeQuery = true, value = "SELECT s.service_name, bd.quantity, s.price, t.code,b.status, b.date_created,b.code,b.bill_id " +
             "FROM bills b " +
             "JOIN bill_details bd ON b.bill_id = bd.bill_id " +
             "JOIN services s ON s.service_id = bd.service_id " +
@@ -27,8 +27,8 @@ public interface IBillRepository extends JpaRepository<Bill,Long> {
 
     @Modifying
     @Transactional
-    @Query(nativeQuery = true, value = "UPDATE bills SET status = 'completed' WHERE table_id = :id AND status = 'pending'")
-    int updateBillStatus(@Param("id") Long tableId);
+    @Query(nativeQuery = true, value = "UPDATE bills SET status = 'completed', creator_id = :userId WHERE table_id = :id AND status = 'pending'")
+    int updateBillStatus(@Param("id") Long tableId,@Param("userId") Long userId);
 
     @Modifying
     @Transactional
