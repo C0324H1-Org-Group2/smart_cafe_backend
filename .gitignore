@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 src/main/resources/application.properties
 src/main/resources/smartcafe-90ae7-firebase-adminsdk-yy4w2-dcf568ba57.json
+src/main/resources/smartcafe-90ae7-firebase-adminsdk-yy4w2-d13c066e66.json
 ### STS ###
 .apt_generated
 .classpath
