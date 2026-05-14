@@ -42,7 +42,7 @@ public class ClientController {
 
     // Endpoint để cập nhật trạng thái bảng thành false
     @PatchMapping("/tables/{id}/status_createBill")
-    public Bill updateTableStatusAndCreateBill(@PathVariable Long id) {
+    public Bill updateTableStatusAndCreateBill(@PathVariable("id") Long id) {
         // Cập nhật trạng thái bảng thành false
         Tables table = tableService.updateTableStatus(id);
 
@@ -53,7 +53,7 @@ public class ClientController {
     }
 
     @PatchMapping("/tables/{id}/status")
-    public Tables updateTableStatus(@PathVariable Long id) {
+    public Tables updateTableStatus(@PathVariable("id") Long id) {
         // Cập nhật trạng thái bảng
         Tables table = tableService.updateTableStatus1(id);
         messagingTemplate.convertAndSend("/topic/admin/sell/pay", table);
@@ -61,7 +61,7 @@ public class ClientController {
     }
 
     @PatchMapping("/tables/{id}/statusBill")
-    public Tables updateTableStatusBill(@PathVariable Long id) {
+    public Tables updateTableStatusBill(@PathVariable("id") Long id) {
         // Cập nhật trạng thái bảng
         Tables tables = tableService.updateTableStatusBill(id);
         messagingTemplate.convertAndSend("/topic/admin/sell/order", tables);
@@ -101,17 +101,17 @@ public class ClientController {
     }
 
     @GetMapping("/tables/{id}/check-is-bill")
-    public boolean checkIsBill(@PathVariable Long id) {
+    public boolean checkIsBill(@PathVariable("id") Long id) {
         return tableService.isTableBill(id);
     }
 
     @GetMapping("/tables/{id}/check-is-call")
-    public boolean checkIsCall(@PathVariable Long id) {
+    public boolean checkIsCall(@PathVariable("id") Long id) {
         return tableService.isTableCall(id);
     }
 
     @PostMapping("/tables/{id}/callEmployee")
-    public Tables callEmployee(@PathVariable Long id){
+    public Tables callEmployee(@PathVariable("id") Long id){
         Tables table = tableService.callEmployee(id);
         messagingTemplate.convertAndSend("/topic/admin/sell/callEmployee", table);
         return table;

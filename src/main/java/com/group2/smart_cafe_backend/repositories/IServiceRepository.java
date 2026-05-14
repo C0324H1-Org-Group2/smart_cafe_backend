@@ -24,7 +24,7 @@ public interface IServiceRepository extends JpaRepository<Service, Long> {
             "ORDER BY SUM(bd.quantity) DESC LIMIT 5")
     List<Service> findTop5MostOrderedServices();
 
-    @Query("SELECT s FROM Service s WHERE s.type.typeId = :typeId")
+    @Query("SELECT s FROM Service s WHERE s.type.typeId = :typeId AND s.isDelete = com.group2.smart_cafe_backend.models.emum.ServiceIsDelete.ACTIVE")
     List<Service> findByTypeId(@Param("typeId") Long typeId);
 
     Optional<Service> findById(Long id);

@@ -35,7 +35,7 @@ public class Sell_Feedback_Controller {
 
 
     @GetMapping("/feedbacks/{date}")
-    public ResponseEntity<List<Feedback>> findFeedbackByDate(@PathVariable LocalDate date) {
+    public ResponseEntity<List<Feedback>> findFeedbackByDate(@PathVariable("date") LocalDate date) {
         List<Feedback> feedbackList = sellService.findFeedbackByDate(date);
         return new ResponseEntity<>(feedbackList, HttpStatus.OK);
     }
@@ -49,13 +49,13 @@ public class Sell_Feedback_Controller {
     }
 
     @GetMapping("/bills/{table_id}")
-    public ResponseEntity<List<BillDTO>> findBillByTableId(@PathVariable Long table_id) {
+    public ResponseEntity<List<BillDTO>> findBillByTableId(@PathVariable("table_id") Long table_id) {
         List<BillDTO> billDTOS = sellService.findBillByTableId(table_id);
         return new ResponseEntity<>(billDTOS, HttpStatus.OK);
     }
 
     @PatchMapping("/bills/delete/{tableId}/{userId}")
-    public ResponseEntity<Boolean> changeStatusBillByTableId(@PathVariable Long tableId,@PathVariable Long userId) {
+    public ResponseEntity<Boolean> changeStatusBillByTableId(@PathVariable("tableId") Long tableId,@PathVariable("userId") Long userId) {
 
 
 
@@ -71,13 +71,13 @@ public class Sell_Feedback_Controller {
     }
 
     @PatchMapping("/table/employee/{tableId}")
-    public void setStatusEmployee(@PathVariable Long tableId){
+    public void setStatusEmployee(@PathVariable("tableId") Long tableId){
         Tables tables = sellService.setStatusEmployee(tableId);
         messagingTemplate.convertAndSend("/topic/client/callEmployee", tables);
     }
 
     @PatchMapping("table/order/{tableId}")
-    public void setStatusOrder(@PathVariable Long tableId){
+    public void setStatusOrder(@PathVariable("tableId") Long tableId){
         sellService.setStatusOrder(tableId);
     }
 

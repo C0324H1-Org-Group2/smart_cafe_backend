@@ -36,7 +36,7 @@ public class TableController {
         return new ResponseEntity<>(tables, HttpStatus.OK);
     }
     @GetMapping("/check-code/{code}")
-    public ResponseEntity<Map<String, Boolean>> checkCode(@PathVariable String code) {
+    public ResponseEntity<Map<String, Boolean>> checkCode(@PathVariable("code") String code) {
         boolean exists = serviceTable.existsByCode(code);
         return ResponseEntity.ok(Collections.singletonMap("exists", exists));
     }
@@ -44,9 +44,9 @@ public class TableController {
     @GetMapping("/byIsOn")
 //    @PreAuthorize("hasRole('ROLE_EMPLOYEE') or hasRole('ROLE_ADMIN')")
     public Page<Tables> getTablesByIsOn(
-            @RequestParam boolean isOn,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(name = "isOn") boolean isOn,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size) {
 
         Pageable pageable = PageRequest.of(page, size);
         return serviceTable.getTablesByIsOn(isOn, pageable);
@@ -54,14 +54,14 @@ public class TableController {
     // Lấy bàn theo ID
     @GetMapping("/{id}")
 //    @PreAuthorize("hasRole('ROLE_EMPLOYEE') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Tables> getTableById(@PathVariable Long id) {
+    public ResponseEntity<Tables> getTableById(@PathVariable("id") Long id) {
         Optional<Tables> table = serviceTable.getTableById(id);
         return table.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/searchByState")
 //    @PreAuthorize("hasRole('ROLE_EMPLOYEE') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> getTablesByState(@RequestParam String state, @RequestParam int page, @RequestParam int size) {
+    public ResponseEntity<?> getTablesByState(@RequestParam(name = "state") String state, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
         if (state.trim().isEmpty()) {
             return ResponseEntity.badRequest().body("Please enter a keyword!");
         }
@@ -92,7 +92,7 @@ public class TableController {
     // Cập nhật bàn
     @PutMapping("/{id}")
 //    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Tables> updateTable(@PathVariable Long id, @RequestBody Tables table) {
+    public ResponseEntity<Tables> updateTable(@PathVariable("id") Long id, @RequestBody Tables table) {
         Tables updatedTable = serviceTable.updateTable(id, table);
         return ResponseEntity.ok(updatedTable);
     }
@@ -100,7 +100,7 @@ public class TableController {
     // Xóa mềm bàn theo ID
     @DeleteMapping("/soft/{id}")
 //    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> softDeleteTable(@PathVariable Long id) {
+    public ResponseEntity<Void> softDeleteTable(@PathVariable("id") Long id) {
         serviceTable.softDeleteTable(id);
         return ResponseEntity.noContent().build();
     }
@@ -108,7 +108,7 @@ public class TableController {
     // Xóa cứng bàn theo ID
     @DeleteMapping("/hard/{id}")
 //    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> deleteTable(@PathVariable Long id) {
+    public ResponseEntity<String> deleteTable(@PathVariable("id") Long id) {
         try {
             serviceTable.hardDeleteTable(id);
             return ResponseEntity.ok("Xóa bàn thành công");
@@ -118,7 +118,7 @@ public class TableController {
     }
 
     @PatchMapping("/{tableId}/restore")
-    public ResponseEntity<?> restoreTable(@PathVariable Long tableId) {
+    public ResponseEntity<?> restoreTable(@PathVariable("tableId") Long tableId) {
         try {
             Tables restoredTable = serviceTable.restoreTable(tableId);
             return new ResponseEntity<>(restoredTable, HttpStatus.OK);

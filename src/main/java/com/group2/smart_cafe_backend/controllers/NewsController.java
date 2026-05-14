@@ -39,8 +39,8 @@ public class NewsController {
 
     @GetMapping("/active")
     public ResponseEntity<Page<News>> getAllActiveNews(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "6") int size) {
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "6") int size) {
         Page<News> newsList = newsService.findAllActiveNews(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "publishDate")));
         return new ResponseEntity<>(newsList, HttpStatus.OK);
     }
@@ -48,15 +48,15 @@ public class NewsController {
     @GetMapping
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Page<News>> getAllNews(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "6") int size
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "6") int size
     ) {
         Page<News> newsList = newsService.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "publishDate")));
         return new ResponseEntity<>(newsList, HttpStatus.OK);
     }
 
     @GetMapping("/{newsId}")
-    public News getNewsById(@PathVariable Long newsId) {
+    public News getNewsById(@PathVariable("newsId") Long newsId) {
         return newsService.getNewsById(newsId);
     }
 
@@ -87,7 +87,7 @@ public class NewsController {
     }
 
     @PatchMapping("/{newsId}/restore")
-    public ResponseEntity<?> restoreNews(@PathVariable Long newsId) {
+    public ResponseEntity<?> restoreNews(@PathVariable("newsId") Long newsId) {
         try {
             News restoredNews = newsService.restoreService(newsId);
             return new ResponseEntity<>(restoredNews, HttpStatus.OK);
@@ -98,20 +98,20 @@ public class NewsController {
 
     @PutMapping("/soft-delete/{id}")
 //    @PreAuthorize("hasRole('ROLE_EMPLOYEE') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> softDeleteNews(@PathVariable Long id) {
+    public ResponseEntity<?> softDeleteNews(@PathVariable("id") Long id) {
         newsService.softDeleteNews(id);
         return ResponseEntity.ok("Tin tức đã bị xóa mềm");
     }
     @DeleteMapping("/hard-delete/{id}")
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> hardDeleteNews(@PathVariable Long id) {
+    public ResponseEntity<?> hardDeleteNews(@PathVariable("id") Long id) {
         newsService.hardDeleteNews(id);
         return ResponseEntity.ok("Tin tức đã bị xóa vĩnh viễn");
     }
 
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/update/{newsId}")
-    public ResponseEntity<News> updateNews(@PathVariable Long newsId,
+    public ResponseEntity<News> updateNews(@PathVariable("newsId") Long newsId,
                                            @Valid @ModelAttribute NewsDTO newsDTO,
                                            @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
         Optional<News> optionalNews = newsService.findById(newsId);
@@ -140,7 +140,7 @@ public class NewsController {
     }
 
     @PutMapping("/{newsId}/increase-views")
-    public ResponseEntity<News> increaseViewCount(@PathVariable Long newsId) {
+    public ResponseEntity<News> increaseViewCount(@PathVariable("newsId") Long newsId) {
         Optional<News> optionalNews = newsService.findById(newsId);
 
         if (optionalNews.isPresent()) {

@@ -81,13 +81,13 @@ public class ServiceController {
 
 
     @PatchMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteService(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteService(@PathVariable("id") Long id) {
         serviceService.deleteService(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("/{serviceId}/restore")
-    public ResponseEntity<?> restoreService(@PathVariable Long serviceId) {
+    public ResponseEntity<?> restoreService(@PathVariable("serviceId") Long serviceId) {
         try {
             Service restoredService = serviceService.restoreService(serviceId);
             return new ResponseEntity<>(restoredService, HttpStatus.OK);
@@ -126,7 +126,7 @@ public class ServiceController {
     }
 
     @GetMapping("/services-by-type/{typeId}")
-    public ResponseEntity<List<Service>> getServicesByType(@PathVariable Long typeId) {
+    public ResponseEntity<List<Service>> getServicesByType(@PathVariable("typeId") Long typeId) {
         List<Service> servicesByType = serviceService.getServicesByType(typeId);
         return new ResponseEntity<>(servicesByType, HttpStatus.OK);
     }
@@ -136,7 +136,7 @@ public class ServiceController {
 //        return new ResponseEntity<>(updatedService, HttpStatus.OK);
 //    }
 @PutMapping("/update/{serviceId}")
-public ResponseEntity<?> updateService(@PathVariable Long serviceId, @RequestParam("imageUrl") MultipartFile file,
+public ResponseEntity<?> updateService(@PathVariable("serviceId") Long serviceId, @RequestParam("imageUrl") MultipartFile file,
 //                                             @RequestParam("serviceCode") String serviceCode,
                                              @RequestParam("serviceName") String serviceName,
                                              @RequestParam("typeId") Long typeId,
@@ -170,7 +170,7 @@ public ResponseEntity<?> updateService(@PathVariable Long serviceId, @RequestPar
     }
 }
     @GetMapping("/detail/{serviceId}")
-    public ResponseEntity<Service> getServiceById(@PathVariable Long serviceId) {
+    public ResponseEntity<Service> getServiceById(@PathVariable("serviceId") Long serviceId) {
         Service service = serviceService.getServiceById(serviceId);
         return new ResponseEntity<>(service, HttpStatus.OK);
     }

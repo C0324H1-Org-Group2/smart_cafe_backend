@@ -54,7 +54,10 @@ public class AuthController {
         String jwt = jwtService.generateTokenLogin(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User currentUser = userService.findByUsername(username.getUsername());
-        return ResponseEntity.ok(new JwtResponse(currentUser.getUserId(), jwt, userDetails.getUsername(), userDetails.getUsername(), userDetails.getAuthorities(),currentUser.getEmployee().getFullName()));
+        String fullName = (currentUser.getEmployee() != null)
+                ? currentUser.getEmployee().getFullName()
+                : currentUser.getUsername();
+        return ResponseEntity.ok(new JwtResponse(currentUser.getUserId(), jwt, userDetails.getUsername(), userDetails.getUsername(), userDetails.getAuthorities(), fullName));
     }
     @PostMapping("/api/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> emailRequest) throws MessagingException {
@@ -75,7 +78,7 @@ public class AuthController {
         return ResponseEntity.ok("Vui lòng kiểm tra email để đặt lại mật khẩu");
     }
     @PostMapping("/api/reset-password")
-    public ResponseEntity<?> resetPassword(@RequestParam String token, @RequestBody Map<String, String> passwordRequest) {
+    public ResponseEntity<?> resetPassword(@RequestParam("token") String token, @RequestBody Map<String, String> passwordRequest) {
         String newPassword = passwordRequest.get("newPassword");
         String confirmPassword = passwordRequest.get("confirmPassword");
 
@@ -135,7 +138,7 @@ public class AuthController {
         return ResponseEntity.ok("Mật khẩu đã được cập nhật thành công");
     }
     @PatchMapping("/api/{userId}/update-password-date")
-    public ResponseEntity<?> updatePasswordDate(@PathVariable Long userId, @RequestBody Map<String, String> dateRequest) throws MessagingException {
+    public ResponseEntity<?> updatePasswordDate(@PathVariable("userId") Long userId, @RequestBody Map<String, String> dateRequest) throws MessagingException {
         String dateString = dateRequest.get("passwordLastUpdatedDate");
         if (dateString == null || dateString.isEmpty()) {
             return ResponseEntity.badRequest().body("Ngày cập nhật mật khẩu không được để trống");

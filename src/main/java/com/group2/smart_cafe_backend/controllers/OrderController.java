@@ -70,7 +70,7 @@ public class OrderController {
 //    }
 
     @GetMapping("/detail/{billCode}")
-    public ResponseEntity<List<OrderDetailDTO>> getOrderDetails(@PathVariable String billCode) {
+    public ResponseEntity<List<OrderDetailDTO>> getOrderDetails(@PathVariable("billCode") String billCode) {
         List<OrderDetailDTO> orderDetails = orderService.getOrderDetailsByBillCode(billCode);
         return new ResponseEntity<>(orderDetails, HttpStatus.OK);
     }

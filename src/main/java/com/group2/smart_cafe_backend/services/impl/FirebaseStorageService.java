@@ -16,17 +16,23 @@ public class FirebaseStorageService implements IFirebaseStorageService {
     @Override
     public String uploadFile(MultipartFile file) throws IOException {
         try {
+            // Thư mục lưu trữ trong static để Spring Boot có thể truy cập trực tiếp qua URL
+            String uploadDir = "src/main/resources/static/uploads/";
+            java.io.File directory = new java.io.File(uploadDir);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
             String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
+            java.nio.file.Path filePath = java.nio.file.Paths.get(uploadDir + fileName);
+            
+            // Lưu file vào ổ đĩa
+            java.nio.file.Files.copy(file.getInputStream(), filePath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
 
-            Bucket bucket = StorageClient.getInstance().bucket();
-
-            Blob blob = bucket.create(fileName, file.getBytes(), file.getContentType());
-
-            blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
-
-            return String.format("https://storage.googleapis.com/%s/%s", bucket.getName(), fileName);
+            // Trả về đường dẫn tương đối để Frontend gọi
+            return "http://localhost:8080/uploads/" + fileName;
         } catch (Exception e) {
-            throw new IOException("Lỗi upload file ", e);
+            throw new IOException("Lỗi lưu file local: " + e.getMessage(), e);
         }
     }
 }
