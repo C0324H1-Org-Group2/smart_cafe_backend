@@ -7,4 +7,7 @@ public interface OrderDTO {
     String getNameCreated();
     String getTableCode();
     Double getTotalAmount();
+    String getCustomerName();
+    String getPhone();
+    String getAddress();
 }

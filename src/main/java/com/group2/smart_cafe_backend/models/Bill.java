@@ -30,5 +30,14 @@ public class Bill {
     @Column(columnDefinition = "ENUM('pending', 'completed', 'canceled', 'on_processing')")
     private BillStatus status;
 
+    @Column(length = 100)
+    private String customerName;
+
+    @Column(length = 20)
+    private String phone;
+
+    @Column(length = 255)
+    private String address;
+
 }
 

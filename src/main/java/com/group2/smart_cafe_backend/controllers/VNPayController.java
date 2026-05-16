@@ -74,8 +74,11 @@ public class VNPayController {
     }
 
     @PostMapping("/confirm-order")
-    public ResponseEntity<?> confirmOrder(@RequestBody List<Map<String, Object>> cartItems) {
+    public ResponseEntity<?> confirmOrder(@RequestBody Map<String, Object> payload) {
         try {
+            List<Map<String, Object>> cartItems = (List<Map<String, Object>>) payload.get("cartItems");
+            Map<String, String> customerInfo = (Map<String, String>) payload.get("customerInfo");
+
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
             User currentUser = userRepository.findByUsername(username);
 
@@ -98,6 +101,12 @@ public class VNPayController {
             // For online order, we might not have a table, or use a default 'Online' table
             // For now, keep it null or set a default if available
             bill.setTable(null); 
+            
+            if (customerInfo != null) {
+                bill.setCustomerName(customerInfo.get("fullName"));
+                bill.setPhone(customerInfo.get("phone"));
+                bill.setAddress(customerInfo.get("address"));
+            }
 
             Bill savedBill = billRepository.save(bill);
 

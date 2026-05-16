@@ -19,6 +19,9 @@ public interface IOrderRepository extends JpaRepository<Bill, Long> {
             "bills.date_created AS dateCreated, " +
             "employees.full_name AS nameCreated, " +
             "tables.code AS tableCode, " +
+            "bills.customer_name AS customerName, " +
+            "bills.phone AS phone, " +
+            "bills.address AS address, " +
             "SUM(bill_details.quantity * services.price) AS totalAmount " +
             "FROM bills " +
             "LEFT JOIN users ON bills.creator_id = users.user_id " +
@@ -29,7 +32,17 @@ public interface IOrderRepository extends JpaRepository<Bill, Long> {
             "WHERE bills.status = 'completed' " +
             "AND (:codeSearch IS NULL OR bills.code LIKE :codeSearch) " +
             "AND (:dateCreate IS NULL OR DATE(bills.date_created) = :dateCreate) " +
-            "GROUP BY bills.code, bills.date_created, employees.full_name, tables.code")
+            "GROUP BY bills.code, bills.date_created, employees.full_name, tables.code, bills.customer_name, bills.phone, bills.address",
+            countQuery = "SELECT COUNT(DISTINCT bills.bill_id) " +
+            "FROM bills " +
+            "LEFT JOIN users ON bills.creator_id = users.user_id " +
+            "LEFT JOIN employees ON users.employee_id = employees.employee_id " +
+            "LEFT JOIN tables ON bills.table_id = tables.table_id " +
+            "JOIN bill_details ON bills.bill_id = bill_details.bill_id " +
+            "JOIN services ON bill_details.service_id = services.service_id " +
+            "WHERE bills.status = 'completed' " +
+            "AND (:codeSearch IS NULL OR bills.code LIKE :codeSearch) " +
+            "AND (:dateCreate IS NULL OR DATE(bills.date_created) = :dateCreate)")
     Page<OrderDTO> findAllOrders(@Param("codeSearch") String codeSearch,
                                  @Param("dateCreate") LocalDate dateCreate, Pageable pageable);
 
