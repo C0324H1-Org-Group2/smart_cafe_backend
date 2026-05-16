@@ -7,6 +7,8 @@ import com.group2.smart_cafe_backend.repositories.IRoleRepository;
 import com.group2.smart_cafe_backend.repositories.IUserRepository;
 import com.group2.smart_cafe_backend.services.IUserService;
 import com.group2.smart_cafe_backend.services.impl.JwtService;
+import com.group2.smart_cafe_backend.services.impl.PasswordResetService;
+import com.group2.smart_cafe_backend.services.impl.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +46,12 @@ public class ClientAuthController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private PasswordResetService passwordResetService;
+
+    @Autowired
+    private EmailService emailService;
 
     /**
      * Client login – reuses the existing user table.
@@ -86,15 +94,21 @@ public class ClientAuthController {
     public ResponseEntity<?> clientRegister(@RequestBody Map<String, String> body) {
         String username = body.get("username");
         String password = body.get("password");
+        String email = body.get("email");
         String fullName = body.getOrDefault("fullName", username);
 
-        if (username == null || username.isBlank() || password == null || password.isBlank()) {
-            return ResponseEntity.badRequest().body("Tên đăng nhập và mật khẩu không được để trống");
+        if (username == null || username.isBlank() || password == null || password.isBlank() || email == null || email.isBlank()) {
+            return ResponseEntity.badRequest().body("Tên đăng nhập, mật khẩu và email không được để trống");
         }
 
         if (userRepository.findByUsername(username) != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body("Tên đăng nhập đã tồn tại");
+        }
+
+        if (userRepository.findByEmail(email) != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Email đã được sử dụng");
         }
 
         if (password.length() < 6) {
@@ -113,6 +127,7 @@ public class ClientAuthController {
         User newUser = new User();
         newUser.setUsername(username);
         newUser.setPassword(passwordEncoder.encode(password));
+        newUser.setEmail(email);
         newUser.setVerified(true);
         newUser.setEmployee(null);
         Set<Role> roles = new HashSet<>();
@@ -123,5 +138,54 @@ public class ClientAuthController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body("Đăng ký thành công! Vui lòng đăng nhập.");
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> body) {
+        String email = body.get("email");
+        if (email == null || email.isBlank()) {
+            return ResponseEntity.badRequest().body("Email không được để trống");
+        }
+
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email không tồn tại trên hệ thống");
+        }
+
+        String token = java.util.UUID.randomUUID().toString();
+        passwordResetService.createPasswordResetToken(user, token);
+        
+        // Client reset URL
+        String resetUrl = "http://localhost:3000/reset-password?token=" + token;
+        try {
+            emailService.sendResetPasswordEmail(email, resetUrl);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi gửi email: " + e.getMessage());
+        }
+
+        return ResponseEntity.ok("Vui lòng kiểm tra email để đặt lại mật khẩu");
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestParam("token") String token, @RequestBody Map<String, String> body) {
+        String newPassword = body.get("newPassword");
+        String confirmPassword = body.get("confirmPassword");
+
+        if (newPassword == null || newPassword.isEmpty()) {
+            return ResponseEntity.badRequest().body("Mật khẩu mới không được để trống");
+        }
+        if (!newPassword.equals(confirmPassword)) {
+            return ResponseEntity.badRequest().body("Mật khẩu xác nhận không khớp");
+        }
+
+        User user = passwordResetService.findUserByToken(token);
+        if (user == null) {
+            return ResponseEntity.badRequest().body("Token không hợp lệ hoặc đã hết hạn");
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Mật khẩu đã được cập nhật thành công");
     }
 }

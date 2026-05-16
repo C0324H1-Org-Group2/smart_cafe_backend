@@ -20,6 +20,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(unique = true)
+    private String email;
+
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
