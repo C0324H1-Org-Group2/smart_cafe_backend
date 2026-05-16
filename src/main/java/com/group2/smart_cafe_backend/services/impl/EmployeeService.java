@@ -6,6 +6,7 @@ import com.group2.smart_cafe_backend.services.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,5 +18,10 @@ public class EmployeeService implements IEmployeeService {
     public Employee getEmployeeById(Long employeeId) {
         Optional<Employee> news = employeeRepository.findById(employeeId);
         return news.orElse(null);
+    }
+
+    @Override
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
     }
 }

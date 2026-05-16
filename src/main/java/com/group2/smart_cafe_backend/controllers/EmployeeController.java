@@ -5,6 +5,8 @@ import com.group2.smart_cafe_backend.services.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/employees")
@@ -14,5 +16,10 @@ public class EmployeeController {
     @GetMapping("/{employeeId}")
     public Employee getEmployeeById(@PathVariable("employeeId") Long employeeId) {
         return employeeService.getEmployeeById(employeeId);
+    }
+
+    @GetMapping
+    public List<Employee> getAllEmployees() {
+        return employeeService.getAllEmployees();
     }
 }
