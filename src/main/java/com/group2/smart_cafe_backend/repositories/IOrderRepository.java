@@ -21,9 +21,9 @@ public interface IOrderRepository extends JpaRepository<Bill, Long> {
             "tables.code AS tableCode, " +
             "SUM(bill_details.quantity * services.price) AS totalAmount " +
             "FROM bills " +
-            "JOIN users ON bills.creator_id = users.user_id " +
-            "JOIN employees ON users.user_id = employees.employee_id " +
-            "JOIN tables ON bills.table_id = tables.table_id " +
+            "LEFT JOIN users ON bills.creator_id = users.user_id " +
+            "LEFT JOIN employees ON users.employee_id = employees.employee_id " +
+            "LEFT JOIN tables ON bills.table_id = tables.table_id " +
             "JOIN bill_details ON bills.bill_id = bill_details.bill_id " +
             "JOIN services ON bill_details.service_id = services.service_id " +
             "WHERE bills.status = 'completed' " +
@@ -54,8 +54,8 @@ public interface IOrderRepository extends JpaRepository<Bill, Long> {
             "services.price AS price, " +
             "(bill_details.quantity * services.price) AS totalPrice " +
             "FROM Bills " +
-            "JOIN Users ON bills.creator_id = users.user_id " +
-            "JOIN Employees ON users.employee_id = employees.employee_id " +
+            "LEFT JOIN Users ON bills.creator_id = users.user_id " +
+            "LEFT JOIN Employees ON users.employee_id = employees.employee_id " +
             "JOIN Bill_Details ON bills.bill_id = bill_details.bill_id " +
             "JOIN Services ON bill_details.service_id = services.service_id " +
             "WHERE bills.code = :billCode")
