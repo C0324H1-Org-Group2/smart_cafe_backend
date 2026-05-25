@@ -32,7 +32,7 @@ public class SellService implements ISellService {
 
     @Override
     public List<Tables> findAllTable() {
-        return tableRepository.findAll();
+        return tableRepository.findAllActiveTables();
     }
 
 

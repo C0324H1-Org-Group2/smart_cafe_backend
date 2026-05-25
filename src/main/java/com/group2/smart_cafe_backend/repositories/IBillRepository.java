@@ -40,8 +40,11 @@ public interface IBillRepository extends JpaRepository<Bill,Long> {
     @Query(nativeQuery = true, value = "UPDATE tables SET is_bill = 0 WHERE table_id = :id")
     void setStatusOrder(@Param("id") Long tableId);
 
-    @Query("SELECT b.code FROM Bill b ORDER BY b.code DESC LIMIT 1")
+    @Query("SELECT MAX(b.code) FROM Bill b WHERE b.code LIKE 'BI%' AND b.code NOT LIKE 'BILL%'")
     String findMaxBillCode();
+    
+    @Query("SELECT MAX(b.code) FROM Bill b WHERE b.code LIKE 'HD-%'")
+    String findMaxOnlineBillCode();
 
 
     @Modifying

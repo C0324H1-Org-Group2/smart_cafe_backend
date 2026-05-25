@@ -89,7 +89,7 @@ public class VNPayController {
             bill.setStatus(BillStatus.completed); // Already paid via VNPay
             
             // Auto generate code
-            String lastCode = billRepository.findMaxBillCode();
+            String lastCode = billRepository.findMaxOnlineBillCode();
             int nextId = 1;
             if (lastCode != null && lastCode.startsWith("HD-")) {
                 try {

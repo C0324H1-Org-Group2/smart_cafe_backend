@@ -23,4 +23,7 @@ public interface ITableRepository extends JpaRepository<Tables, Long> {
 Page<Tables> findAllTablesByCodeAndOnIncludingDeleted(@Param("code") String code, @Param("on") Boolean on, Pageable pageable);
     Tables findByTableId(Long tableId);
     boolean existsByCode(String code);
+
+    @Query("SELECT t FROM Tables t WHERE t.isDelete = false")
+    List<Tables> findAllActiveTables();
 }

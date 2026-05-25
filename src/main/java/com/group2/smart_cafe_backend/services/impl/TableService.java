@@ -60,7 +60,9 @@ public Page<Tables> getAllTables(String code, Boolean on, boolean includeDeleted
         Tables existingTable = tableRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Table with ID " + id + " does not exist."));
         // Cập nhật các trường dữ liệu của bàn, bao gồm isDelete
-        existingTable.setCode(table.getCode());
+        if (table.getCode() != null && !table.getCode().isEmpty()) {
+            existingTable.setCode(table.getCode());
+        }
         existingTable.setState(table.getState());
         existingTable.setOn(table.isOn());
         existingTable.setDelete(table.isDelete());  // Cho phép cập nhật isDelete
@@ -108,7 +110,7 @@ public Page<Tables> getAllTables(String code, Boolean on, boolean includeDeleted
 
     @Override
     public List<Tables> getAllTablesByClient() {
-        return tableRepository.findAll();
+        return tableRepository.findAllActiveTables();
     }
 
     @Override
